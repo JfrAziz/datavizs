@@ -13,12 +13,15 @@
     "@mantine/hooks": "^4.2.12",
     "@mantine/modals": "^4.2.12",
     "@mantine/next": "^4.2.12",
+    "leaflet": "^1.8.0",
     "next": "12.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-leaflet": "^4.0.1",
     "tabler-icons-react": "^1.52.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.7.11",
     "@types/node": "18.0.3",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",

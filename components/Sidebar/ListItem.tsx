@@ -1,13 +1,13 @@
 import React from 'react';
 import { Group, Text } from '@mantine/core';
-import useStyles from './OptionsItem.styles';
+import useStyles from './Sidebar.styles';
 
-interface OptionsItemProps extends React.PropsWithChildren {
+interface ListItemProps extends React.PropsWithChildren {
   title: string;
   description?: string;
 }
 
-export function OptionsItem({ title, description, children }: OptionsItemProps) {
+export function ListItem({ title, description, children }: ListItemProps) {
   const { classes } = useStyles();
 
   return (

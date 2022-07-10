@@ -1,8 +1,11 @@
+import dynamic from 'next/dynamic';
 import type { NextPage } from 'next'
 import ThemeProvider from '../components/ThemeProvider';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
-import { Adjustments, Camera, Settings, Table } from 'tabler-icons-react';
 import { Settings as SettingsPage } from '../components/Settings';
+import { Adjustments, Camera, Settings, Table } from 'tabler-icons-react';
+
+const MapWithNoSSR = dynamic(() => import("../components/Maps/Map"), { ssr: false });
 
 const useStyles = createStyles((theme) => {
   const BREAKPOINT = theme.breakpoints.lg
@@ -41,11 +44,12 @@ const useStyles = createStyles((theme) => {
 
 const Home: NextPage = () => {
   const { classes } = useStyles();
+  
   return (
     <ThemeProvider>
       <div className={classes.container}>
         <div className={classes.map_container}>
-          map
+          <MapWithNoSSR />
         </div>
         <div className={classes.sidebar_container}>
           <Tabs classNames={{ body: classes.tab_body }}>
