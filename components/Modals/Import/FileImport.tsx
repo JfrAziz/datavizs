@@ -2,21 +2,11 @@ import { useContext } from 'react';
 import { CloudUpload } from 'tabler-icons-react';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { GeoJSONContext } from '../../Context/GeoJSONContext';
-import { Text, Group, createStyles, MantineTheme, useMantineTheme } from '@mantine/core';
+import { Text, Group, useMantineTheme } from '@mantine/core';
 
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    marginBottom: 30,
-  },
 
-  dropzone: {
-    borderWidth: 1,
-    paddingBottom: 50,
-  },
-}));
-
-const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
+const getActiveColor = (status: DropzoneStatus) => {
+  const theme = useMantineTheme();
   return status.accepted
     ? theme.colors[theme.primaryColor][6]
     : status.rejected
@@ -26,19 +16,19 @@ const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
         : theme.colors.gray[7];
 }
 
-const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => {
+const dropzoneChildren = (status: DropzoneStatus) => {
   return (
     <div style={{ pointerEvents: 'none' }}>
       <Group position="center">
-        <CloudUpload size={50} color={getActiveColor(status, theme)} />
+        <CloudUpload size={50} color={getActiveColor(status)} />
       </Group>
-      <Text align="center" weight={700} size="lg" mt="xl" sx={{ color: getActiveColor(status, theme) }}>
+      <Text align="center" mt="xl" sx={{ color: getActiveColor(status) }}>
         {
           status.accepted
-            ? 'Drop files here'
+            ? 'Drop a file here'
             : status.rejected
-              ? 'JSON files'
-              : 'Upload resume'
+              ? 'must be JSON file'
+              : 'Upload geoJSON file'
         }
       </Text>
       <Text align="center" size="sm" mt="xs" color="dimmed">
@@ -48,25 +38,24 @@ const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => {
   );
 }
 
-export function FileImport({ callback } : { callback: () => void}) {
+export function FileImport({ callback }: { callback: () => void }) {
   const { setGeoJSON } = useContext(GeoJSONContext)
-  const theme = useMantineTheme();
-  const { classes } = useStyles();
 
   const processFile = async (files: File[]) => {
-    const textFile = await files[0].text()
-    setGeoJSON(textFile)
+    setGeoJSON(await files[0].text())
     callback()
-  } 
+  }
 
   return (
-    <div className={classes.wrapper}>
-      <Dropzone className={classes.dropzone} radius="md" maxSize={10 * 1024 ** 2}
-        onDrop={processFile}
-        onReject={(files) => console.log('rejected files', files)}
-      >
-        {(status) => dropzoneChildren(status, theme)}
-      </Dropzone>
-    </div>
+    <Dropzone
+      radius="md"
+      maxSize={10 * 1024 ** 2}
+      onDrop={processFile}
+      style={{
+        borderWidth: 1,
+        paddingBottom: 50
+      }} >
+      {(status) => dropzoneChildren(status)}
+    </Dropzone>
   );
 }

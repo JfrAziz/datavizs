@@ -1,7 +1,8 @@
 import React, { createContext, useState } from "react";
+import { GeoJsonObject } from "geojson";
 
 interface geoJSONDataContextValue {
-  geoJSON: JSON | null;
+  geoJSON: GeoJsonObject | null;
   setGeoJSON: (value: string) => void
 }
 
@@ -16,11 +17,9 @@ export function GeoJSONProvider(props: React.PropsWithChildren) {
   const [geoJSON, setData] = useState(geoJSONDataInitialState.geoJSON)
 
   const setGeoJSON = (value: string) => {
-    const json = JSON.parse(value)
+    const json = JSON.parse(value) as unknown as GeoJsonObject
     setData(json)
   }
-
-  console.log(geoJSON)
 
   return (
     <GeoJSONContext.Provider value={{ geoJSON, setGeoJSON }}>

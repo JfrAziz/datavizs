@@ -3,7 +3,6 @@ import { MapSettingsContext } from "../Context/MapSettingsContext";
 import { ListItem } from "../Sidebar/ListItem";
 import { Switcher } from "../Sidebar/Switcher";
 
-
 export function MapsControlOptions() {
   const { showControl, toggleControl } = useContext(MapSettingsContext)
   return (

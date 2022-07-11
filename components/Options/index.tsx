@@ -5,7 +5,7 @@ import { MapsControlOptions } from "./MapsControlOptions";
 export function Options() {
   return (
     <div>
-      <Divider label="Maps Setting" />
+      {/* <Divider label="Maps Setting" /> */}
       <MapsControlOptions />
       <BaseMapsOptions />
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
 
-const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
 
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -15,5 +15,3 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     </ColorSchemeProvider>
   )
 }
-
-export default ThemeProvider

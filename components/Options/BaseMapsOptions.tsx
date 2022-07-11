@@ -4,7 +4,6 @@ import { ListItem } from "../Sidebar/ListItem";
 import { baseMaps } from "../../config/baseMaps";
 import { BaseMapContext } from "../Context/BaseMapContext";
 
-
 export function BaseMapsOptions() {
   const { baseMap, setBaseMap } = useContext(BaseMapContext)
 
