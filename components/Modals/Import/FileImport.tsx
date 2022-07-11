@@ -42,7 +42,7 @@ export function FileImport({ callback }: { callback: () => void }) {
   const { setGeoJSON } = useContext(GeoJSONContext)
 
   const processFile = async (files: File[]) => {
-    setGeoJSON(await files[0].text())
+    setGeoJSON(await files[0].text(), files[0].size.toString())
     callback()
   }
 
@@ -51,10 +51,13 @@ export function FileImport({ callback }: { callback: () => void }) {
       radius="md"
       maxSize={10 * 1024 ** 2}
       onDrop={processFile}
+      onReject={(files) => console.log("rejected", files)}
       style={{
         borderWidth: 1,
         paddingBottom: 50
-      }} >
+      }}
+      accept={["application/geo+json"]}
+    >
       {(status) => dropzoneChildren(status)}
     </Dropzone>
   );

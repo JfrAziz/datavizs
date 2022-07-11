@@ -1,11 +1,13 @@
-import { ListItem } from "../Sidebar/ListItem";
-import { ImportGeoJSONBtn } from "../Modals/ImportGeoJSONBtn";
+import { Divider } from "../Sidebar/Divider";
+import { DataTable } from "./DataTable";
 import { Import } from "./Import";
 
 export function Data() {
   return (
-    <div>
+    <>
       <Import />
-    </div>
+      <Divider />
+      <DataTable />
+    </>
   );
 }

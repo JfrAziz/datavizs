@@ -1,7 +1,7 @@
-import { MapContainer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { BaseMap } from "./BaseMap";
 import { MapControl } from "./MapsControl";
+import { MapContainer } from "react-leaflet";
 import { GeoJSONLayer } from "./GeoJSONLayer";
 
 const Map = () => (
