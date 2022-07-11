@@ -16,6 +16,10 @@ const useStyles = createStyles((theme) => ({
       cursor: 'pointer',
     },
   },
+
+  divider: {
+    
+  }
 }));
 
 export default useStyles
