@@ -8,7 +8,7 @@ const BaseMap = () => {
   return (
     <>
       {
-        baseMap && (
+        baseMap?.attribution && (
           <TileLayer
             key={useId(baseMap.name)}
             attribution={baseMap.attribution}

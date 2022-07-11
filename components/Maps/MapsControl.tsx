@@ -5,12 +5,16 @@ import { MapSettingsContext } from "../Context/MapSettingsContext";
 const MapControl = () => {
   const { showControl } = useContext(MapSettingsContext)
   return (
-    <>{showControl && (
-      <>
-        <ZoomControl />
-        <ScaleControl />
-      </>
-    )}</>
+    <>
+      {
+        showControl && (
+          <>
+            <ZoomControl />
+            <ScaleControl />
+          </>
+        )
+      }
+    </>
   );
 };
 

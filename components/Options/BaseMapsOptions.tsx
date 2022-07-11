@@ -10,6 +10,7 @@ export function BaseMapsOptions() {
 
   const selectBaseMap = (value: string) => {
     const selectedBaseMap = baseMaps.find((item) => item.name === value) || null
+    console.log(selectedBaseMap)
     setBaseMap(selectedBaseMap)
   }
   return (

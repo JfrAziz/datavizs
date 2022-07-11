@@ -1,6 +1,6 @@
 export interface BaseMap {
   name: string;
-  attribution: string;
+  attribution: string | undefined;
   baseMap: string
 };
 
@@ -29,6 +29,11 @@ const baseMaps: BaseMap[] = [
     name: "CartoDB Voyager No Labels",
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     baseMap: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png"
+  },
+  {
+    name: "No Base Maps",
+    baseMap: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution: undefined
   }
 ]
 
