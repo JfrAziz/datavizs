@@ -1,8 +1,8 @@
-import { Select } from "@mantine/core";
 import { useContext } from "react";
+import { Select } from "@mantine/core";
+import { ListItem } from "../Sidebar/ListItem";
 import { baseMaps } from "../../config/baseMaps";
 import { BaseMapContext } from "../Context/BaseMapContext";
-import { ListItem } from "../Sidebar/ListItem";
 
 
 export function BaseMapsOptions() {
@@ -10,7 +10,6 @@ export function BaseMapsOptions() {
 
   const selectBaseMap = (value: string) => {
     const selectedBaseMap = baseMaps.find((item) => item.name === value) || null
-    console.log(selectedBaseMap)
     setBaseMap(selectedBaseMap)
   }
   return (

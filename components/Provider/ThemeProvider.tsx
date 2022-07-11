@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ColorScheme, ColorSchemeProvider, MantineProvider, useMantineTheme, } from '@mantine/core'
+import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
 
 const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
