@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { CloudUpload } from 'tabler-icons-react';
-import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
+import { showNotification } from '@mantine/notifications';
 import { GeoJSONContext } from '../Context/GeoJSONContext';
+import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { Text, Group, useMantineTheme } from '@mantine/core';
 
 const getActiveColor = (status: DropzoneStatus) => {
@@ -40,9 +41,22 @@ const dropzoneChildren = (status: DropzoneStatus) => {
 export function FileImport({ callback }: { callback: () => void }) {
   const { setGeoJSON } = useContext(GeoJSONContext)
 
+  const showFailedImportNotifications = () => {
+    showNotification({
+      title: "Error Imported File",
+      message: "Please import valid GeoJSON Collection files",
+      color: "red"
+    })
+  }
+
   const processFile = async (files: File[]) => {
-    setGeoJSON(await files[0].text())
-    callback()
+    try {
+      setGeoJSON(await files[0].text())
+    } catch (error) {
+      showFailedImportNotifications()
+    } finally {
+      callback()
+    }
   }
 
   return (
@@ -50,7 +64,7 @@ export function FileImport({ callback }: { callback: () => void }) {
       radius="md"
       maxSize={10 * 1024 ** 2}
       onDrop={processFile}
-      onReject={(files) => console.log("rejected", files)}
+      onReject={showFailedImportNotifications}
       style={{
         borderWidth: 1,
         paddingBottom: 50

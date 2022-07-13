@@ -5,11 +5,8 @@ import { FileImport } from '../Import/FileImport';
 import { GeoJSONContext } from '../Context/GeoJSONContext';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
 
-interface ImportModalBodyProps {
-  modals : ModalsContextProps
-}
 
-const ImportModalBody = ({ modals }: ImportModalBodyProps) => <FileImport callback={() => modals.closeAll()} />
+const ImportModalBody: React.FC<{ modals : ModalsContextProps }> = ({ modals }) => <FileImport callback={() => modals.closeAll()} />
 
 export function ImportGeoJSONBtn() {
   const modals = useModals();

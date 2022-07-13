@@ -1,6 +1,6 @@
+import { MapProvider } from './MapProvider';
 import { DataProvider } from './DataProvider';
 import { MantineProvider } from './MantineProvider';
-import { MapProvider } from './MapProvider';
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <DataProvider>
