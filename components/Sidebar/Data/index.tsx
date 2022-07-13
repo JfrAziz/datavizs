@@ -1,11 +1,11 @@
-import { Divider } from "../Sidebar/Divider";
+import { Divider } from "../Items/Divider";
 import { DataTable } from "./DataTable";
-import { Import } from "./Import";
+import { ImportOptions } from "./ImportOptions";
 
 export function Data() {
   return (
     <>
-      <Import />
+      <ImportOptions />
       <Divider />
       <DataTable />
     </>

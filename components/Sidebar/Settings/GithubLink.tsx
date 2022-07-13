@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import { ListItem } from "../Sidebar/ListItem";
+import { ListItem } from "../Items/ListItem";
 import { BrandGithub } from "tabler-icons-react";
 
 export function GithubLink() {

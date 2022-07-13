@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 import { CloudUpload } from 'tabler-icons-react';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
-import { GeoJSONContext } from '../../Context/GeoJSONContext';
+import { GeoJSONContext } from '../Context/GeoJSONContext';
 import { Text, Group, useMantineTheme } from '@mantine/core';
-
 
 const getActiveColor = (status: DropzoneStatus) => {
   const theme = useMantineTheme();

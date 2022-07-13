@@ -1,10 +1,10 @@
 import dynamic from 'next/dynamic';
 import type { NextPage } from 'next'
-import { Data } from '../components/Data';
-import { Options } from '../components/Options';
+import { Data } from '../components/Sidebar/Data';
+import { Options } from '../components/Sidebar/Options';
 import AppProvider from '../components/Provider/AppProvider';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
-import { Settings as SettingsPage } from '../components/Settings';
+import { Settings as SettingsPage } from '../components/Sidebar/Settings';
 import { Adjustments, Camera, Settings, Table } from 'tabler-icons-react';
 
 const MapWithNoSSR = dynamic(() => import("../components/Maps"), { ssr: false });

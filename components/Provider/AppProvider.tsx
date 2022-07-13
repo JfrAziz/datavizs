@@ -1,21 +1,15 @@
-import { BaseMapProvider } from '../Context/BaseMapContext';
-import { GeoJSONProvider } from '../Context/GeoJSONContext';
-import { MapSettingsProvider } from '../Context/MapSettingsContext';
-import { ModalsProvider } from './ModalsProvider';
-import { ThemeProvider } from './ThemeProvider';
+import { DataProvider } from './DataProvider';
+import { MantineProvider } from './MantineProvider';
+import { MapProvider } from './MapProvider';
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <ThemeProvider>
-    <GeoJSONProvider>
-      <MapSettingsProvider>
-        <BaseMapProvider>
-          <ModalsProvider>
-            {children}
-          </ModalsProvider>
-        </BaseMapProvider>
-      </MapSettingsProvider>
-    </GeoJSONProvider>
-  </ThemeProvider>
+  <DataProvider>
+    <MantineProvider>
+      <MapProvider>
+        {children}
+      </MapProvider>
+    </MantineProvider>
+  </DataProvider>
 )
 
 export default AppProvider

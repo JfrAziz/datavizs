@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { MapSettingsContext } from "../Context/MapSettingsContext";
-import { ListItem } from "../Sidebar/ListItem";
-import { Switcher } from "../Sidebar/Switcher";
+import { MapSettingsContext } from "../../Context/MapSettingsContext";
+import { ListItem } from "../Items/ListItem";
+import { Switcher } from "../Items/Switcher";
 
 export function MapsControlOptions() {
   const { showControl, toggleControl } = useContext(MapSettingsContext)
