@@ -3,10 +3,9 @@ import { CloudUpload } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
 import { GeoJSONContext } from '../Context/GeoJSONContext';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
-import { Text, Group, useMantineTheme } from '@mantine/core';
+import { Text, Group, useMantineTheme, MantineTheme } from '@mantine/core';
 
-const getActiveColor = (status: DropzoneStatus) => {
-  const theme = useMantineTheme();
+const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
   return status.accepted
     ? theme.colors[theme.primaryColor][6]
     : status.rejected
@@ -16,13 +15,14 @@ const getActiveColor = (status: DropzoneStatus) => {
         : theme.colors.gray[7];
 }
 
-const dropzoneChildren = (status: DropzoneStatus) => {
+const DropzoneChildren = (status: DropzoneStatus) => {
+  const theme = useMantineTheme();
   return (
     <div style={{ pointerEvents: 'none' }}>
       <Group position="center">
-        <CloudUpload size={50} color={getActiveColor(status)} />
+        <CloudUpload size={50} color={getActiveColor(status, theme)} />
       </Group>
-      <Text align="center" mt="xl" sx={{ color: getActiveColor(status) }}>
+      <Text align="center" mt="xl" sx={{ color: getActiveColor(status, theme) }}>
         {
           status.accepted
             ? 'Drop a file here'
@@ -71,7 +71,7 @@ export function FileImport({ callback }: { callback: () => void }) {
       }}
       accept={["application/geo+json"]}
     >
-      {(status) => dropzoneChildren(status)}
+      {(status) => DropzoneChildren(status)}
     </Dropzone>
   );
 }

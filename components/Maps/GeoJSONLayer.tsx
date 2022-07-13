@@ -72,8 +72,9 @@ export const GeoJSONLayer = () => {
   const geojsonRef = useRef<L.FeatureGroup>(null)
 
   useEffect(() => {
+    console.log("asdasd")
     geoJSON && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
-  }, [geoJSON])
+  }, [geoJSON, map])
 
   return geoJSON && geoJSON.features && (
     <FeatureGroup ref={geojsonRef} key={mapKey}>

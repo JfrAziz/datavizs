@@ -5,8 +5,9 @@ import { BaseMapContext } from "../Context/BaseMapContext";
 
 export const BaseMap = () => {
   const { baseMap } = useContext(BaseMapContext)
+  const uuid = useId(baseMap?.name);
 
   if (!baseMap?.attribution) return null;
 
-  return <TileLayer key={useId(baseMap.name)} attribution={baseMap.attribution} url={baseMap.baseMap} />
+  return <TileLayer key={uuid} attribution={baseMap.attribution} url={baseMap.baseMap} />
 };
