@@ -3,9 +3,7 @@ import { ScrollArea, Table } from '@mantine/core';
 import { GeoJSONContext } from "../Context/GeoJSONContext"
 
 export const DataTable = () => {
-  const { geoJSON } = useContext(GeoJSONContext)
-
-  console.log("table rerender")
+  const { geoJSON, mapKey } = useContext(GeoJSONContext)
 
   const features = geoJSON?.features
 
@@ -13,15 +11,15 @@ export const DataTable = () => {
 
   const keys = features[0].properties && Object.keys(features[0].properties)
 
-  const rows = features.map((element, id) => (
-    <tr key={id}>
-      <td>{id + 1}</td>
-      {keys && keys.map(key => <td key={`${id}_${key}`}>{element?.properties?.[key]}</td>)}
+  const rows = features.map((element, idx) => (
+    <tr key={element?.properties?.uuid}>
+      <td>{idx + 1}</td>
+      {keys && keys.map(key => <td key={`${element?.properties?.uuid}_${key}`}>{element?.properties?.[key]}</td>)}
     </tr>
   ));
 
   return (
-    <ScrollArea>
+    <ScrollArea key={mapKey}>
       <Table>
         <thead>
           <tr>

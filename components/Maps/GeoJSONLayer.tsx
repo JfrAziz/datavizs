@@ -1,9 +1,9 @@
-import "leaflet/dist/leaflet.css";
-import L, { LatLngBounds, Layer } from "leaflet";
-import { GeoJSON, useMap } from "react-leaflet";
+import { Feature } from 'geojson';
+import { useMap, FeatureGroup } from "react-leaflet";
 import { useContext, useEffect, useRef } from "react";
 import { GeoJSONContext } from "../Context/GeoJSONContext";
-import { Feature, GeometryObject } from 'geojson';
+import { geoJSON, LatLngBounds, Layer, FeatureGroup as FeatureGroupLeaflet } from "leaflet";
+import { createElementObject, createPathComponent, LeafletContextInterface, PathProps } from '@react-leaflet/core'
 
 const colors = [
   '#fffddd',
@@ -23,40 +23,61 @@ const colors = [
   '#f6081b'
 ]
 
+interface GeoJSONProps extends PathProps {
+  data: Feature
+}
 
-export const GeoJSONLayer = () => {
-  const map = useMap()
-  const geojsonRef = useRef<L.GeoJSON>(null)
-  const { geoJSON, key } = useContext(GeoJSONContext)
-
-  console.log("element mount")
-
-  useEffect(() => {
-    console.log("effect geoJSON")
-    geoJSON && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
-  }, [geoJSON])
-
-  function style(feature: Feature<GeometryObject, any> | undefined) {
-    return {
+function createGeoJSON(props: GeoJSONProps, context: LeafletContextInterface) {
+  return createElementObject(geoJSON(props.data, {
+    style: {
       fillColor: colors[Math.floor(14 * Math.random())],
       weight: 1,
       opacity: 1,
       color: '#888',
       dashArray: '3',
       fillOpacity: 0.7
+    },
+    onEachFeature: (feature: Feature, layer: Layer) => {
+      layer.on('mouseover', function (e) {
+
+        if (feature.properties && feature.properties.name) {
+          layer.bindPopup(feature.properties.name);
+          layer.openPopup()
+        }
+      });
+      layer.on('mouseout', () => layer.closePopup());
     }
+  }), context)
+}
+
+function updateGeoJSON(instance: FeatureGroupLeaflet, props: GeoJSONProps, prevProps: GeoJSONProps) {
+  if (props.data?.properties?.uuid !== prevProps.data?.properties?.uuid) {
+    console.log("updated")
+    instance.setStyle({
+      fillColor: colors[Math.floor(14 * Math.random())],
+      weight: 1,
+      opacity: 1,
+      color: '#888',
+      dashArray: '3',
+      fillOpacity: 0.7
+    })
   }
+}
 
-  function onEachFeature(feature: Feature, layer: Layer) {
-    layer.on('mouseover', function (e) {
+const GeoJSON = createPathComponent(createGeoJSON, updateGeoJSON)
 
-      if (feature.properties && feature.properties.name) {
-        layer.bindPopup(feature.properties.name);
-        layer.openPopup()
-      }
-    });
-    layer.on('mouseout', () => layer.closePopup());
-  }
+export const GeoJSONLayer = () => {
+  const map = useMap()
+  const { geoJSON, mapKey } = useContext(GeoJSONContext)
+  const geojsonRef = useRef<L.FeatureGroup>(null)
 
-  return geoJSON && <GeoJSON key={key} ref={geojsonRef} data={geoJSON} style={style} onEachFeature={onEachFeature} />
+  useEffect(() => {
+    geoJSON && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
+  }, [geoJSON])
+
+  return geoJSON && geoJSON.features && (
+    <FeatureGroup ref={geojsonRef} key={mapKey}>
+      {geoJSON.features.map((item) => <GeoJSON key={item.properties?.uuid} data={item} />)}
+    </FeatureGroup>
+  )
 };

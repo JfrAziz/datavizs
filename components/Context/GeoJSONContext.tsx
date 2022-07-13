@@ -3,14 +3,14 @@ import { FeatureCollection } from "geojson";
 import { v4 } from "uuid";
 
 interface geoJSONDataContextValue {
-  key: string | null;
+  mapKey: string | null;
   geoJSON: FeatureCollection | null;
   setGeoJSON: (value: string) => void;
   updateGeoJSON: (featuresIdx: number) => void;
 }
 
 const geoJSONDataInitialState: geoJSONDataContextValue = {
-  key: null,
+  mapKey: null,
   geoJSON: null,
   setGeoJSON: (value: string) => { },
   updateGeoJSON: (featuresIdx: number) => { },
@@ -20,17 +20,28 @@ export const GeoJSONContext = createContext<geoJSONDataContextValue>(geoJSONData
 
 export function GeoJSONProvider(props: React.PropsWithChildren) {
   const [geoJSON, setData] = useState(geoJSONDataInitialState.geoJSON)
-  const [key, setKey] = useState(geoJSONDataInitialState.key)
+  const [mapKey, setMapKey] = useState(geoJSONDataInitialState.mapKey)
 
   const setGeoJSON = (value: string) => {
     try {
       const json = JSON.parse(value) as unknown as FeatureCollection
 
       if (!(json?.type === 'FeatureCollection')) throw new Error("GeoJSON Not Valid");
-      
+
       if (!(json?.features)) throw new Error("GeoJSON has emtpy value");
-      
-      setKey(v4())
+
+      // add a uuid foreach features properties
+      json.features.forEach((item, idx) => {
+        if (!json.features[idx].properties) {
+          Object.assign(json.features[idx], { properties: {} })
+        }
+
+        if (!json.features[idx].properties?.uuid) {
+          Object.assign(json.features[idx].properties as {}, { uuid: v4() })
+        }
+      });
+
+      setMapKey(v4())
       setData(json)
     } catch (error) {
       console.log(error)
@@ -39,13 +50,12 @@ export function GeoJSONProvider(props: React.PropsWithChildren) {
 
   const updateGeoJSON = (featuresIdx: number) => {
     if (geoJSON) {
-      setData({ type: "FeatureCollection", features: geoJSON.features.filter((item, id) => id !== featuresIdx)})
-      // setKey(v4())
+      setData({ type: "FeatureCollection", features: geoJSON.features.filter((item, id) => id !== featuresIdx) })
     }
   }
 
   return (
-    <GeoJSONContext.Provider value={{ key, geoJSON, setGeoJSON, updateGeoJSON }}>
+    <GeoJSONContext.Provider value={{ mapKey, geoJSON, setGeoJSON, updateGeoJSON }}>
       {props.children}
     </GeoJSONContext.Provider>
   )
