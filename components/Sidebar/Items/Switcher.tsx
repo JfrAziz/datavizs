@@ -1,5 +1,5 @@
 import { Switch, SwitchProps } from "@mantine/core";
-import useStyles from "../Sidebar/Sidebar.styles";
+import useStyles from "./Sidebar.styles";
 
 interface SwitcherProps extends SwitchProps { }
 

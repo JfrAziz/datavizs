@@ -1,6 +1,6 @@
 import { useMantineColorScheme } from "@mantine/core";
-import { ListItem } from "../Sidebar/ListItem";
-import { Switcher } from "../Sidebar/Switcher";
+import { ListItem } from "../Items/ListItem";
+import { Switcher } from "../Items/Switcher";
 
 export function DarkMode() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();

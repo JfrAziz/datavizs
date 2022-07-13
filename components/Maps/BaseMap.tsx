@@ -1,23 +1,13 @@
-import { useId } from "@mantine/hooks";
 import { useContext } from "react";
+import { useId } from "@mantine/hooks";
 import { TileLayer } from "react-leaflet";
 import { BaseMapContext } from "../Context/BaseMapContext";
 
-const BaseMap = () => {
+export const BaseMap = () => {
   const { baseMap } = useContext(BaseMapContext)
-  return (
-    <>
-      {
-        baseMap?.attribution && (
-          <TileLayer
-            key={useId(baseMap.name)}
-            attribution={baseMap.attribution}
-            url={baseMap.baseMap}
-          />
-        )
-      }
-    </>
-  );
-};
+  const uuid = useId(baseMap?.name);
 
-export default BaseMap;
+  if (!baseMap?.attribution) return null;
+
+  return <TileLayer key={uuid} attribution={baseMap.attribution} url={baseMap.baseMap} />
+};
