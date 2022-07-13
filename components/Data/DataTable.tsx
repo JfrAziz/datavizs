@@ -1,12 +1,13 @@
 import { useContext } from "react"
-import { Group, ScrollArea, Table } from '@mantine/core';
-import { FeatureCollection } from "geojson"
+import { ScrollArea, Table } from '@mantine/core';
 import { GeoJSONContext } from "../Context/GeoJSONContext"
 
 export const DataTable = () => {
   const { geoJSON } = useContext(GeoJSONContext)
 
-  const features = (geoJSON as FeatureCollection)?.features
+  console.log("table rerender")
+
+  const features = geoJSON?.features
 
   if (!features) return null;
 
@@ -14,6 +15,7 @@ export const DataTable = () => {
 
   const rows = features.map((element, id) => (
     <tr key={id}>
+      <td>{id + 1}</td>
       {keys && keys.map(key => <td key={`${id}_${key}`}>{element?.properties?.[key]}</td>)}
     </tr>
   ));
@@ -23,6 +25,7 @@ export const DataTable = () => {
       <Table>
         <thead>
           <tr>
+            <th>No.</th>
             {keys && keys.map(key => <th key={key}>{key}</th>)}
           </tr>
         </thead>

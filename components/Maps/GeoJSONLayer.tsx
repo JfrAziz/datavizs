@@ -23,12 +23,16 @@ const colors = [
   '#f6081b'
 ]
 
+
 export const GeoJSONLayer = () => {
   const map = useMap()
   const geojsonRef = useRef<L.GeoJSON>(null)
   const { geoJSON, key } = useContext(GeoJSONContext)
 
+  console.log("element mount")
+
   useEffect(() => {
+    console.log("effect geoJSON")
     geoJSON && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
   }, [geoJSON])
 
@@ -51,10 +55,7 @@ export const GeoJSONLayer = () => {
         layer.openPopup()
       }
     });
-    layer.on('mouseout', function () {
-      layer.closePopup();
-      console.log("closed")
-    });
+    layer.on('mouseout', () => layer.closePopup());
   }
 
   return geoJSON && <GeoJSON key={key} ref={geojsonRef} data={geoJSON} style={style} onEachFeature={onEachFeature} />

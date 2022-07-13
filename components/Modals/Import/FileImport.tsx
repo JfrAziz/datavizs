@@ -42,7 +42,7 @@ export function FileImport({ callback }: { callback: () => void }) {
   const { setGeoJSON } = useContext(GeoJSONContext)
 
   const processFile = async (files: File[]) => {
-    setGeoJSON(await files[0].text(), files[0].size.toString())
+    setGeoJSON(await files[0].text())
     callback()
   }
 
