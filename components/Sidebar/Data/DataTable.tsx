@@ -1,7 +1,6 @@
 import { FC } from "react"
+import { useGeoJSONStore } from "@store/geoJSONStore";
 import { Button, ScrollArea, Table } from '@mantine/core';
-import { useGeoJSONStore } from "lib/store/geoJSONStore";
-
 
 const Row: FC<{ keys: string[] | null, properties: any }> = ({ keys, properties }) => (
   <tr key={properties?.uuid}>

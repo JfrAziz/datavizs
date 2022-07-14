@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import type { NextPage } from 'next'
 import { createStyles } from '@mantine/core';
 import { Sidebar } from '@components/Sidebar';
-import AppProvider from '@provider/AppProvider';
+import { MantineProvider } from '@components/Provider/MantineProvider';
 
 const MapWithNoSSR = dynamic(() => import("@components/Maps"), { ssr: false });
 
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
       <Head>
         <title>App Title</title>
       </Head>
-      <AppProvider>
+      <MantineProvider>
         <div className={classes.container}>
           <div className={classes.map_container}>
             <MapWithNoSSR />
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             <Sidebar />
           </div>
         </div>
-      </AppProvider>
+      </MantineProvider>
     </>
   )
 }

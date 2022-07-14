@@ -1,5 +1,5 @@
-import create from 'zustand'
 import { v4 } from 'uuid';
+import create from 'zustand'
 import { FeatureCollection } from "geojson";
 
 interface GeoJSONState {

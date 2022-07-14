@@ -1,6 +1,6 @@
 import { CloudUpload } from 'tabler-icons-react';
+import { useGeoJSONStore } from '@store/geoJSONStore';
 import { showNotification } from '@mantine/notifications';
-import { useGeoJSONStore } from 'lib/store/geoJSONStore';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { Text, Group, useMantineTheme } from '@mantine/core';
 

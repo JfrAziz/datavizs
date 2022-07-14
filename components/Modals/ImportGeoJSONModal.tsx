@@ -1,6 +1,6 @@
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
-import { useGeoJSONStore } from 'lib/store/geoJSONStore';
+import { useGeoJSONStore } from '@store/geoJSONStore';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
 import { GeoJSONFileImport } from '@components/Import/GeoJSONFileImport';
 

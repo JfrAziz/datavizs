@@ -2,7 +2,7 @@ import { GeoJSON } from "./GeoJSON";
 import { LatLngBounds } from "leaflet";
 import { useMap, FeatureGroup } from "react-leaflet";
 import { useEffect, useRef } from "react";
-import { useGeoJSONStore } from "lib/store/geoJSONStore";
+import { useGeoJSONStore } from "@store/geoJSONStore";
 
 export const GeoJSONLayer = () => {
   const map = useMap()
