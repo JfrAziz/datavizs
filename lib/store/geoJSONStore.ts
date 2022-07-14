@@ -1,41 +1,48 @@
 import { v4 } from 'uuid';
 import create from 'zustand'
 import { FeatureCollection } from "geojson";
+import { validateFC, configureFCProperties } from '@utils/featureCollection';
 
 interface GeoJSONState {
   mapKey: string | null;
   geoJSON: FeatureCollection | null;
-  importGeoJSON: (value: string) => void;
-  deleteGeoJSONFirtsIndex: () => void;
+  importGeoJSON: (jsonString: string) => void;
+  updateFeatureByUUID: (uuid: string, properties: any) => void;
+  deleteFeaturebyUUID: (uuid: string) => void;
+  updateFeatureColor: (uuid: string, color: string) => void;
 }
 
 export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
   mapKey: null,
   geoJSON: null,
-  importGeoJSON: (value: string) => {
-    const json = JSON.parse(value) as unknown as FeatureCollection
+  importGeoJSON: (jsonString: string) => {
+    let json = validateFC(JSON.parse(jsonString) as unknown as FeatureCollection)
 
-    if (!(json?.type === 'FeatureCollection')) throw new Error("GeoJSON Not Valid");
-
-    if (!(json?.features)) throw new Error("GeoJSON has emtpy value");
-
-    // add a uuid foreach features properties
-    json.features.forEach((item, idx) => {
-      if (!json.features[idx].properties) {
-        Object.assign(json.features[idx], { properties: {} })
-      }
-
-      if (!json.features[idx].properties?.uuid) {
-        Object.assign(json.features[idx].properties as {}, { uuid: v4() })
-      }
-    });
-
-    set(state => ({ mapKey: v4(), geoJSON: json }))
+    set(state => ({ mapKey: v4(), geoJSON: configureFCProperties(json) }))
   },
-  deleteGeoJSONFirtsIndex: () => {
+  deleteFeaturebyUUID: (uuid: string) => {
     const geoJSON = get().geoJSON
-    if (geoJSON) {
-      set((state) => ({ geoJSON: { type: "FeatureCollection", features: geoJSON.features.filter((item, id) => id !== 1) } }))
-    }
+
+    geoJSON && set((state) => {
+
+      if (geoJSON?.features.length === 1) return { mapKey: null, geoJSON: null }
+
+      return ({ geoJSON: { ...geoJSON, features: geoJSON.features.filter((item) => item?.properties?.uuid !== uuid) } })
+    })
+  },
+  updateFeatureByUUID: (uuid: string, properties: any) => {
+    const geoJSON = get().geoJSON
+    geoJSON && set((state) => ({
+      geoJSON: {
+        ...geoJSON, features: geoJSON.features.map((item) => {
+          if (item?.properties?.uuid !== uuid) return item
+          return { ...item, properties: properties }
+        })
+      }
+    }))
+  },
+  updateFeatureColor: (uuid: string, color: string) => {
+    console.log(color)
+    console.log("not implemented")
   }
 }))

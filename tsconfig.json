@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@store/*": ["lib/store/*"],
+      "@utils/*": ["lib/utils/*"],
       "@styles/*": ["styles/*"],
       "@config/*": ["config/*"],
       "@components/*": ["components/*"],

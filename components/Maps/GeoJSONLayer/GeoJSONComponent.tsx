@@ -36,7 +36,7 @@ const createStyles: StyleFunction = () => {
 }
 
 const createGeoJSON = (props: GeoJSONProps, context: LeafletContextInterface) => {
-  const geoJSONObject = geoJSON(props.data, { style: createStyles() })
+  const geoJSONObject = geoJSON(props.data, { style: createStyles(), })
   return createElementObject(geoJSONObject, extendContext(context, { overlayContainer: geoJSONObject }))
 }
 
