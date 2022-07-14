@@ -24,7 +24,8 @@
     "react-dom": "18.2.0",
     "react-leaflet": "^4.0.1",
     "tabler-icons-react": "^1.52.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.2.2",

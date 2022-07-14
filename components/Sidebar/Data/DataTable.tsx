@@ -1,6 +1,6 @@
-import { FC, useContext } from "react"
+import { FC } from "react"
 import { Button, ScrollArea, Table } from '@mantine/core';
-import { GeoJSONContext } from "@context/GeoJSONContext"
+import { useGeoJSONStore } from "lib/store/geoJSONStore";
 
 
 const Row: FC<{ keys: string[] | null, properties: any }> = ({ keys, properties }) => (
@@ -10,13 +10,14 @@ const Row: FC<{ keys: string[] | null, properties: any }> = ({ keys, properties 
 )
 
 export const DataTable = () => {
-  const { geoJSON, mapKey, deleteGeoJSONFirtsIndex } = useContext(GeoJSONContext)
+  const mapKey = useGeoJSONStore(state => state.mapKey)
+  const geoJSON = useGeoJSONStore(state => state.geoJSON)
+  const deleteGeoJSONFirtsIndex = useGeoJSONStore(state => state.deleteGeoJSONFirtsIndex)
 
   const features = geoJSON?.features
 
   if (!features) return null;
 
-  // get all properties key to show on table, except uuid
   const keys = features[0].properties && Object.keys(features[0].properties).filter(item => item !== "uuid")
 
   return (

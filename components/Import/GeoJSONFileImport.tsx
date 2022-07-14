@@ -1,7 +1,6 @@
-import { useContext } from 'react';
 import { CloudUpload } from 'tabler-icons-react';
-import { GeoJSONContext } from '@context/GeoJSONContext';
 import { showNotification } from '@mantine/notifications';
+import { useGeoJSONStore } from 'lib/store/geoJSONStore';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { Text, Group, useMantineTheme } from '@mantine/core';
 
@@ -39,7 +38,7 @@ const DropzoneChildren = (status: DropzoneStatus) => {
 }
 
 export function GeoJSONFileImport({ callback }: { callback: () => void }) {
-  const { setGeoJSON } = useContext(GeoJSONContext)
+  const importGeoJSON = useGeoJSONStore((state) => state.importGeoJSON)
 
   const showFailedImportNotifications = () => showNotification({
     title: "Error Imported File",
@@ -49,7 +48,8 @@ export function GeoJSONFileImport({ callback }: { callback: () => void }) {
 
   const processFile = async (files: File[]) => {
     try {
-      setGeoJSON(await files[0].text())
+      // setGeoJSON(await files[0].text())
+      importGeoJSON(await files[0].text())
     } catch (error) {
       showFailedImportNotifications()
     } finally {
