@@ -1,5 +1,5 @@
-import { ListItem } from "../Items/ListItem";
-import { ImportGeoJSONBtn } from "../../Modals/ImportModal";
+import { ListItem } from "@components/Sidebar/Common/ListItem";
+import { ImportGeoJSONBtn } from "@components/Modals/ImportGeoJSONModal";
 
 export function ImportOptions() {
   return (

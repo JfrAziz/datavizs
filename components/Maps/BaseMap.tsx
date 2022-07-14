@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useId } from "@mantine/hooks";
 import { TileLayer } from "react-leaflet";
-import { BaseMapContext } from "../Context/BaseMapContext";
+import { BaseMapContext } from "@context/BaseMapContext";
 
 export const BaseMap = () => {
   const { baseMap } = useContext(BaseMapContext)

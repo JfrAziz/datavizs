@@ -1,4 +1,4 @@
-import { Divider } from "../Items/Divider";
+import { Divider } from "@components/Sidebar/Common/Divider";
 import { BaseMapsOptions } from "./BaseMapsOptions";
 import { MapsControlOptions } from "./MapsControlOptions";
 

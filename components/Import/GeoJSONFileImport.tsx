@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { CloudUpload } from 'tabler-icons-react';
+import { GeoJSONContext } from '@context/GeoJSONContext';
 import { showNotification } from '@mantine/notifications';
-import { GeoJSONContext } from '../Context/GeoJSONContext';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
-import { Text, Group, useMantineTheme, MantineTheme } from '@mantine/core';
+import { Text, Group, useMantineTheme } from '@mantine/core';
 
 
 const DropzoneChildren = (status: DropzoneStatus) => {
@@ -38,7 +38,7 @@ const DropzoneChildren = (status: DropzoneStatus) => {
   );
 }
 
-export function FileImport({ callback }: { callback: () => void }) {
+export function GeoJSONFileImport({ callback }: { callback: () => void }) {
   const { setGeoJSON } = useContext(GeoJSONContext)
 
   const showFailedImportNotifications = () => showNotification({

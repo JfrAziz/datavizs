@@ -1,10 +1,9 @@
 import { useContext } from 'react';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
-import { GeoJSONFileImport } from '@components/Import/GeoJSONFileImport';
 import { GeoJSONContext } from '@context/GeoJSONContext';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
-
+import { GeoJSONFileImport } from '@components/Import/GeoJSONFileImport';
 
 const ImportModalBody: React.FC<{ modals : ModalsContextProps }> = ({ modals }) => <GeoJSONFileImport callback={() => modals.closeAll()} />
 
@@ -14,7 +13,7 @@ export function ImportGeoJSONBtn() {
 
   const openContextModal = () => {
     const openImportGeoJSONModal = () => modals.openModal({
-      title: 'Subscribe to newsletter',
+      title: 'Import GeoJSON',
       size: 'xl',
       centered: true,
       onClose: () => modals.closeAll(),
@@ -29,7 +28,7 @@ export function ImportGeoJSONBtn() {
       closeOnCancel: true,
       centered: true,
       labels: { confirm: 'Continue', cancel: 'Cancel' },
-      children: <Text size="sm">This will reset current GeoJSON data</Text>,
+      children: <Text size="sm">This will reset current GeoJSON</Text>,
       onConfirm: openImportGeoJSONModal,
     });
   }

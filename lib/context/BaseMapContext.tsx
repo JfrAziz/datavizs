@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import { BaseMap, baseMaps } from "../../config/baseMaps";
+import { createContext, useState } from "react";
+import { BaseMap, baseMaps } from "@config/baseMaps";
 
 interface BaseMapContextValue {
   baseMap: BaseMap | null;

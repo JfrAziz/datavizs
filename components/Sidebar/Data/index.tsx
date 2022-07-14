@@ -1,4 +1,4 @@
-import { Divider } from "../Items/Divider";
+import { Divider } from "@components/Sidebar/Common/Divider";
 import { DataTable } from "./DataTable";
 import { ImportOptions } from "./ImportOptions";
 

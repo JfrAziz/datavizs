@@ -1,20 +1,8 @@
-import { GeoJSON } from './GeoJSON';
+import { GeoJSON } from "./GeoJSON";
 import { LatLngBounds } from "leaflet";
-import { Feature } from "geojson"
-import { GeoJSONPopup } from './GeoJSONPopup';
-import { FC, useContext, useEffect, useRef } from "react";
-import { useMap, FeatureGroup, Popup } from "react-leaflet";
-import { GeoJSONContext } from "../../Context/GeoJSONContext";
-
-const GeoJSONWithPopup: FC<{ feature: Feature }> = ({ feature }) => {
-  return (
-    <GeoJSON data={feature}>
-      <Popup minWidth={100} closeButton={false}>
-        <GeoJSONPopup properties={feature.properties}></GeoJSONPopup>
-      </Popup>
-    </GeoJSON>
-  )
-}
+import { useMap, FeatureGroup } from "react-leaflet";
+import { useContext, useEffect, useRef } from "react";
+import { GeoJSONContext } from "@context/GeoJSONContext";
 
 export const GeoJSONLayer = () => {
   const map = useMap()
@@ -27,7 +15,7 @@ export const GeoJSONLayer = () => {
 
   return geoJSON && geoJSON.features && (
     <FeatureGroup ref={geojsonRef} key={mapKey}>
-      {geoJSON.features.map((item) => <GeoJSONWithPopup key={item.properties?.uuid} feature={item} />)}
+      {geoJSON.features.map((item) => <GeoJSON key={item.properties?.uuid} feature={item} />)}
     </FeatureGroup>
   )
 };

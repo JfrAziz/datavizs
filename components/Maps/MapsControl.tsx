@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ScaleControl, ZoomControl } from "react-leaflet";
-import { MapSettingsContext } from "../Context/MapSettingsContext";
+import { MapSettingsContext } from "@context/MapSettingsContext";
 
 export const MapControl = () => {
   const { showControl } = useContext(MapSettingsContext)

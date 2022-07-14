@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { Select } from "@mantine/core";
-import { ListItem } from "../Items/ListItem";
-import { baseMaps } from "../../../config/baseMaps";
-import { BaseMapContext } from "../../Context/BaseMapContext";
+import { ListItem } from "../Common/ListItem";
+import { baseMaps } from "@config/baseMaps";
+import { BaseMapContext } from "@context/BaseMapContext";
 
 export function BaseMapsOptions() {
   const { baseMap, setBaseMap } = useContext(BaseMapContext)
