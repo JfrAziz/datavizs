@@ -6,12 +6,14 @@ interface geoJSONDataContextValue {
   mapKey: string | null;
   geoJSON: FeatureCollection | null;
   setGeoJSON: (value: string) => void;
+  deleteGeoJSONFirtsIndex: () => void;
 }
 
 const geoJSONDataInitialState: geoJSONDataContextValue = {
   mapKey: null,
   geoJSON: null,
   setGeoJSON: (value: string) => { },
+  deleteGeoJSONFirtsIndex: () => {}
 }
 
 export const GeoJSONContext = createContext<geoJSONDataContextValue>(geoJSONDataInitialState)
@@ -42,8 +44,14 @@ export function GeoJSONProvider(props: React.PropsWithChildren) {
     setData(json)
   }
 
+  const deleteGeoJSONFirtsIndex = () => {
+    if (geoJSON) {
+      setData({ type: "FeatureCollection", features: geoJSON.features.filter((item, id) => id !== 1) })
+    }
+  }
+
   return (
-    <GeoJSONContext.Provider value={{ mapKey, geoJSON, setGeoJSON }}>
+    <GeoJSONContext.Provider value={{ mapKey, geoJSON, setGeoJSON, deleteGeoJSONFirtsIndex }}>
       {props.children}
     </GeoJSONContext.Provider>
   )

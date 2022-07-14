@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { ScrollArea, Table } from '@mantine/core';
+import { Button, ScrollArea, Table } from '@mantine/core';
 import { GeoJSONContext } from "../../Context/GeoJSONContext"
 import { Feature } from "geojson";
 
@@ -24,7 +24,7 @@ const DataTableRow = ({ keys, features }: DataTableRowProps) => {
 }
 
 export const DataTable = () => {
-  const { geoJSON, mapKey } = useContext(GeoJSONContext)
+  const { geoJSON, mapKey, deleteGeoJSONFirtsIndex } = useContext(GeoJSONContext)
 
   const features = geoJSON?.features
 
@@ -34,18 +34,23 @@ export const DataTable = () => {
   const keys = features[0].properties && Object.keys(features[0].properties).filter(item => item !== "uuid")
 
   return (
-    <ScrollArea key={mapKey}>
-      <Table>
-        <thead>
-          <tr>
-            <th>No.</th>
-            {keys && keys.map(key => <th key={key}>{key}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          <DataTableRow keys={keys} features={features} />
-        </tbody>
-      </Table>
-    </ScrollArea>
+    <>
+      <Button onClick={() => deleteGeoJSONFirtsIndex()}>
+        Delete
+      </Button>
+      <ScrollArea key={mapKey}>
+        <Table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              {keys && keys.map(key => <th key={key}>{key}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            <DataTableRow keys={keys} features={features} />
+          </tbody>
+        </Table>
+      </ScrollArea>
+    </>
   )
 }
