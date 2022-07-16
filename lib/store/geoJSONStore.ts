@@ -14,7 +14,7 @@ interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
 
   deleteFeaturebyUUID: (uuid: string) => void;
 
-  updateFeatureColor: (uuid: string, color: string) => void;
+  deleteFeaturebyUUIDs: (uuids: string[]) => void;
 }
 
 export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
@@ -34,15 +34,18 @@ export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
     return { features: state.features.filter(item => item.properties.uuid !== uuid) }
   }),
 
+  deleteFeaturebyUUIDs: (uuids: string[]) => set((state) => {
+    const features = state.features.filter(item => !uuids.includes(item.properties.uuid))
+
+    if (!features.length) return { mapKey: null, features: [] }
+
+    return { features: features }
+  }),
+
   updateFeatureByUUID: (uuid: string, properties: FeatureProperties) => set((state) => ({
     features: state.features.map((item) => {
       if (item.properties.uuid !== uuid) return item
       return { ...item, properties: properties }
     })
   })),
-
-  updateFeatureColor: (uuid: string, color: string) => {
-    // console.log("color", uuid)
-    console.log("color")
-  },
 }))

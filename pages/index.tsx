@@ -44,6 +44,9 @@ const Home: NextPage = () => {
       <Head>
         <title>App Title</title>
       </Head>
+      {/* <MantineProvider>
+        <Sidebar />
+      </MantineProvider> */}
       <MantineProvider>
         <div className={classes.container}>
           <div className={classes.map_container}>

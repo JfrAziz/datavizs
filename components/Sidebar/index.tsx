@@ -12,11 +12,6 @@ const useStyles = createStyles((theme) => {
       display: 'flex',
       flexDirection: 'column'
     },
-    scroll_viewport: {
-      '> div': {
-        display: 'block !important'
-      }
-    }
   };
 });
 
@@ -26,9 +21,7 @@ export const Sidebar = () => {
   return (
     <Tabs classNames={{ body: classes.tab_body }}>
       <Tabs.Tab label="Data" icon={<Table size={14} />}>
-        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={200} classNames={{ viewport: classes.scroll_viewport }} scrollbarSize={5} >
-          <Data />
-        </ScrollArea>
+        <Data />
       </Tabs.Tab>
       <Tabs.Tab label="Options" icon={<Adjustments size={14} />}>
         <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={200} scrollbarSize={5} >
