@@ -1,6 +1,8 @@
 import { v4 } from "uuid";
 import { Feature, FeatureCollection, Geometry } from "geojson";
 
+const DEFAULT_COLOR = "#aaaaaa";
+
 /* 
 |
 | Extended Feature Collection with custom properties. Every features has uuid 
@@ -8,7 +10,8 @@ import { Feature, FeatureCollection, Geometry } from "geojson";
 |
 */
 export interface FeatureProperties {
-  uuid: string
+  uuid: string;
+  color: string;
   [name: string]: any;
 }
 
@@ -49,6 +52,8 @@ export const configureFCProperties = (json: GeoJSONExtended): GeoJSONExtended =>
     if (!json.features[idx].properties?.uuid) {
       Object.assign(json.features[idx].properties, { uuid: v4() })
     }
+
+    Object.assign(json.features[idx].properties, { color: DEFAULT_COLOR })
   });
 
   return json;
