@@ -1,9 +1,9 @@
 import { useId } from "@mantine/hooks";
 import { TileLayer } from "react-leaflet";
-import { useBaseMapStore } from "@store/baseMapStore";
+import { useMapSettingsStore } from "@store/mapSettingsStore";
 
 export const BaseMap = () => {
-  const baseMap = useBaseMapStore(state => state.baseMap)
+  const baseMap = useMapSettingsStore(state => state.baseMap)
   const uuid = useId(baseMap?.name);
 
   if (!baseMap?.attribution) return null;
