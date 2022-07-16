@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { ScaleControl, ZoomControl } from "react-leaflet";
-import { MapSettingsContext } from "../Context/MapSettingsContext";
+import { useMapSettingsStore } from "@store/mapSettingsStore";
 
 export const MapControl = () => {
-  const { showControl } = useContext(MapSettingsContext)
+  const showControl = useMapSettingsStore(state => state.showControl)
 
   if (!showControl) return null;
 

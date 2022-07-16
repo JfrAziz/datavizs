@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ModalsProvider } from '@mantine/modals';
-import { ColorScheme, ColorSchemeProvider, MantineProvider as MantineRootProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications';
+import { ColorScheme, ColorSchemeProvider, MantineProvider as MantineRootProvider } from '@mantine/core'
 
 export const MantineProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');

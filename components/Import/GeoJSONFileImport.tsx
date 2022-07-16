@@ -1,28 +1,27 @@
-import { useContext } from 'react';
 import { CloudUpload } from 'tabler-icons-react';
+import { useGeoJSONStore } from '@store/geoJSONStore';
 import { showNotification } from '@mantine/notifications';
-import { GeoJSONContext } from '../Context/GeoJSONContext';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
-import { Text, Group, useMantineTheme, MantineTheme } from '@mantine/core';
+import { Text, Group, useMantineTheme } from '@mantine/core';
 
-const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
-  return status.accepted
-    ? theme.colors[theme.primaryColor][6]
-    : status.rejected
-      ? theme.colors.red[6]
-      : theme.colorScheme === 'dark'
-        ? theme.colors.dark[0]
-        : theme.colors.gray[7];
-}
 
 const DropzoneChildren = (status: DropzoneStatus) => {
   const theme = useMantineTheme();
+  const getActiveColor = () => {
+    return status.accepted
+      ? theme.colors[theme.primaryColor][6]
+      : status.rejected
+        ? theme.colors.red[6]
+        : theme.colorScheme === 'dark'
+          ? theme.colors.dark[0]
+          : theme.colors.gray[7];
+  }
   return (
     <div style={{ pointerEvents: 'none' }}>
       <Group position="center">
-        <CloudUpload size={50} color={getActiveColor(status, theme)} />
+        <CloudUpload size={50} color={getActiveColor()} />
       </Group>
-      <Text align="center" mt="xl" sx={{ color: getActiveColor(status, theme) }}>
+      <Text align="center" mt="xl" sx={{ color: getActiveColor() }}>
         {
           status.accepted
             ? 'Drop a file here'
@@ -38,20 +37,19 @@ const DropzoneChildren = (status: DropzoneStatus) => {
   );
 }
 
-export function FileImport({ callback }: { callback: () => void }) {
-  const { setGeoJSON } = useContext(GeoJSONContext)
+export function GeoJSONFileImport({ callback }: { callback: () => void }) {
+  const importGeoJSON = useGeoJSONStore.getState().importGeoJSON
 
-  const showFailedImportNotifications = () => {
-    showNotification({
-      title: "Error Imported File",
-      message: "Please import valid GeoJSON Collection files",
-      color: "red"
-    })
-  }
+  const showFailedImportNotifications = () => showNotification({
+    title: "Error Imported File",
+    message: "Please import valid GeoJSON Collection files",
+    color: "red"
+  })
 
   const processFile = async (files: File[]) => {
     try {
-      setGeoJSON(await files[0].text())
+      // setGeoJSON(await files[0].text())
+      importGeoJSON(await files[0].text())
     } catch (error) {
       showFailedImportNotifications()
     } finally {
@@ -65,11 +63,11 @@ export function FileImport({ callback }: { callback: () => void }) {
       maxSize={10 * 1024 ** 2}
       onDrop={processFile}
       onReject={showFailedImportNotifications}
+      accept={["application/geo+json"]}
       style={{
         borderWidth: 1,
         paddingBottom: 50
       }}
-      accept={["application/geo+json"]}
     >
       {(status) => DropzoneChildren(status)}
     </Dropzone>
