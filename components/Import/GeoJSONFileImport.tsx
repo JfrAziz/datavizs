@@ -38,7 +38,7 @@ const DropzoneChildren = (status: DropzoneStatus) => {
 }
 
 export function GeoJSONFileImport({ callback }: { callback: () => void }) {
-  const importGeoJSON = useGeoJSONStore((state) => state.importGeoJSON)
+  const importGeoJSON = useGeoJSONStore.getState().importGeoJSON
 
   const showFailedImportNotifications = () => showNotification({
     title: "Error Imported File",

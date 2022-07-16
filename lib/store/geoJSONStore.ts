@@ -10,7 +10,11 @@ interface GeoJSONState {
   updateFeatureByUUID: (uuid: string, properties: any) => void;
   deleteFeaturebyUUID: (uuid: string) => void;
   updateFeatureColor: (uuid: string, color: string) => void;
+  anotherFunction: (uuid: string, color: string) => void;
 }
+
+let updated = 0;
+let updated2 = 0;
 
 export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
   mapKey: null,
@@ -31,18 +35,29 @@ export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
     })
   },
   updateFeatureByUUID: (uuid: string, properties: any) => {
-    const geoJSON = get().geoJSON
-    geoJSON && set((state) => ({
-      geoJSON: {
+    // console.log(uuid)
+
+    console.log("update", updated2)
+    updated2++
+    let geoJSON = get().geoJSON
+    if (geoJSON) {
+      geoJSON = {
         ...geoJSON, features: geoJSON.features.map((item) => {
           if (item?.properties?.uuid !== uuid) return item
           return { ...item, properties: properties }
         })
       }
-    }))
+      set({ geoJSON: geoJSON })
+    }
   },
   updateFeatureColor: (uuid: string, color: string) => {
-    console.log(color)
-    console.log("not implemented")
+    // console.log("color", uuid)
+    console.log("color", updated)
+    updated++
+  },
+  anotherFunction: (uuid: string, color: string) => {
+    // console.log("color", uuid)
+    console.log("color", updated)
+    updated++
   }
 }))
