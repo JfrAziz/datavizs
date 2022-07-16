@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import create from 'zustand'
+import { omit } from '@utils/omit';
 import { validateFC, configureFCProperties, GeoJSONExtended, FeatureProperties } from '@utils/featureCollection';
 
 interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
@@ -12,9 +13,9 @@ interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
 
   updateFeatureByUUID: (uuid: string, properties: FeatureProperties) => void;
 
-  deleteFeaturebyUUID: (uuid: string) => void;
-
   deleteFeaturebyUUIDs: (uuids: string[]) => void;
+
+  deletePropertiesKey: (propertiesName: string) => void;
 }
 
 export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
@@ -27,12 +28,6 @@ export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
 
     set(({ mapKey: v4(), features: configureFCProperties(json).features }))
   },
-
-  deleteFeaturebyUUID: (uuid: string) => set((state) => {
-    if (state.features.length === 1) return { mapKey: null, features: [] }
-
-    return { features: state.features.filter(item => item.properties.uuid !== uuid) }
-  }),
 
   deleteFeaturebyUUIDs: (uuids: string[]) => set((state) => {
     const features = state.features.filter(item => !uuids.includes(item.properties.uuid))
@@ -48,4 +43,8 @@ export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
       return { ...item, properties: properties }
     })
   })),
+
+  deletePropertiesKey: (propertiesName: string) => set((state) => ({
+    features: state.features.map((item) => ({ ...item, properties: omit(item.properties, propertiesName) }))
+  }))
 }))
