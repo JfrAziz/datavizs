@@ -1,22 +1,22 @@
 import { GeoJSON } from "./GeoJSON";
 import { LatLngBounds } from "leaflet";
-import { useMap, FeatureGroup } from "react-leaflet";
 import { useEffect, useRef } from "react";
+import { useMap, FeatureGroup } from "react-leaflet";
 import { useGeoJSONStore } from "@store/geoJSONStore";
 
 export const GeoJSONLayer = () => {
   const map = useMap()
   const geojsonRef = useRef<L.FeatureGroup>(null)
   const mapKey = useGeoJSONStore(state => state.mapKey)
-  const geoJSON = useGeoJSONStore(state => state.geoJSON)
+  const features = useGeoJSONStore(state => state.features)
 
   useEffect(() => {
-    geoJSON && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
-  }, [geoJSON, map])
+    features.length && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
+  }, [features, map])
 
-  return geoJSON && geoJSON.features && (
+  return features && (
     <FeatureGroup ref={geojsonRef} key={mapKey}>
-      {geoJSON.features.map((item) => <GeoJSON key={item.properties?.uuid} feature={item} />)}
+      {features.map((item) => <GeoJSON key={item.properties.uuid} feature={item} />)}
     </FeatureGroup>
   )
 };

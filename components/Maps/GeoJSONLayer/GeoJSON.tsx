@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { Feature } from 'geojson';
 import { Popup } from "react-leaflet";
 import { GeoJSONPopup } from "./GeoJSONPopup";
 import { GeoJSONComponent } from "./GeoJSONComponent";
+import { FeatureExtended } from "@utils/featureCollection";
 
-export const GeoJSON: FC<{ feature: Feature }> = ({ feature }) => (
+export const GeoJSON: FC<{ feature: FeatureExtended }> = ({ feature }) => (
   <GeoJSONComponent data={feature}>
     <Popup minWidth={100} closeButton={false}>
       <GeoJSONPopup properties={feature.properties} />

@@ -1,9 +1,9 @@
-import { Feature } from 'geojson';
-import { geoJSON, FeatureGroup as FeatureGroupLeaflet, StyleFunction } from "leaflet";
+import { FeatureExtended } from '@utils/featureCollection';
+import { geoJSON, FeatureGroup, StyleFunction } from "leaflet";
 import { createElementObject, createPathComponent, LeafletContextInterface, PathProps, extendContext } from '@react-leaflet/core'
 
 interface GeoJSONProps extends PathProps, React.PropsWithChildren {
-  data: Feature;
+  data: FeatureExtended;
 }
 
 const createStyles: StyleFunction = () => {
@@ -40,8 +40,8 @@ const createGeoJSON = (props: GeoJSONProps, context: LeafletContextInterface) =>
   return createElementObject(geoJSONObject, extendContext(context, { overlayContainer: geoJSONObject }))
 }
 
-const updateGeoJSON = (instance: FeatureGroupLeaflet, props: GeoJSONProps, prevProps: GeoJSONProps) => {
-  if (props.data?.properties !== prevProps.data?.properties) {
+const updateGeoJSON = (instance: FeatureGroup, props: GeoJSONProps, prevProps: GeoJSONProps) => {
+  if (props.data.properties !== prevProps.data.properties) {
     instance.setStyle(createStyles())
   }
 }

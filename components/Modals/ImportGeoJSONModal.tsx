@@ -10,8 +10,6 @@ export function ImportGeoJSONBtn() {
   const modals = useModals();
   const mapKey = useGeoJSONStore.getState().mapKey
 
-  console.log("rerended")
-
   const openContextModal = () => {
     const openImportGeoJSONModal = () => modals.openModal({
       title: 'Import GeoJSON',
