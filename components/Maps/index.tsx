@@ -3,6 +3,7 @@ import { BaseMap } from "./BaseMap";
 import { MapControl } from "./MapsControl";
 import { MapContainer } from "react-leaflet";
 import { GeoJSONLayer } from "./GeoJSONLayer";
+import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
 
 
 const Map = () => {
@@ -13,9 +14,9 @@ const Map = () => {
       zoomControl={false}
       scrollWheelZoom={true}
       attributionControl={false}
-      style={{ height: "100%", width: "100%", zIndex: 0, backgroundColor: "var(--leaflet-custom-bg-color)" }}
+      style={{ height: "100%", width: "100%", zIndex: 0, backgroundColor: `var(${LEAFLET_CUSTOM_COLOR_VAR})` }}
     >
-      <MapControl />
+      {/* <MapControl /> */}
       <BaseMap />
       <GeoJSONLayer />
     </MapContainer>

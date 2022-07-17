@@ -1,7 +1,7 @@
 import create from 'zustand'
 import { BaseMap, baseMaps } from "@config/baseMaps";
 
-interface MapSettingsContextValue {
+interface MapSettingsState {
   showControl: boolean;
 
   baseMap: BaseMap | null;
@@ -11,7 +11,7 @@ interface MapSettingsContextValue {
   toggleControl: () => void;
 }
 
-export const useMapSettingsStore = create<MapSettingsContextValue>()((set, get) => ({
+export const useMapSettingsStore = create<MapSettingsState>()((set, get) => ({
   showControl: true,
 
   baseMap: baseMaps[0],

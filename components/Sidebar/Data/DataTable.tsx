@@ -47,6 +47,7 @@ const getTheme = (theme: MantineTheme) => {
 const DataTable = () => {
   const theme = useMantineTheme()
   const features = useGeoJSONStore(state => state.features)
+  const columnNames = useGeoJSONStore(state => state.propertiesKeys)
   const deletePropertiesKey = useGeoJSONStore.getState().deletePropertiesKey
   const updateFeatureByUUID = useGeoJSONStore.getState().updateFeatureByUUID
   const deleteFeaturebyUUIDs = useGeoJSONStore.getState().deleteFeaturebyUUIDs
@@ -54,7 +55,6 @@ const DataTable = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [gridSelection, setGridSelection] = useState<GridSelection | undefined>(undefined)
 
-  const columnNames = Object.keys(features[0].properties).filter(key => key !== "uuid")
   const columns: GridColumn[] = columnNames.map((keyName) => ({ title: keyName, id: keyName }))
 
   /* 
@@ -193,7 +193,8 @@ const DataTable = () => {
           keybindings={{ search: true }}
         />
         <div id="portal" style={{ position: "fixed", left: 0, right: 0, top: 0, zIndex: 9999 }} />
-      </ThemeProvider></>
+      </ThemeProvider>
+    </>
   )
 }
 

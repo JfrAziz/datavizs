@@ -2,15 +2,15 @@ import { useState } from "react";
 import { baseMaps } from "@config/baseMaps";
 import { ListItem } from "../Common/ListItem";
 import { ColorInput, Select } from "@mantine/core";
+import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
 import { useMapSettingsStore } from "@store/mapSettingsStore";
 
-const leafletBaseColor = "--leaflet-custom-bg-color"
 
 export function BaseMapsOptions() {
   const baseMap = useMapSettingsStore(state => state.baseMap)
   const setBaseMap = useMapSettingsStore(state => state.setBaseMap)
 
-  const [color, setColor] = useState(getComputedStyle(document.documentElement).getPropertyValue(leafletBaseColor))
+  const [color, setColor] = useState(getComputedStyle(document.documentElement).getPropertyValue(LEAFLET_CUSTOM_COLOR_VAR))
 
   const selectBaseMap = (value: string) => {
     const selectedBaseMap = baseMaps.find((item) => item.name === value) || null
@@ -18,7 +18,7 @@ export function BaseMapsOptions() {
   }
 
   const setBaseColor = (value: string) => {
-    document.documentElement.style.setProperty(leafletBaseColor, value);
+    document.documentElement.style.setProperty(LEAFLET_CUSTOM_COLOR_VAR, value);
     setColor(value)
   }
 

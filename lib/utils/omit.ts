@@ -1,3 +1,8 @@
+/* 
+|
+| Remove some key from an object
+|
+*/
 export function omit(obj: any, omitKey: string) : any{
   return Object.keys(obj)
     .filter(key => key != omitKey)

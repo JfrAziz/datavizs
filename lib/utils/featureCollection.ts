@@ -1,7 +1,6 @@
 import { v4 } from "uuid";
+import { DEFAULT_FEATURE_COLOR } from "@config/colors";
 import { Feature, FeatureCollection, Geometry } from "geojson";
-
-const DEFAULT_COLOR = "#aaaaaa";
 
 /* 
 |
@@ -37,13 +36,15 @@ export const validateFC = (json: GeoJSONExtended): GeoJSONExtended => {
 
 /* 
 |
-| Sconfigures a validated GeoJSON Feature collection to add a new properties
+| Configures a validated GeoJSON Feature collection to add a new properties
 | for each feature with add a uuid. Sometimes imported geoJSON file does not 
 | have a properties value, so we added first then we add a uuid to it.
 |
-| TODO: add a default color
+| This function also return list key of properties except uuid, it will be used in
+| any component for editing an so on.
+|
 */
-export const configureFCProperties = (json: GeoJSONExtended): GeoJSONExtended => {
+export const configureFCProperties = (json: GeoJSONExtended): { json: GeoJSONExtended, propertiesKeys: string[] } => {
   json.features.forEach((item, idx) => {
     if (!json.features[idx].properties) {
       Object.assign(json.features[idx], { properties: {} })
@@ -53,8 +54,12 @@ export const configureFCProperties = (json: GeoJSONExtended): GeoJSONExtended =>
       Object.assign(json.features[idx].properties, { uuid: v4() })
     }
 
-    Object.assign(json.features[idx].properties, { color: DEFAULT_COLOR })
+    if (!json.features[idx].properties?.color) {
+      Object.assign(json.features[idx].properties, { color: DEFAULT_FEATURE_COLOR })
+    }
   });
 
-  return json;
+  const propertiesKeys = Object.keys(json.features[0].properties).filter(key => key !== "uuid")
+
+  return { json, propertiesKeys };
 }
