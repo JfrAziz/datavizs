@@ -12,7 +12,8 @@ const Map = () => {
       center={[0, 0]}
       zoomControl={false}
       scrollWheelZoom={true}
-      style={{ height: "100%", width: "100%", zIndex: 0 }}
+      attributionControl={false}
+      style={{ height: "100%", width: "100%", zIndex: 0, backgroundColor: "var(--leaflet-custom-bg-color)" }}
     >
       <MapControl />
       <BaseMap />

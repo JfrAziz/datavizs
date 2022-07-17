@@ -8,5 +8,5 @@ export const BaseMap = () => {
 
   if (!baseMap?.attribution) return null;
 
-  return <TileLayer key={uuid} attribution={baseMap.attribution} url={baseMap.baseMap} />
+  return <TileLayer key={uuid} url={baseMap.baseMap} />
 };
