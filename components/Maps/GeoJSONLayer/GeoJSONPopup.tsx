@@ -1,17 +1,18 @@
 import { FC, useState } from 'react';
-import { useDebounce } from '@utils/debounce';
-import { useGeoJSONStore } from '@store/geoJSONStore';
 import { FeatureProperties } from '@utils/featureCollection';
 import { Text, Paper, Group, ScrollArea, ColorPicker } from '@mantine/core';
 
-export const GeoJSONPopup: FC<{ properties: FeatureProperties }> = ({ properties }) => {
-  const [color, setColor] = useState(properties.color)
+interface GeoJSONPopupProps {
+  properties: FeatureProperties
+  updateProperties: (uuid: string, properties: FeatureProperties) => void
+}
 
-  const updateFeatureByUUID = useDebounce(useGeoJSONStore(state => state.updateFeatureByUUID), 500)
+export const GeoJSONPopup: FC<GeoJSONPopupProps> = ({ properties, updateProperties }) => {
+  const [color, setColor] = useState(properties.color)
 
   const updateColor = (color: string) => {
     setColor(color)
-    updateFeatureByUUID(properties.uuid, { ...properties, color: color })
+    updateProperties(properties.uuid, { ...properties, color: color })
   }
 
   const keys = Object.keys(properties).filter(item => item !== "uuid" && item !== "color")
@@ -36,7 +37,7 @@ export const GeoJSONPopup: FC<{ properties: FeatureProperties }> = ({ properties
             }
           </ScrollArea>
         </div>
-        <ColorPicker mt={10} value={color} style={{ width: "100%" }} size="md" onChange={updateColor} />
+        <ColorPicker format="rgba" mt={10} value={color} style={{ width: "100%" }} size="md" onChange={updateColor} />
       </Paper>
     </div>
   )
