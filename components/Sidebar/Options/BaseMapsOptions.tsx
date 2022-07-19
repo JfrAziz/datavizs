@@ -27,13 +27,13 @@ export function BaseMapsOptions() {
       <ListItem title="Base Maps" description="Select base map from various provider" >
         <Select
           placeholder="Pick one"
-          data={baseMaps.map(item => item.name)}
-          value={baseMap?.name}
+          data={[...baseMaps.map(item => item.name), "No Base Map"]}
+          value={baseMap ? baseMap.name : "No Base Map"}
           onChange={selectBaseMap}
         />
       </ListItem>
       {
-        !(baseMap?.attribution) && (
+        !baseMap && (
           <ListItem title="Background Color" description="Use background color instead?" >
             <ColorInput value={color} width="10p%" onChange={setBaseColor} />
           </ListItem>

@@ -46,7 +46,7 @@ const InputText = ({ value, onChange }: { value: string | number, onChange: (val
 }
 
 
-export const ColorsTable = () => {
+export const LegendTable = () => {
   const colors = useLegendStore(state => state.legends)
 
   const toggleHidden = useLegendStore.getState().toggleHidden

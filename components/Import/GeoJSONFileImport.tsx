@@ -1,9 +1,9 @@
 import { CloudUpload } from 'tabler-icons-react';
+import { useLegendStore } from '@store/legendStore';
 import { useGeoJSONStore } from '@store/geoJSONStore';
 import { showNotification } from '@mantine/notifications';
 import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { Text, Group, useMantineTheme } from '@mantine/core';
-import { useLegendStore } from '@store/legendStore';
 
 
 const DropzoneChildren = (status: DropzoneStatus) => {
