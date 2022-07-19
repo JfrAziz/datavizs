@@ -51,7 +51,7 @@ export function GeoJSONFileImport({ callback }: { callback: () => void }) {
   const processFile = async (files: File[]) => {
     try {
       importGeoJSON(await files[0].text())
-      resetLegend()
+      // resetLegend()
     } catch (error) {
       showFailedImportNotifications()
     } finally {

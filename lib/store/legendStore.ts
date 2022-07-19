@@ -24,7 +24,7 @@ export const useLegendStore = create<ColorStore>()((set, get) => ({
   legends: [],
 
   addLegends: () => set(state => ({
-    legends: [...state.legends, { color: randomColor(), value: 0, hidden: false }]
+    legends: [...state.legends, { color: randomColor(), value: "", hidden: false }]
   })),
 
   updateValue: (idx, value) => set(state => ({

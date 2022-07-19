@@ -75,7 +75,7 @@ export const LegendTable = () => {
           {colors.map((item, idx) => (
             <tr key={idx}>
               <td>
-                <InputText value={item.value} onChange={(value) => updateValue(idx, value)} />
+                <InputText key={item.color} value={item.value} onChange={(value) => updateValue(idx, value)} />
               </td>
               <td>
                 <InputColor color={item.color} onChange={(color) => updateColor(idx, color)} />

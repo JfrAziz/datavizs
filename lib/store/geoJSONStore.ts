@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import create from 'zustand'
 import { omit } from '@utils/omit';
-import { FeatureColor, getFeatureColor } from '@utils/featureColor';
+import { FeatureColor, getFeatureColor, Operator } from '@utils/featureColor';
 import { validateFC, GeoJSONExtended, FeatureProperties, configureFCProperties, } from '@utils/featureCollection';
 
 
@@ -23,7 +23,7 @@ interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
 
   deletePropertiesKey: (key: string) => void;
 
-  updateFeatureColor: (key: string, color: FeatureColor[]) => void;
+  updateFeatureColor: (key: string, color: FeatureColor[], operator: Operator) => void;
 }
 
 const geoJSONStateInitialValue = {
@@ -38,13 +38,13 @@ const geoJSONStateInitialValue = {
 export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
   ...geoJSONStateInitialValue,
 
-  importGeoJSON: (jsonString: string) => {
+  importGeoJSON: (jsonString) => {
     const { json, propertiesKeys } = configureFCProperties(validateFC(JSON.parse(jsonString) as unknown as GeoJSONExtended))
 
     set(({ mapKey: v4(), features: json.features, propertiesKeys: propertiesKeys }))
   },
 
-  deleteFeaturebyUUIDs: (uuids: string[]) => set((state) => {
+  deleteFeaturebyUUIDs: (uuids) => set((state) => {
     const features = state.features.filter(item => !uuids.includes(item.properties.uuid))
 
     if (!features.length) return geoJSONStateInitialValue
@@ -52,19 +52,19 @@ export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
     return { features: features }
   }),
 
-  updateFeatureByUUID: (uuid: string, properties: FeatureProperties) => set((state) => ({
+  updateFeatureByUUID: (uuid, properties) => set((state) => ({
     features: state.features.map((item) => {
       if (item.properties.uuid !== uuid) return item
       return { ...item, properties: properties }
     })
   })),
 
-  addPropertiesKey: (key: string) => set((state) => ({
+  addPropertiesKey: (key) => set((state) => ({
     features: state.features.map((item) => ({ ...item, properties: { ...item.properties, [key]: "" } })),
     propertiesKeys: [...state.propertiesKeys, key]
   })),
 
-  deletePropertiesKey: (key: string) => {
+  deletePropertiesKey: (key) => {
     if (['color', 'uuid'].includes(key)) return; // don't delete uuid and color properties
     return set((state) => ({
       features: state.features.map((item) => ({ ...item, properties: omit(item.properties, key) })),
@@ -72,7 +72,7 @@ export const useGeoJSONStore = create<GeoJSONState>()((set, get) => ({
     }))
   },
 
-  updateFeatureColor: (key: string, colors: FeatureColor[]) => set((state) => ({
-    features: state.features.map((item) => ({ ...item, properties: { ...item.properties, color: getFeatureColor(item.properties[key], colors) } })),
+  updateFeatureColor: (key, colors, operator) => set((state) => ({
+    features: state.features.map((item) => ({ ...item, properties: { ...item.properties, color: getFeatureColor(item.properties[key], colors, operator) } })),
   }))
 }))
