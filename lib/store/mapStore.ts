@@ -11,7 +11,7 @@ interface MapSettingsState {
   toggleControl: () => void;
 }
 
-export const useMapSettingsStore = create<MapSettingsState>()((set, get) => ({
+export const useMapStore = create<MapSettingsState>()((set, get) => ({
   showControl: true,
 
   baseMap: baseMaps[0],

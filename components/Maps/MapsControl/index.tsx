@@ -1,9 +1,9 @@
 import { MinimapControl } from "./Minimap";
 import { ScaleControl, ZoomControl } from "react-leaflet";
-import { useMapSettingsStore } from "@store/mapSettingsStore";
+import { useMapStore } from "@store/mapStore";
 
 export const MapControl = () => {
-  const showControl = useMapSettingsStore(state => state.showControl)
+  const showControl = useMapStore(state => state.showControl)
   if (!showControl) return null;
 
   return (

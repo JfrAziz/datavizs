@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ColorSwatchs } from "./ColorSwatchs";
 import { useDebounce } from "@utils/debounce";
 import { randomColor } from "@utils/featureColor";
 import { Refresh, Trash } from "tabler-icons-react";
-import { useFeatureColorStore } from "@store/featureColorStore";
+import { useLegendStore } from "@store/legendStore";
 import { Table, Checkbox, TextInput, ActionIcon, ColorInput, } from "@mantine/core";
 
 
@@ -18,6 +18,8 @@ const InputColor = ({ color, onChange }: { color: string, onChange: (value: any)
     setColor(value)
     onChange(value)
   }
+
+  useEffect(() => { setColor(color) }, [color])
 
   const RandomButton = () => (
     <ActionIcon onClick={() => updateColor(randomColor())}>
@@ -45,15 +47,15 @@ const InputText = ({ value, onChange }: { value: string | number, onChange: (val
 
 
 export const ColorsTable = () => {
-  const colors = useFeatureColorStore(state => state.colors)
+  const colors = useLegendStore(state => state.legends)
 
-  const toggleHidden = useFeatureColorStore.getState().toggleHidden
+  const toggleHidden = useLegendStore.getState().toggleHidden
 
-  const deleteColor = useFeatureColorStore.getState().deleteColor
+  const deleteLegend = useLegendStore.getState().deleteLegend
 
-  const updateValue = useDebounce(useFeatureColorStore.getState().updateValue, 500)
+  const updateValue = useDebounce(useLegendStore.getState().updateValue, 500)
 
-  const updateColor = useDebounce(useFeatureColorStore.getState().updateColor, 500)
+  const updateColor = useDebounce(useLegendStore.getState().updateColor, 500)
 
   if (colors.length === 0) return null
 
@@ -82,7 +84,7 @@ export const ColorsTable = () => {
                 <Checkbox checked={item.hidden} onChange={() => toggleHidden(idx)} />
               </td>
               <td>
-                <ActionIcon color="red" variant="filled" onClick={() => deleteColor(idx)}>
+                <ActionIcon color="red" variant="filled" onClick={() => deleteLegend(idx)}>
                   <Trash size={14} />
                 </ActionIcon>
               </td>
