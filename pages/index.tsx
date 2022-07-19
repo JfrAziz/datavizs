@@ -43,6 +43,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>App Title</title>
+        <meta name="description" content="Maps Apps" />
       </Head>
       <MantineProvider>
         <div className={classes.container}>

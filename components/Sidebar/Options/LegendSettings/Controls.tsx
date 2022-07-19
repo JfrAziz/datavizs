@@ -1,9 +1,9 @@
+import { useState } from "react"
+import { Operator } from "@utils/featureColor"
 import { useLegendStore } from "@store/legendStore"
+import { useGeoJSONStore } from "@store/geoJSONStore"
 import { Button, Group, Select, Tooltip } from "@mantine/core"
 import { ListItem } from "@components/Sidebar/Common/ListItem"
-import { Operator } from "@utils/featureColor"
-import { useGeoJSONStore } from "@store/geoJSONStore"
-import { useState } from "react"
 
 export const HeaderButton = () => {
   const addLegends = useLegendStore.getState().addLegends
@@ -61,8 +61,6 @@ export const FooterButton = () => {
   }
 
   const updateFeatureColor = () => {
-    console.log(colors)
-
     if (!selectedKey) return;
 
     const selected = data.find(item => item.name === selectionType)

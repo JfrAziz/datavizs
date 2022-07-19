@@ -1,5 +1,5 @@
 import create from 'zustand'
-import Gradient from "javascript-color-gradient";
+import { scale } from "chroma-js";
 import { FeatureColor, randomColor } from '@utils/featureColor';
 
 interface ColorStore {
@@ -50,7 +50,7 @@ export const useLegendStore = create<ColorStore>()((set, get) => ({
 
     if (length <= 2) return {}
 
-    const gradientArray = new Gradient().setColorGradient(state.legends[0].color, state.legends[length - 1].color).setMidpoint(length).getColors()
+    const gradientArray = scale([state.legends[0].color, state.legends[length - 1].color]).mode('lch').colors(length)
 
     return { legends: state.legends.map((color, index) => ({...color, color: gradientArray[index]}) ) }
   })

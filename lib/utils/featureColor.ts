@@ -21,7 +21,6 @@ export const getFeatureColor = (value: string | number, colors: FeatureColor[], 
 
     case "greater-than":
       selectedColor = colors.slice().reverse().find(item => value >= item.value)
-      console.log(selectedColor)
       break;
 
     case "less-than":
@@ -29,7 +28,6 @@ export const getFeatureColor = (value: string | number, colors: FeatureColor[], 
 
       break;
   }
-  console.log(value)
   return selectedColor ? selectedColor.color : DEFAULT_FEATURE_COLOR
 }
 
