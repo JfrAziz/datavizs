@@ -1,5 +1,5 @@
-import { FeatureExtended } from '@utils/featureCollection';
 import { geoJSON, FeatureGroup, PathOptions } from "leaflet";
+import { FeatureExtended } from '@stores/maps/utils/featureCollection';
 import { createElementObject, createPathComponent, LeafletContextInterface, PathProps, extendContext } from '@react-leaflet/core'
 
 interface GeoJSONProps extends PathProps, React.PropsWithChildren {
