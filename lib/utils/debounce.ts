@@ -1,46 +1,29 @@
 import { useEffect } from "react";
 
-/* 
-|
-| This code below part of debounce function implementation in typescript
-|
-| Volodymyr Yepishev https://github.com/Bwca/package__merry-solutions__debounce 
-| 
-*/
 interface FunctionWithArguments {
   (...args: any): any;
 }
 
-/* 
-|
-| This code below part of debounce function implementation in typescript
-|
-| Volodymyr Yepishev https://github.com/Bwca/package__merry-solutions__debounce 
-| 
-*/
+
 interface DebouncedFunction<F extends FunctionWithArguments> {
   (...args: Parameters<F>): Promise<ReturnType<F>>;
 }
 
-/* 
-|
-| This code below part of debounce function implementation in typescript
-|
-| Volodymyr Yepishev https://github.com/Bwca/package__merry-solutions__debounce 
-| 
-*/
+
 interface DebounceReturn<F extends FunctionWithArguments> extends Array<DebouncedFunction<F> | (() => void)> {
   0: (...args: Parameters<F>) => Promise<ReturnType<F>>;
   1: () => void;
 }
 
-/* 
-|
-| This code below part of debounce function implementation in typescript
-|
-| Volodymyr Yepishev https://github.com/Bwca/package__merry-solutions__debounce 
-| 
-*/
+/**
+ * Debounce function implementation in typescript
+ * 
+ * Volodymyr Yepishev https://github.com/Bwca/package__merry-solutions__debounce 
+ * 
+ * @param fn function
+ * @param ms milisecond
+ * @returns 
+ */
 function debounce<F extends FunctionWithArguments>(fn: F, ms: number): DebounceReturn<F> {
   let timer: ReturnType<typeof setTimeout>;
 
@@ -60,13 +43,13 @@ function debounce<F extends FunctionWithArguments>(fn: F, ms: number): DebounceR
   return [debouncedFunc, teardown];
 }
 
-/* 
-|
-| This code below part of debounce function implementation in typescript
-|
-| Volodymyr Yepishev https://github.com/Bwca/package__merry-solutions__debounce 
-| 
-*/
+/**
+ * hooks function for debounce implementation in typescript
+ * 
+ * @param fn 
+ * @param ms 
+ * @returns 
+ */
 export const useDebounce = <F extends FunctionWithArguments>(fn: F, ms: number): DebouncedFunction<F> => {
   const [debouncedFun, teardown] = debounce(fn, ms);
 

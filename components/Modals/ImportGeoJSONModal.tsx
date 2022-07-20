@@ -1,6 +1,6 @@
+import { useStore } from '@stores/maps';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
-import { useGeoJSONStore } from '@store/geoJSONStore';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
 import { GeoJSONFileImport } from '@components/Import/GeoJSONFileImport';
 
@@ -8,7 +8,7 @@ const ImportModalBody: React.FC<{ modals : ModalsContextProps }> = ({ modals }) 
 
 export function ImportGeoJSONBtn() {
   const modals = useModals();
-  const mapKey = useGeoJSONStore.getState().mapKey
+  const mapKey = useStore.getState().mapKey
 
   const openContextModal = () => {
     const openImportGeoJSONModal = () => modals.openModal({

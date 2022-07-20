@@ -16,7 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@store/*": ["lib/store/*"],
+      "@stores/*": ["lib/stores/*"],
       "@utils/*": ["lib/utils/*"],
       "@styles/*": ["styles/*"],
       "@config/*": ["config/*"],

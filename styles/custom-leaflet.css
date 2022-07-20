@@ -1,3 +1,7 @@
+:root {
+  --leaflet-custom-bg-color: #C1C2C5
+}
+
 .leaflet-popup-content-wrapper {
   padding: 0px !important;
 }

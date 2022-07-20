@@ -1,12 +1,17 @@
+import { useMemo } from "react";
 import { useId } from "@mantine/hooks";
+import { useStore } from "@stores/maps";
 import { TileLayer } from "react-leaflet";
-import { useBaseMapStore } from "@store/baseMapStore";
 
 export const BaseMap = () => {
-  const baseMap = useBaseMapStore(state => state.baseMap)
+  const baseMap = useStore(state => state.baseMap)
   const uuid = useId(baseMap?.name);
 
-  if (!baseMap?.attribution) return null;
+  const layer = useMemo(() => {
+    if (!baseMap) return null;
 
-  return <TileLayer key={uuid} attribution={baseMap.attribution} url={baseMap.baseMap} />
+    return <TileLayer key={uuid} url={baseMap.baseMap} />
+  }, [baseMap])
+
+  return layer
 };
