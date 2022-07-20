@@ -1,9 +1,9 @@
+import { useStore } from "@stores/maps";
+import { randomColor } from "@utils/colors";
 import { useEffect, useState } from "react";
 import { ColorSwatchs } from "./ColorSwatchs";
 import { useDebounce } from "@utils/debounce";
-import { randomColor } from "@utils/featureColor";
 import { Refresh, Trash } from "tabler-icons-react";
-import { useLegendStore } from "@store/legendStore";
 import { Table, Checkbox, TextInput, ActionIcon, ColorInput, } from "@mantine/core";
 
 
@@ -47,21 +47,21 @@ const InputText = ({ value, onChange }: { value: string | number, onChange: (val
 
 
 export const LegendTable = () => {
-  const colors = useLegendStore(state => state.legends)
+  const legends = useStore(state => state.legends)
 
-  const toggleHidden = useLegendStore.getState().toggleHidden
+  const toggleHidden = useStore.getState().toggleHiddenLegend
 
-  const deleteLegend = useLegendStore.getState().deleteLegend
+  const deleteLegend = useStore.getState().deleteLegend
 
-  const updateValue = useDebounce(useLegendStore.getState().updateValue, 500)
+  const updateValue = useDebounce(useStore.getState().updateLegendValue, 500)
 
-  const updateColor = useDebounce(useLegendStore.getState().updateColor, 500)
+  const updateColor = useDebounce(useStore.getState().updateLegendColor, 500)
 
-  if (colors.length === 0) return null
+  if (legends.length === 0) return null
 
   return (
     <>
-      <ColorSwatchs colors={colors} />
+      <ColorSwatchs colors={legends.map(item => item.color)} />
       <Table verticalSpacing="md">
         <thead>
           <tr>
@@ -72,7 +72,7 @@ export const LegendTable = () => {
           </tr>
         </thead>
         <tbody>
-          {colors.map((item, idx) => (
+          {legends.map((item, idx) => (
             <tr key={idx}>
               <td>
                 <InputText key={item.color} value={item.value} onChange={(value) => updateValue(idx, value)} />

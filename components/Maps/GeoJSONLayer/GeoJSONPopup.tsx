@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { FeatureProperties } from '@utils/featureCollection';
+import { FeatureProperties } from '@stores/maps/types';
 import { Text, Paper, Group, ScrollArea, ColorPicker } from '@mantine/core';
 
 interface GeoJSONPopupProps {

@@ -1,8 +1,7 @@
 import { Group, ColorSwatch } from "@mantine/core";
-import { FeatureColor } from "@utils/featureColor";
 
-export const ColorSwatchs = ({ colors }: { colors: FeatureColor[] }) => (
+export const ColorSwatchs = ({ colors }: { colors: string[] }) => (
   <Group position="center" spacing="xs">
-    {colors.map((item, idx) => <ColorSwatch key={idx} color={item.color} />)}
+    {colors.map((color, idx) => <ColorSwatch key={idx} color={color} />)}
   </Group>
 )

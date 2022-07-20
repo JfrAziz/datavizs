@@ -1,41 +1,25 @@
-import create from 'zustand'
 import { scale } from "chroma-js";
-import { FeatureColor, randomColor } from '@utils/featureColor';
+import { StateCreator } from "zustand";
+import { randomColor } from "@utils/colors";
+import { DataStore, LegendStore } from "@stores/maps/types";
 
-interface ColorStore {
-  legends: FeatureColor[];
 
-  addLegends: () => void;
-
-  updateValue: (idx: number, value: string) => void;
-
-  updateColor: (idx: number, color: string) => void;
-
-  toggleHidden: (idx: number) => void;
-
-  deleteLegend: (idx: number) => void;
-
-  resetLegends: () => void;
-
-  generateGradient: () => void
-}
-
-export const useLegendStore = create<ColorStore>()((set, get) => ({
+export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set) => ({
   legends: [],
 
   addLegends: () => set(state => ({
     legends: [...state.legends, { color: randomColor(), value: "", hidden: false }]
   })),
 
-  updateValue: (idx, value) => set(state => ({
+  updateLegendValue: (idx, value) => set(state => ({
     legends: state.legends.map((item, id) => id !== idx ? item : { ...item, value: value })
   })),
 
-  updateColor: (idx, color) => set(state => ({
+  updateLegendColor: (idx, color) => set(state => ({
     legends: state.legends.map((item, id) => id !== idx ? item : { ...item, color: color })
   })),
 
-  toggleHidden: (idx) => set(state => ({
+  toggleHiddenLegend: (idx) => set(state => ({
     legends: state.legends.map((item, id) => id !== idx ? item : { ...item, hidden: !item.hidden })
   })),
 
@@ -54,4 +38,4 @@ export const useLegendStore = create<ColorStore>()((set, get) => ({
 
     return { legends: state.legends.map((color, index) => ({...color, color: gradientArray[index]}) ) }
   })
-}))
+})

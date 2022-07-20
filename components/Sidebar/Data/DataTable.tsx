@@ -1,6 +1,6 @@
+import { useStore } from "@stores/maps";
 import { useCallback, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { useGeoJSONStore } from "@store/geoJSONStore";
 import { DeviceFloppy, Search, Trash } from "tabler-icons-react";
 import { ActionIcon, Group, MantineTheme, Tooltip, useMantineTheme } from "@mantine/core";
 import DataEditor, { EditableGridCell, GridCell, GridCellKind, GridColumn, GridSelection, Item } from "@glideapps/glide-data-grid";
@@ -46,11 +46,11 @@ const getTheme = (theme: MantineTheme) => {
 
 const DataTable = () => {
   const theme = useMantineTheme()
-  const features = useGeoJSONStore(state => state.features)
-  const columnNames = useGeoJSONStore(state => state.propertiesKeys)
-  const deletePropertiesKey = useGeoJSONStore.getState().deletePropertiesKey
-  const updateFeatureByUUID = useGeoJSONStore.getState().updateFeatureByUUID
-  const deleteFeaturebyUUIDs = useGeoJSONStore.getState().deleteFeaturebyUUIDs
+  const features = useStore(state => state.features)
+  const columnNames = useStore(state => state.propertiesKeys)
+  const deletePropertiesKey = useStore.getState().deletePropertiesKey
+  const updateFeatureByUUID = useStore.getState().updateFeatureByUUID
+  const deleteFeaturebyUUIDs = useStore.getState().deleteFeaturebyUUIDs
 
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [gridSelection, setGridSelection] = useState<GridSelection | undefined>(undefined)

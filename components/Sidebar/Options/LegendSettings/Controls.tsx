@@ -1,16 +1,15 @@
 import { useState } from "react"
-import { Operator } from "@utils/featureColor"
-import { useLegendStore } from "@store/legendStore"
-import { useGeoJSONStore } from "@store/geoJSONStore"
+import { useStore } from "@stores/maps"
+import { LegendOperator } from "@stores/maps/types"
 import { Button, Group, Select, Tooltip } from "@mantine/core"
 import { ListItem } from "@components/Sidebar/Common/ListItem"
 
 export const HeaderButton = () => {
-  const addLegends = useLegendStore.getState().addLegends
+  const addLegends = useStore.getState().addLegends
 
-  const resetLegends = useLegendStore.getState().resetLegends
+  const resetLegends = useStore.getState().resetLegends
 
-  const generateGradient = useLegendStore.getState().generateGradient
+  const generateGradient = useStore.getState().generateGradient
 
   return (
     <Group position="apart" my={20}>
@@ -31,7 +30,7 @@ export const HeaderButton = () => {
   )
 }
 
-const data: { name: string, value: Operator }[] = [
+const data: { name: string, value: LegendOperator }[] = [
   {
     name: "Less Than",
     value: "less-than"
@@ -47,10 +46,10 @@ const data: { name: string, value: Operator }[] = [
 ]
 
 export const FooterButton = () => {
-  const colors = useLegendStore(state => state.legends)
-  const applyColor = useGeoJSONStore.getState().updateFeatureColor
+  const colors = useStore(state => state.legends)
+  const applyColor = useStore.getState().updateFeatureColor
 
-  const keys = useGeoJSONStore(state => state.propertiesKeys)
+  const keys = useStore(state => state.propertiesKeys)
 
   const [selectionType, setSelectionType] = useState<string>(data[0].name)
   const [selectedKey, setSelectedKey] = useState<string | null>(null)

@@ -1,20 +1,6 @@
 import { v4 } from "uuid";
+import { GeoJSONExtended } from "@stores/maps/types";
 import { DEFAULT_FEATURE_COLOR } from "@config/colors";
-import { Feature, FeatureCollection, Geometry } from "geojson";
-
-/**
- * Extended Feature Collection with custom properties. Every features has uuid 
- * properties to make easier to update, delete, and rendered on react component
- */
-export interface FeatureProperties {
-  uuid: string;
-  color: string;
-  [name: string]: any;
-}
-
-export interface FeatureExtended extends Feature<Geometry, FeatureProperties> { }
-
-export interface GeoJSONExtended extends FeatureCollection<Geometry, FeatureProperties> { }
 
 
 /**
