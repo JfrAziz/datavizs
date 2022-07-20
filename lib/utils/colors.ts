@@ -3,5 +3,13 @@
  * 
  * @returns string
  */
- export const randomColor = () : string => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+export const randomColor = (): string => {
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    const random = Math.random();
+    const bit = (random * 16) | 0;
+    color += (bit).toString(16);
+  };
+  return color;
+};
 

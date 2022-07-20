@@ -1,5 +1,5 @@
-import { FooterButton, HeaderButton } from "./Controls";
 import { LegendTable } from "./LegendTable";
+import { FooterButton, HeaderButton } from "./Controls";
 
 export function ColorOptions() {
   return (
