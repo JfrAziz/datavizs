@@ -42,8 +42,9 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>App Title</title>
-        <meta name="description" content="Maps Apps" />
+        <title>GeoJSON Editor | Datavizs</title>
+        <meta name="description" content="Simple and Powerful GeoJSON Editor" />
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <MantineProvider>
         <div className={classes.container}>
