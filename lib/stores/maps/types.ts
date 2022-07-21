@@ -6,7 +6,7 @@ import { Feature, FeatureCollection, Geometry } from "geojson";
  * Extended Feature Collection with custom properties. Every features has uuid 
  * properties to make easier to update, delete, and rendered on react component
  */
- export interface FeatureProperties {
+export interface FeatureProperties {
   uuid: string;
   color: string;
   [name: string]: any;
@@ -42,7 +42,7 @@ export interface GeoJSONFunction {
 
   deletePropertiesKey: (key: string) => void;
 
-  updateFeatureColor: (key: string, color: Legend[], operator: LegendOperator) => void;
+  updateFeatureColor: (key: string, legends: Legend[]) => void;
 }
 
 export type GeoJSONStore = GeoJSONState & GeoJSONFunction
@@ -52,15 +52,20 @@ export type GeoJSONStore = GeoJSONState & GeoJSONFunction
  * color generator
  * 
  */
+
 export interface Legend {
-  value: string | number;
+  uuid: string;
 
   color: string;
 
-  hidden: boolean;
-}
+  label: string;
 
-export type LegendOperator = "less-than" | "greater-than" | "equal"
+  hidden: boolean
+
+  type: "equals" | "range";
+
+  value: number[] | string[]
+}
 
 export interface LegendState {
   legends: Legend[];
@@ -69,13 +74,9 @@ export interface LegendState {
 export interface LegendFunction {
   addLegends: () => void;
 
-  updateLegendValue: (idx: number, value: string) => void;
+  updateLegend: (uuid: string, legend: Legend) => void;
 
-  updateLegendColor: (idx: number, color: string) => void;
-
-  toggleHiddenLegend: (idx: number) => void;
-
-  deleteLegend: (idx: number) => void;
+  deleteLegend: (uuid: string) => void;
 
   resetLegends: () => void;
 

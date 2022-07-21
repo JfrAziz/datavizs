@@ -1,5 +1,5 @@
+import { Legend } from "@stores/maps/types";
 import { DEFAULT_FEATURE_COLOR } from "@config/colors";
-import { Legend, LegendOperator } from "@stores/maps/types";
 
 /**
  * compare a value with value in the legends use some operator to generate a color.
@@ -9,21 +9,13 @@ import { Legend, LegendOperator } from "@stores/maps/types";
  * @param operator 
  * @returns string
  */
-export const getFeatureColor = (value: string | number, legends: Legend[], operator: LegendOperator): string => {
+export const getFeatureColor = (value: string | number, legends: Legend[]): string => {
   let selectedColor: Legend | undefined = undefined
-  switch (operator) {
-    case "equal":
-      selectedColor = legends.find(item => value === item.value)
-      break;
 
-    case "greater-than":
-      selectedColor = legends.slice().reverse().find(item => value >= item.value)
-      break;
+  selectedColor = legends.find(item => {
+    if (item.type === "equals") return item.value[0] === value
 
-    case "less-than":
-      selectedColor = legends.find(item => value <= item.value)
-
-      break;
-  }
+    return item.value[0] <= value && item.value[1] > value
+  })
   return selectedColor ? selectedColor.color : DEFAULT_FEATURE_COLOR
 }

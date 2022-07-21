@@ -51,7 +51,7 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
     }))
   },
 
-  updateFeatureColor: (key, legends, operator) => set((state) => ({
-    features: state.features.map((item) => ({ ...item, properties: { ...item.properties, color: getFeatureColor(item.properties[key], legends, operator) } })),
+  updateFeatureColor: (key, legends) => set((state) => ({
+    features: state.features.map((item) => ({ ...item, properties: { ...item.properties, color: getFeatureColor(item.properties[key], legends) } })),
   }))
 })
