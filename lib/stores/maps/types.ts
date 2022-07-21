@@ -49,11 +49,14 @@ export type GeoJSONStore = GeoJSONState & GeoJSONFunction
 
 /**
  * Legend state and function for handle legend data and 
- * color generator
+ * color generator. Legend value is an array value with
+ * size 1 or 2. If the type is equals, just index 0 is used
+ * for comparison, but if the type is range, index 0 and 1
+ * were used. example [a, b] will be compared a <= value < b 
  * 
  */
 
-export interface Legend {
+interface LegendCreator<T extends "single" | "range"> {
   uuid: string;
 
   color: string;
@@ -62,10 +65,15 @@ export interface Legend {
 
   hidden: boolean
 
-  type: "equals" | "range";
+  type: T;
 
-  value: number[] | string[]
+  value: T extends "single" ? string : {
+    min: number | undefined
+    max: number | undefined
+  }
 }
+
+export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 
 export interface LegendState {
   legends: Legend[];

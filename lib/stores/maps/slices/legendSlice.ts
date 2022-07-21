@@ -12,10 +12,10 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
     legends: [...state.legends, {
       uuid: v4(),
       label: "",
-      color: randomColor(),
+      value: "",
       hidden: false,
-      type: "equals",
-      value: [""],
+      type: "single",
+      color: randomColor(),
     }]
   })),
 

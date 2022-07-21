@@ -1,7 +1,7 @@
 import { Data } from '@components/Sidebar/Data';
 import { Maps } from '@components/Sidebar/Maps';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
-import { LegendOptions } from '@components/Sidebar/LegendOptions';
+import { LegendOptions } from '@components/Sidebar/Legend';
 import { Settings as SettingsPage } from '@components/Sidebar/Settings';
 import { Adjustments, Map, Settings, Table } from 'tabler-icons-react';
 
