@@ -6,7 +6,9 @@ import { configureFCProperties, validateFC } from "@stores/maps/utils/featureCol
 import { DataStore, GeoJSONState, GeoJSONStore, GeoJSONExtended } from "@stores/maps/types";
 
 const geoJSONStateInitialValue: GeoJSONState = {
-  mapKey: null,
+  geoJSONKey: null,
+
+  geoJSONRef: null,
 
   features: [],
 
@@ -20,8 +22,10 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
   importGeoJSON: (jsonString) => {
     const { json, propertiesKeys } = configureFCProperties(validateFC(JSON.parse(jsonString) as unknown as GeoJSONExtended))
 
-    set(({ mapKey: v4(), features: json.features, propertiesKeys: propertiesKeys, legends: [] }))
+    set(({ geoJSONKey: v4(), features: json.features, propertiesKeys: propertiesKeys, legends: [] }))
   },
+
+  setGeoJSONRef: (ref) => set({ geoJSONRef: ref }),
 
   deleteFeaturebyUUIDs: (uuids) => set((state) => {
     const features = state.features.filter(item => !uuids.includes(item.properties.uuid))

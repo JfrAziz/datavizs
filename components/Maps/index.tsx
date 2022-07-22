@@ -1,12 +1,10 @@
 import Map from "./Map";
-import { Wrapper } from "./Wrapper";
+import { MapWrapper } from "./MapWrapper";
 
-const Maps = () => {
-  return (
-    <Wrapper>
-      <Map />
-    </Wrapper>
-  )
-}
+const Maps = () => (
+  <MapWrapper>
+    <Map />
+  </MapWrapper>
+)
 
 export default Maps;

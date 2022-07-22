@@ -1,9 +1,11 @@
 import { useStore } from "@stores/maps"
 import { PropsWithChildren } from "react"
+import { ExternalControl } from "./ExternalControl";
 import { createStyles, Paper, ScrollArea } from "@mantine/core"
 import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH } from "@config/maps"
 
-const useStyles = createStyles(theme => ({
+
+const useStyles = createStyles({
   wrapper: {
     width: "100%",
     height: "100%",
@@ -23,28 +25,35 @@ const useStyles = createStyles(theme => ({
     display: "flex",
     justifyContent: "center"
   }
-}))
+})
 
-export const Wrapper = (props: PropsWithChildren) => {
+export const MapWrapper = (props: PropsWithChildren) => {
   const mapWrapper = useStore(state => state.mapWrapper)
 
   const { classes } = useStyles()
 
   return (
     <div className={classes.wrapper}>
+      <ExternalControl/>
       {mapWrapper.type === "auto" && props.children}
       {mapWrapper.type === "custom" && (
         <div className={classes.container}>
           <ScrollArea style={{ height: "100%", width: "100%" }}>
             <div className={classes.mapContainer}>
-              <Paper shadow="xl" radius="xs" style={{ width: mapWrapper.width ?? DEFAULT_MAPS_WIDTH, height: mapWrapper.height ?? DEFAULT_MAPS_HEIGHT, padding: 1 }}>
+              <Paper
+                shadow="xl"
+                radius="xs"
+                style={{
+                  width: mapWrapper.width ?? DEFAULT_MAPS_WIDTH,
+                  height: mapWrapper.height ?? DEFAULT_MAPS_HEIGHT,
+                  padding: 1
+                }}>
                 {props.children}
               </Paper>
             </div>
           </ScrollArea>
         </div>
       )}
-
     </div>
   )
 }

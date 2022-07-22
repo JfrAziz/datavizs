@@ -10,7 +10,7 @@ const ImportModalBody: React.FC<{ modals: ModalsContextProps }> = ({ modals }) =
 
 export function ImportGeoJSON() {
   const modals = useModals();
-  const mapKey = useStore.getState().mapKey
+  const geoJSONKey = useStore.getState().geoJSONKey
 
   const openContextModal = () => {
     const openImportGeoJSONModal = () => modals.openModal({
@@ -21,7 +21,7 @@ export function ImportGeoJSON() {
       children: <ImportModalBody modals={modals} />,
     });
 
-    if (!mapKey) return openImportGeoJSONModal()
+    if (!geoJSONKey) return openImportGeoJSONModal()
 
     return modals.openConfirmModal({
       title: 'Import a new GeoJSON Collection',

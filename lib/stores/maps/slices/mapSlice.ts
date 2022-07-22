@@ -14,7 +14,7 @@ const initialValue: MapState = {
   }
 }
 
-export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set) => ({
+export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, get) => ({
   ...initialValue,
 
   setMap: (map) => set({ map: map }),
@@ -29,4 +29,12 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set) =
   }),
 
   toggleControl: () => set((state) => ({ showControl: !state.showControl })),
+
+  setMapToCenter: () => {
+    const geoJSONref = get().geoJSONRef
+    
+    if (!geoJSONref ||  Object.keys(geoJSONref.getBounds()).length === 0) return;
+
+    return get().map?.fitBounds(geoJSONref.getBounds())
+  }
 })

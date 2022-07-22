@@ -7,15 +7,14 @@ const DataTable = dynamic(() => import("./DataTable"), { ssr: false })
 
 
 export function Data() {
-  const mapKey = useStore(state => state.mapKey)
+  const geoJSONKey = useStore(state => state.geoJSONKey)
   const features = useStore(state => state.features)
 
   return (
     <>
       <ImportGeoJSON />
       <Divider />
-      {features.length !== 0 && <DataTable key={mapKey} />}
-      {/* <DataTable2 /> */}
+      {features.length !== 0 && <DataTable key={geoJSONKey} />}
     </>
   );
 }

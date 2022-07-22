@@ -88,8 +88,6 @@ const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
       else setPrecision(0)
     }
 
-    console.log(onChange)
-
     if (onChange) return onChange(value)
   }
 

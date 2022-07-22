@@ -1,4 +1,4 @@
-import { Map } from "leaflet";
+import { FeatureGroup, Map } from "leaflet";
 import { BaseMap } from "@config/maps";
 import { Feature, FeatureCollection, Geometry } from "geojson";
 
@@ -23,8 +23,9 @@ export type GeoJSONExtended = FeatureCollection<Geometry, FeatureProperties>
  * 
  */
 export interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
+  geoJSONKey: string | null;
 
-  mapKey: string | null;
+  geoJSONRef: FeatureGroup | null;
 
   features: GeoJSONExtended["features"] | [];
 
@@ -34,6 +35,8 @@ export interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
 export interface GeoJSONFunction {
 
   importGeoJSON: (jsonString: string) => void;
+
+  setGeoJSONRef: (geoJSON: FeatureGroup | null) => void;
 
   updateFeatureByUUID: (uuid: string, properties: FeatureProperties) => void;
 
@@ -127,6 +130,8 @@ export interface MapFunction {
   setMapWrapper: (wrapper: MapWrapper) => void
 
   toggleControl: () => void;
+
+  setMapToCenter: () => void
 }
 
 export type MapStore = MapState & MapFunction
