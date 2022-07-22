@@ -11,7 +11,7 @@ export const BaseMap = () => {
     if (!baseMap) return null;
 
     return <TileLayer key={uuid} url={baseMap.baseMap} />
-  }, [baseMap])
+  }, [baseMap, uuid])
 
   return layer
 };

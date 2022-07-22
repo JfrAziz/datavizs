@@ -1,8 +1,8 @@
 import { Data } from '@components/Sidebar/Data';
 import { Maps } from '@components/Sidebar/Maps';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
-import { LegendOptions } from '@components/Sidebar/Legend';
-import { Settings as SettingsPage } from '@components/Sidebar/Settings';
+import { LegendOptions } from '@components/Sidebar/Legends';
+import { AppsSettings } from '@components/Sidebar/Apps';
 import { Adjustments, Map, Settings, Table } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => {
@@ -34,9 +34,9 @@ export const Sidebar = () => {
           <Maps/>
         </ScrollArea>
       </Tabs.Tab>
-      <Tabs.Tab label="Settings" icon={<Settings size={14} />}>
+      <Tabs.Tab label="Apps" icon={<Settings size={14} />}>
         <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={200} scrollbarSize={5} >
-          <SettingsPage />
+          <AppsSettings />
         </ScrollArea>
       </Tabs.Tab>
     </Tabs>

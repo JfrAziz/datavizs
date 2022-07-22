@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useStore } from "@stores/maps";
-import { ImportOptions } from "./ImportOptions";
 import { Divider } from "@components/Sidebar/Common/Divider";
+import { ImportGeoJSON } from "./Import";
 
 const DataTable = dynamic(() => import("./DataTable"), { ssr: false })
 
@@ -12,7 +12,7 @@ export function Data() {
 
   return (
     <>
-      <ImportOptions />
+      <ImportGeoJSON />
       <Divider />
       {features.length !== 0 && <DataTable key={mapKey} />}
       {/* <DataTable2 /> */}

@@ -1,7 +1,7 @@
 import { DarkMode } from "./DarkMode";
 import { GithubLink } from "./GithubLink";
 
-export function Settings() {
+export function AppsSettings() {
   return (
     <div>
       <DarkMode />
