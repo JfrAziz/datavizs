@@ -1,4 +1,5 @@
-import { BaseMap } from "@config/baseMaps";
+import { Map } from "leaflet";
+import { BaseMap } from "@config/maps";
 import { Feature, FeatureCollection, Geometry } from "geojson";
 
 
@@ -55,6 +56,11 @@ export type GeoJSONStore = GeoJSONState & GeoJSONFunction
  * were used. example [a, b] will be compared a <= value < b 
  * 
  */
+export type minMaxValue = {
+  min: number | undefined
+
+  max: number | undefined
+}
 
 interface LegendCreator<T extends "single" | "range"> {
   uuid: string;
@@ -67,10 +73,7 @@ interface LegendCreator<T extends "single" | "range"> {
 
   type: T;
 
-  value: T extends "single" ? string : {
-    min: number | undefined
-    max: number | undefined
-  }
+  value: T extends "single" ? string : minMaxValue
 }
 
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">
@@ -98,14 +101,30 @@ export type LegendStore = LegendState & LegendFunction
  * Map Settings state for handle maps
  * 
  */
+type MapWrapper = { type: "auto" } | {
+  type: "custom"
+
+  width?: number;
+
+  height?: number
+}
+
 export interface MapState {
+  map: Map | null;
+
   showControl: boolean;
 
   baseMap: BaseMap | null;
+
+  mapWrapper: MapWrapper
 }
 
 export interface MapFunction {
+  setMap: (map: Map) => void
+
   setBaseMap: (value: BaseMap | null) => void
+
+  setMapWrapper: (wrapper: MapWrapper) => void
 
   toggleControl: () => void;
 }

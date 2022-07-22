@@ -1,4 +1,5 @@
 import { BaseMapsOptions } from "./BaseMapsOptions";
+import { MapsSizeOptions } from "./MapsSizeOptions";
 import { MapsControlOptions } from "./MapsControlOptions";
 
 export function Maps() {
@@ -6,6 +7,7 @@ export function Maps() {
     <div>
       <MapsControlOptions />
       <BaseMapsOptions />
+      <MapsSizeOptions />
     </div>
   );
 }

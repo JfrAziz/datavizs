@@ -1,8 +1,8 @@
 import { useStore } from "@stores/maps";
 import { randomColor } from "@utils/colors";
 import { useEffect, useState } from "react";
-import { Legend } from "@stores/maps/types";
 import { useDebounce } from "@utils/debounce";
+import { Legend, minMaxValue } from "@stores/maps/types";
 import { Divider } from "@components/Sidebar/Common/Divider";
 import { Eye, EyeOff, Refresh, Trash } from "tabler-icons-react";
 import {
@@ -101,12 +101,6 @@ const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
  * onChange props. We can do props drilling and use single debounce function
  * to all legend items. 
  */
-type minMaxValue = {
-  min: number | undefined
-
-  max: number | undefined
-}
-
 interface InputMinMaxProps {
   value: minMaxValue
 

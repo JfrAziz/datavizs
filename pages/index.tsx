@@ -18,7 +18,7 @@ const useStyles = createStyles((theme) => {
     },
     map_container: {
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: '#eee',
 
       [theme.fn.smallerThan(BREAKPOINT)]: {
         display: 'flex',
