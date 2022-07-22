@@ -39,13 +39,13 @@ export const ExternalControl = () => {
   return (
     <div className={classes.container}>
       <Group grow spacing={0}>
-        <Button variant="default" size="xs" className={classes.button} onClick={() => map?.zoomIn()}>
+        <Button variant="default" size="xs" className={classes.button} onClick={() => map?.zoomIn()} aria-label="Zoom In">
           <Tooltip label="zoom in"><ZoomIn size={16} /></Tooltip>
         </Button>
-        <Button variant="default" size="xs" className={classes.button} onClick={() => map?.zoomOut()}>
+        <Button variant="default" size="xs" className={classes.button} onClick={() => map?.zoomOut()} aria-label="Zoom Out">
           <Tooltip label="zoom out"><ZoomOut size={16} /></Tooltip>
         </Button>
-        <Button variant="default" size="xs" className={classes.button} onClick={setCenter}>
+        <Button variant="default" size="xs" className={classes.button} onClick={setCenter} aria-label="Focus to GeoJSON">
           <Tooltip label="focus"><FocusCentered size={16} /></Tooltip>
         </Button>
       </Group>
