@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useStore } from "@stores/maps";
-import { baseMaps } from "@config/baseMaps";
-import { ListItem } from "../Common/ListItem";
+import { baseMaps } from "@config/maps";
 import { ColorInput, Select } from "@mantine/core";
 import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
+import { ListItem } from "@components/Sidebar/Common/ListItem";
 
 
 export function BaseMapsOptions() {

@@ -1,6 +1,5 @@
-import { LatLngBounds } from "leaflet";
+import { useEffect } from "react";
 import { useStore } from "@stores/maps";
-import { useEffect, useRef } from "react";
 import { useDebounce } from "@utils/debounce";
 import { GeoJSONPopup } from "./GeoJSONPopup";
 import { GeoJSONComponent } from "./GeoJSONComponent";
@@ -23,18 +22,25 @@ const GeoJSON = ({ feature, updateProperties }: GeoJSONProps) => (
 
 export const GeoJSONLayer = () => {
   const map = useMap()
-  const geojsonRef = useRef<L.FeatureGroup>(null)
-  const mapKey = useStore(state => state.mapKey)
   const features = useStore(state => state.features)
+  const geoJSONKey = useStore(state => state.geoJSONKey)
+  const geojsonRef = useStore(state => state.geoJSONRef)
 
+  const setGeoJSONRef = useStore.getState().setGeoJSONRef
   const updateFeatureByUUID = useDebounce(useStore.getState().updateFeatureByUUID, 500)
 
   useEffect(() => {
-    features.length && map.fitBounds(geojsonRef.current?.getBounds() as LatLngBounds)
-  }, [features, map])
+    if (!features.length) return;
 
-  return features && (
-    <FeatureGroup ref={geojsonRef} key={mapKey}>
+    if (!geojsonRef || Object.keys(geojsonRef.getBounds()).length === 0) return;
+
+    map.fitBounds(geojsonRef.getBounds())
+  }, [geojsonRef])
+
+  if (!features.length) return null;
+
+  return (
+    <FeatureGroup ref={setGeoJSONRef} key={geoJSONKey}>
       {features.map((item) => <GeoJSON key={item.properties.uuid} updateProperties={updateFeatureByUUID} feature={item} />)}
     </FeatureGroup>
   )

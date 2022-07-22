@@ -1,14 +1,16 @@
 import { useStore } from '@stores/maps';
+import { FileImport } from './FileImport';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
+import { ListItem } from "@components/Sidebar/Common/ListItem";
 import { ModalsContextProps } from '@mantine/modals/lib/context';
-import { GeoJSONFileImport } from '@components/Import/GeoJSONFileImport';
 
-const ImportModalBody: React.FC<{ modals : ModalsContextProps }> = ({ modals }) => <GeoJSONFileImport callback={() => modals.closeAll()} />
 
-export function ImportGeoJSONBtn() {
+const ImportModalBody: React.FC<{ modals: ModalsContextProps }> = ({ modals }) => <FileImport callback={() => modals.closeAll()} />
+
+export function ImportGeoJSON() {
   const modals = useModals();
-  const mapKey = useStore.getState().mapKey
+  const geoJSONKey = useStore.getState().geoJSONKey
 
   const openContextModal = () => {
     const openImportGeoJSONModal = () => modals.openModal({
@@ -19,7 +21,7 @@ export function ImportGeoJSONBtn() {
       children: <ImportModalBody modals={modals} />,
     });
 
-    if (!mapKey) return openImportGeoJSONModal()
+    if (!geoJSONKey) return openImportGeoJSONModal()
 
     return modals.openConfirmModal({
       title: 'Import a new GeoJSON Collection',
@@ -32,5 +34,9 @@ export function ImportGeoJSONBtn() {
     });
   }
 
-  return <Button onClick={openContextModal}>Import Data</Button>;
+  return (
+    <ListItem title="Import Data" description="Import geojson">
+      <Button onClick={openContextModal}>Import Data</Button>
+    </ListItem>
+  );
 }

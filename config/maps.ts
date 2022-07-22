@@ -4,7 +4,7 @@ export interface BaseMap {
   baseMap: string
 };
 
-const baseMaps: BaseMap[] = [
+export const baseMaps: BaseMap[] = [
   {
     name: "Open Street Maps",
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -32,4 +32,5 @@ const baseMaps: BaseMap[] = [
   }
 ]
 
-export { baseMaps }
+export const DEFAULT_MAPS_WIDTH = 800
+export const DEFAULT_MAPS_HEIGHT = 600

@@ -6,12 +6,13 @@ import { ActionIcon, Group, MantineTheme, Tooltip, useMantineTheme } from "@mant
 import DataEditor, { EditableGridCell, GridCell, GridCellKind, GridColumn, GridSelection, Item } from "@glideapps/glide-data-grid";
 
 
-/* 
-|
-| function for geneate table theme, based on mantine theme
-| this will change a lot of default color used in glide-data-grid
-|
-*/
+/**
+ * function for geneate table theme, based on mantine theme
+ * this will change a lot of default color used in glide-data-grid
+ * 
+ * @param theme 
+ * @returns 
+ */
 const getTheme = (theme: MantineTheme) => {
   if (theme.colorScheme === 'dark') {
     return {
@@ -57,11 +58,10 @@ const DataTable = () => {
 
   const columns: GridColumn[] = columnNames.map((keyName) => ({ title: keyName, id: keyName }))
 
-  /* 
-  |
-  | table cell getter and setter, for get and delete a value in the table
-  |
-  */
+
+  /**
+   * table cell getter and setter, for get and delete a value in the table
+   */
   const getContent = useCallback((cell: Item): GridCell => {
     const [col, row] = cell;
     const rowCell = features[row].properties[columnNames[col]]
@@ -84,11 +84,11 @@ const DataTable = () => {
   }, [features]);
 
 
-  /* 
-  |
-  | custom function for deletion by row and by column, then the button just 
-  | call the action to check column or row to be deleted.
-  |
+ /**
+  * custom function for deletion by row and by column, then the button just 
+  * call the action to check column or row to be deleted.
+  * 
+  * @returns 
   */
   const getSelectedRowIndex = (): number[] => {
     if (!gridSelection || !gridSelection.rows.length) return []
@@ -138,10 +138,11 @@ const DataTable = () => {
     }
   }
 
-  /* 
-  |
-  | save a current geoJSON and it's properties to file
-  |
+
+ /**
+  * save a current geoJSON and it's properties to file
+  * 
+  * @returns 
   */
   const downloadToGeoJSON = () => {
     const blob = new Blob([JSON.stringify({ type: "FeatureCollection", features: features })], { type: 'text/plain' })

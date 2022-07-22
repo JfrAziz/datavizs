@@ -1,29 +1,24 @@
+import { Legend } from "@stores/maps/types";
 import { DEFAULT_FEATURE_COLOR } from "@config/colors";
-import { Legend, LegendOperator } from "@stores/maps/types";
 
 /**
- * compare a value with value in the legends use some operator to generate a color.
+ * Legend value is an array value with size 1 or 2. If the type is equals, 
+ * just index 0 is used for comparison, but if the type is range, index 0 and 1
+ * were used. example [a, b] will be compared a <= value < b 
  * 
  * @param value 
  * @param legends 
- * @param operator 
  * @returns string
  */
-export const getFeatureColor = (value: string | number, legends: Legend[], operator: LegendOperator): string => {
+export const getFeatureColor = (value: string | number, legends: Legend[]): string => {
   let selectedColor: Legend | undefined = undefined
-  switch (operator) {
-    case "equal":
-      selectedColor = legends.find(item => value === item.value)
-      break;
 
-    case "greater-than":
-      selectedColor = legends.slice().reverse().find(item => value >= item.value)
-      break;
+  selectedColor = legends.find(item => {
+    if (item.type === "single") return item.value === value
 
-    case "less-than":
-      selectedColor = legends.find(item => value <= item.value)
+    if (item.value.min === undefined || item.value.max === undefined) return false
 
-      break;
-  }
+    return item.value.min <= value && item.value.max > value
+  })
   return selectedColor ? selectedColor.color : DEFAULT_FEATURE_COLOR
 }

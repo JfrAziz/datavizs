@@ -17,28 +17,22 @@ export const GeoJSONPopup: FC<GeoJSONPopupProps> = ({ properties, updateProperti
 
   const keys = Object.keys(properties).filter(item => item !== "uuid" && item !== "color")
   return keys && (
-    <div>
-      <Paper withBorder radius="md" p="xs">
-        <div style={{ height: "100%", display: "flex", maxHeight: 200 }}>
-          <ScrollArea style={{ width: 250 }} scrollbarSize={3}>
-            {
-              keys.map(key => {
-                return (
-                  <Group position="apart" noWrap spacing="xl" mb="sm" key={`${properties.uuid}_${key}`}>
-                    <div>
-                      <Text size="sm">{key}</Text>
-                    </div>
-                    <div>
-                      <Text align='right' size="sm">{properties?.[key]}</Text>
-                    </div>
-                  </Group>
-                )
-              })
-            }
-          </ScrollArea>
-        </div>
-        <ColorPicker format="rgba" mt={10} value={color} style={{ width: "100%" }} size="md" onChange={updateColor} />
-      </Paper>
-    </div>
+    <Paper withBorder radius="md" p="xs">
+      <div style={{ height: "100%", display: "flex", maxHeight: 200 }}>
+        <ScrollArea style={{ width: 250 }} scrollbarSize={3}>
+          {keys.map(key => (
+            <Group position="apart" noWrap spacing="xl" mb="sm" key={`${properties.uuid}_${key}`}>
+              <div>
+                <Text size="sm">{key}</Text>
+              </div>
+              <div>
+                <Text align='right' size="sm">{properties?.[key]}</Text>
+              </div>
+            </Group>
+          ))}
+        </ScrollArea>
+      </div>
+      <ColorPicker format="rgba" mt={10} value={color} style={{ width: "100%" }} size="md" onChange={updateColor} />
+    </Paper>
   )
 }
