@@ -1,6 +1,7 @@
 import { FeatureGroup, Map } from "leaflet";
 import { BaseMap } from "@config/maps";
 import { Feature, FeatureCollection, Geometry } from "geojson";
+import { RefObject } from "react";
 
 
 /**
@@ -113,25 +114,29 @@ type MapWrapper = { type: "auto" } | {
 }
 
 export interface MapState {
-  map: Map | null;
-
-  showControl: boolean;
+  mapRef: Map | null;
 
   baseMap: BaseMap | null;
-
+  
   mapWrapper: MapWrapper
+
+  mapWrapperRef: RefObject<HTMLDivElement> | null;
+
+  showControl: boolean;
 }
 
 export interface MapFunction {
-  setMap: (map: Map) => void
+  setMapRef: (map: Map) => void
 
   setBaseMap: (value: BaseMap | null) => void
 
   setMapWrapper: (wrapper: MapWrapper) => void
 
-  toggleControl: () => void;
-
   setMapToCenter: () => void
+
+  downloadMap: (format?: "png" | "jpeg" | "svg") => void
+
+  toggleControl: () => void;
 }
 
 export type MapStore = MapState & MapFunction

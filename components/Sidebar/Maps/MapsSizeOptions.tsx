@@ -1,7 +1,7 @@
 import { useStore } from "@stores/maps";
 import { NumberInput, Select } from "@mantine/core";
 import { BaseList, ListItem } from "@components/Sidebar/Common/ListItem";
-import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH } from "@config/maps";
+import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH, MAPS_MAX_HEIGHT, MAPS_MAX_WIDTH } from "@config/maps";
 
 export function MapsSizeOptions() {
   const mapWrapper = useStore(state => state.mapWrapper)
@@ -21,14 +21,14 @@ export function MapsSizeOptions() {
           <NumberInput
             label="width"
             placeholder="800px"
-            min={400} max={5000}
+            min={400} max={MAPS_MAX_WIDTH}
             value={mapWrapper.width}
             defaultValue={DEFAULT_MAPS_WIDTH}
             onChange={value => setMapWrapper({ ...mapWrapper, width: value })} />
           <NumberInput
             label="height"
             placeholder="600px"
-            min={400} max={5000}
+            min={400} max={MAPS_MAX_HEIGHT}
             value={mapWrapper.height}
             defaultValue={DEFAULT_MAPS_HEIGHT}
             onChange={value => setMapWrapper({ ...mapWrapper, height: value })} />

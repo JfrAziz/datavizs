@@ -20,6 +20,7 @@
     "@mantine/next": "^4.2.12",
     "@mantine/notifications": "^4.2.12",
     "chroma-js": "^2.4.2",
+    "html-to-image": "^1.9.0",
     "leaflet": "^1.8.0",
     "next": "12.2.1",
     "react": "18.2.0",

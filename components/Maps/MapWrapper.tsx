@@ -19,27 +19,33 @@ const useStyles = createStyles({
     left: 0,
     right: 0,
   },
-  mapContainer: {
+  canvas: {
     padding: 50,
     minWidth: "100%",
     display: "flex",
     justifyContent: "center"
+  },
+  map: {
+    width: "100%",
+    height: "100%"
   }
 })
 
 export const MapWrapper = (props: PropsWithChildren) => {
   const mapWrapper = useStore(state => state.mapWrapper)
 
+  const mapWrapperRef = useStore(state => state.mapWrapperRef)
+
   const { classes } = useStyles()
 
   return (
     <div className={classes.wrapper}>
-      <ExternalControl/>
-      {mapWrapper.type === "auto" && props.children}
+      <ExternalControl />
+      {mapWrapper.type === "auto" && <div ref={mapWrapperRef} className={classes.map}>{props.children}</div>}
       {mapWrapper.type === "custom" && (
         <div className={classes.container}>
           <ScrollArea style={{ height: "100%", width: "100%" }}>
-            <div className={classes.mapContainer}>
+            <div className={classes.canvas}>
               <Paper
                 shadow="xl"
                 radius="xs"
@@ -48,7 +54,7 @@ export const MapWrapper = (props: PropsWithChildren) => {
                   height: mapWrapper.height ?? DEFAULT_MAPS_HEIGHT,
                   padding: 1
                 }}>
-                {props.children}
+                <div ref={mapWrapperRef} className={classes.map}>{props.children}</div>
               </Paper>
             </div>
           </ScrollArea>

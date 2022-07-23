@@ -33,4 +33,9 @@ export const baseMaps: BaseMap[] = [
 ]
 
 export const DEFAULT_MAPS_WIDTH = 800
+
 export const DEFAULT_MAPS_HEIGHT = 600
+
+export const MAPS_MAX_WIDTH = 2048
+
+export const MAPS_MAX_HEIGHT = 2048

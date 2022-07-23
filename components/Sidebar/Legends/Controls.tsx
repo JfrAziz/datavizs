@@ -30,12 +30,12 @@ export const HeaderButton = () => {
 
 export const FooterButton = () => {
   const legends = useStore(state => state.legends)
-  const applyColor = useStore.getState().updateFeatureColor
 
   const keys = useStore(state => state.propertiesKeys)
 
-  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+  const applyColor = useStore.getState().updateFeatureColor
 
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
 
   const updateFeatureColor = () => {
     if (!selectedKey) return;
@@ -47,10 +47,14 @@ export const FooterButton = () => {
 
   return (
     <Group position="apart" my={20} align="flex-end">
-      <Select label="Select key to apply the color" data={keys} value={selectedKey} onChange={setSelectedKey} />
-      <Button onClick={updateFeatureColor}>
-        Apply Color
-      </Button>
+      <Select
+        searchable
+        data={keys}
+        value={selectedKey}
+        onChange={setSelectedKey}
+        label="Select key to apply the color"
+      />
+      <Button onClick={updateFeatureColor}>Apply Color</Button>
     </Group>
   )
 }
