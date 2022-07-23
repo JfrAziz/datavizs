@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
+import Maps from '@components/Maps';
 import type { NextPage } from 'next'
+import Sidebar from '@components/Sidebar';
 import { createStyles } from '@mantine/core';
-import { Sidebar } from '@components/Sidebar';
 import { MantineProvider } from '@components/Provider/MantineProvider';
 
-const MapWithNoSSR = dynamic(() => import("@components/Maps"), { ssr: false });
 
 const useStyles = createStyles((theme) => {
   const BREAKPOINT = theme.breakpoints.lg
@@ -49,7 +48,7 @@ const Home: NextPage = () => {
       <MantineProvider>
         <div className={classes.container}>
           <div className={classes.map_container}>
-            <MapWithNoSSR />
+            <Maps />
           </div>
           <div className={classes.sidebar_container}>
             <Sidebar />

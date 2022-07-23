@@ -1,6 +1,6 @@
 export interface BaseMap {
   name: string;
-  attribution: string | undefined;
+  attribution: string;
   baseMap: string
 };
 

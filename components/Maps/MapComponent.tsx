@@ -5,7 +5,7 @@ import { MapContainer } from "react-leaflet";
 import { GeoJSONLayer } from "./GeoJSONLayer";
 import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
 
-const Map = () => {
+const MapComponent = () => {
   const setMap = useStore.getState().setMapRef
   const mapWrapper = useStore(state => state.mapWrapper)
 
@@ -29,4 +29,4 @@ const Map = () => {
   )
 }
 
-export default Map;
+export default MapComponent;

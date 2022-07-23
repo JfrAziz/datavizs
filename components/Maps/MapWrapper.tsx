@@ -27,7 +27,8 @@ const useStyles = createStyles({
   },
   map: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    position: "relative"
   }
 })
 
@@ -44,7 +45,7 @@ export const MapWrapper = (props: PropsWithChildren) => {
       {mapWrapper.type === "auto" && <div ref={mapWrapperRef} className={classes.map}>{props.children}</div>}
       {mapWrapper.type === "custom" && (
         <div className={classes.container}>
-          <ScrollArea style={{ height: "100%", width: "100%" }}>
+          <ScrollArea style={{ height: "100%", width: "100%" }} styles={{ thumb: { zIndex: 4 } }}>
             <div className={classes.canvas}>
               <Paper
                 shadow="xl"

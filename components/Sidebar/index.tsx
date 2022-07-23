@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => {
   };
 });
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const { classes } = useStyles();
 
   return (
@@ -42,3 +42,5 @@ export const Sidebar = () => {
     </Tabs>
   )
 }
+
+export default Sidebar
