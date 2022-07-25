@@ -1,60 +1,76 @@
-import { useState } from "react"
+import { ColorInput, createStyles, Divider, Group, NumberInput, Select, Switch } from "@mantine/core"
 import { useStore } from "@stores/maps"
-import { Button, Group, Select, Tooltip } from "@mantine/core"
+import { BaseList, ListItem } from "@components/Sidebar/Common/ListItem"
 
-export const HeaderButton = () => {
-  const addLegends = useStore.getState().addLegends
+const useStyles = createStyles(theme => ({
+  split: {
+    paddingTop: theme.spacing.md,
+    [theme.fn.smallerThan(theme.breakpoints.sm)]: {
+      flexWrap: "wrap"
+    },
+  }
+}))
 
-  const resetLegends = useStore.getState().resetLegends
+export const ShowLegend = () => {
+  const { classes, theme } = useStyles()
+  const legendOptions = useStore(state => state.legendOptions)
 
-  const generateGradient = useStore.getState().generateGradient
-
-  return (
-    <Group position="apart" my={20}>
-      <Tooltip label="Create a gradient colors from the first to the last color">
-        <Button size="xs" color="cyan" onClick={generateGradient}>
-          Create Gradient
-        </Button>
-      </Tooltip>
-      <Group position="right">
-        <Button size="xs" onClick={addLegends}>
-          Add Legend
-        </Button>
-        <Button size="xs" color="red" onClick={resetLegends}>
-          Reset Legend
-        </Button>
-      </Group>
-    </Group>
-  )
-}
-
-export const FooterButton = () => {
-  const legends = useStore(state => state.legends)
-
-  const keys = useStore(state => state.propertiesKeys)
-
-  const applyColor = useStore.getState().updateFeatureColor
-
-  const [selectedKey, setSelectedKey] = useState<string | null>(null)
-
-  const updateFeatureColor = () => {
-    if (!selectedKey) return;
-
-    return applyColor(selectedKey, legends)
+  const toggleShowLegend = () => {
+    useStore.setState(state => ({ legendOptions: { ...legendOptions, show: !state.legendOptions.show } }))
   }
 
-  if (!legends.length) return null
+  const changeDirection = (value: "column" | "row") => useStore.setState(state => ({
+    legendOptions: { ...state.legendOptions, direction: value }
+  }))
 
   return (
-    <Group position="apart" my={20} align="flex-end">
-      <Select
-        searchable
-        data={keys}
-        value={selectedKey}
-        onChange={setSelectedKey}
-        label="Select key to apply the color"
-      />
-      <Button onClick={updateFeatureColor}>Apply Color</Button>
-    </Group>
+    <>
+      <ListItem title="Show legend" description="legend will display additional information on the maps">
+        <Switch checked={legendOptions.show} onChange={toggleShowLegend} />
+      </ListItem>
+      {legendOptions.show && (
+        <>
+          <BaseList className={classes.split}>
+            <Group noWrap sx={{ width: "100%" }} grow>
+              <NumberInput
+                min={0}
+                size="xs"
+                label="Width"
+                placeholder="px"
+                stepHoldDelay={500}
+                stepHoldInterval={(t) => Math.max(1000 / t ** 4, 25)} />
+              <NumberInput
+                min={0}
+                size="xs"
+                label="Height"
+                placeholder="px"
+                stepHoldDelay={500}
+                stepHoldInterval={(t) => Math.max(1000 / t ** 2, 25)} />
+            </Group>
+            <Group noWrap sx={{ width: "100%" }} grow>
+              <NumberInput size="xs" placeholder="px" label="Spacing" />
+              <Select
+                size="xs"
+                label="Direction"
+                defaultValue="column"
+                data={["column", "row"]}
+                onChange={changeDirection}
+                value={legendOptions.direction}
+              />
+            </Group>
+          </BaseList>
+          <BaseList className={classes.split}>
+            <Group noWrap sx={{ width: "100%" }} grow>
+              <NumberInput size="xs" placeholder="px" label="Text Size" />
+              <NumberInput size="xs" placeholder="px" label="Simbol Size" />
+            </Group>
+            <Group noWrap sx={{ width: "100%" }} grow>
+              <ColorInput size="xs" label="Background Color" />
+              <ColorInput size="xs" label="Text Color" />
+            </Group>
+          </BaseList>
+        </>
+      )}
+    </>
   )
 }

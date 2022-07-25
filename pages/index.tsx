@@ -27,6 +27,8 @@ const useStyles = createStyles((theme) => {
     sidebar_container: {
       width: '100%',
       padding: theme.spacing.xs,
+      maxWidth: theme.breakpoints.sm,
+      margin: "auto",
 
       [theme.fn.largerThan(BREAKPOINT)]: {
         maxWidth: theme.breakpoints.xs,

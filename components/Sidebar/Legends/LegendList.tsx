@@ -8,10 +8,13 @@ import { Eye, EyeOff, Refresh, Trash } from "tabler-icons-react";
 import {
   Group,
   Stack,
+  Select,
+  Button,
   Tooltip,
   TextInput,
   ActionIcon,
   ColorInput,
+  ColorSwatch,
   NumberInput,
   SegmentedControl,
   NumberInputProps,
@@ -27,6 +30,7 @@ interface InputColorProps {
 
   onChange: (value: string) => void
 }
+
 const InputColor = ({ color, onChange }: InputColorProps) => {
   const [value, setColor] = useState<string>(color)
 
@@ -43,7 +47,15 @@ const InputColor = ({ color, onChange }: InputColorProps) => {
     </ActionIcon>
   )
 
-  return <ColorInput sx={{ flex: 1 }} label="Color" format="hex" value={value} onChange={updateColor} rightSection={<RandomButton />} />
+  return <ColorInput
+    size="xs"
+    format="hex"
+    label="Color"
+    value={value}
+    sx={{ flex: 1 }}
+    onChange={updateColor}
+    rightSection={<RandomButton />}
+  />
 }
 
 /**
@@ -69,7 +81,7 @@ const InputText = ({ value, onChange, ...others }: InputTextProps) => {
     onChange(value)
   }
 
-  return <TextInput sx={{ flex: 1 }} {...others} value={val} onChange={e => updateColor(e.target.value)} />
+  return <TextInput sx={{ flex: 1 }} {...others} size="xs" value={val} onChange={e => updateColor(e.target.value)} />
 }
 
 /**
@@ -91,7 +103,7 @@ const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
     if (onChange) return onChange(value)
   }
 
-  return <NumberInput sx={{ flex: 1 }} value={value} precision={precision} onChange={updateMinValue} {...others} />
+  return <NumberInput sx={{ flex: 1 }} size="xs" value={value} precision={precision} onChange={updateMinValue} {...others} />
 }
 
 /**
@@ -127,7 +139,7 @@ const InputMinMax = ({ value, onChange }: InputMinMaxProps) => {
  * Legend list item and handle type value selection. Some value
  * will be updated with delay (debounce), e.g input text, color, and value.
  */
-interface ItemProps {
+interface LegendItemProps {
   item: Legend
 
   onUpdate: (legend: Legend) => void
@@ -137,72 +149,62 @@ interface ItemProps {
   onDelete: (legend: Legend) => void
 }
 
-const Item = ({ item, onDelete, onUpdate, onUpdateEnd }: ItemProps) => {
-  const [legend, setLegend] = useState<Legend>(item)
-
-  const updateState = (value: Legend) => {
-    setLegend(value)
-
-    return onUpdate(value)
-  }
-
+const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) => {
   const updateWithDelay = (value: Legend) => {
-    setLegend(value)
-
     if (onUpdateEnd) return onUpdateEnd(value)
 
     return onUpdate(value)
   }
 
-  const updateColor = (color: string) => updateWithDelay({ ...legend, color: color })
+  const updateColor = (color: string) => updateWithDelay({ ...item, color: color })
 
-  const updateLabel = (label: string) => updateWithDelay({ ...legend, label: label })
+  const updateLabel = (label: string) => updateWithDelay({ ...item, label: label })
 
-  const toggleHidden = () => updateState({ ...legend, hidden: !legend.hidden })
+  const toggleHidden = () => onUpdate({ ...item, hidden: !item.hidden })
 
   const updateType = (type: "range" | "single") => {
-    if (type === "single") return updateState({ ...legend, type: "single", value: "" })
+    if (type === "single") return onUpdate({ ...item, type: "single", value: "" })
 
-    return updateState({ ...legend, type: type, value: { min: undefined, max: undefined } })
+    return onUpdate({ ...item, type: type, value: { min: undefined, max: undefined } })
   }
 
-  const updateValueText = (value: string) => updateWithDelay({ ...legend, type: "single", value: value })
+  const updateValueText = (value: string) => updateWithDelay({ ...item, type: "single", value: value })
 
-  const updateValueRange = (value: minMaxValue) => updateWithDelay({ ...legend, type: "range", value: value })
+  const updateValueRange = (value: minMaxValue) => updateWithDelay({ ...item, type: "range", value: value })
 
   return (
-    <Stack mt="sm" key={legend.uuid}>
-      <Group grow>
-        <InputText label="Label" placeholder="label on legend" value={legend.label} onChange={updateLabel} />
-        <InputColor color={legend.color} onChange={updateColor} />
-      </Group>
-      <Group>
-
+    <Stack mt="sm" key={item.uuid}>
+      <Group align="flex-end">
+        <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
+        <InputColor color={item.color} onChange={updateColor} />
         <Group>
-          <Tooltip label={legend.hidden ? "show in legend" : "hide from legend"}>
-            <ActionIcon variant="filled" color={legend.hidden ? "gray" : "teal"} onClick={toggleHidden}>
-              {legend.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+          <Tooltip label={item.hidden ? "show in legend" : "hide from legend"}>
+            <ActionIcon variant="filled" color={item.hidden ? "gray" : "teal"} onClick={toggleHidden}>
+              {item.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
             </ActionIcon>
           </Tooltip>
 
           <Tooltip label="delete this legend">
-            <ActionIcon color="red" variant="filled" onClick={() => onDelete(legend)}>
+            <ActionIcon color="red" variant="filled" onClick={() => onDelete(item)}>
               <Trash size={14} />
             </ActionIcon>
           </Tooltip>
         </Group>
+      </Group>
+      <Group>
+
         <Tooltip label="set value type to compare with the data">
           <SegmentedControl
-            value={legend.type}
+            value={item.type}
             onChange={updateType}
             size="xs"
             data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
           />
         </Tooltip>
 
-        {legend.type === "single" && <InputText value={legend.value} placeholder="value" onChange={updateValueText} />}
+        {item.type === "single" && <InputText value={item.value} placeholder="value" onChange={updateValueText} />}
 
-        {legend.type === "range" && <InputMinMax value={legend.value} onChange={updateValueRange} />}
+        {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
 
       </Group>
       <Divider mt={0} mb={0} />
@@ -210,7 +212,98 @@ const Item = ({ item, onDelete, onUpdate, onUpdateEnd }: ItemProps) => {
   )
 }
 
+/**
+ * Header Button to add a new legend, reset current legends, and 
+ * generate gradient from available color in the legend
+ * 
+ * @returns JSX
+ */
+const HeaderButton = () => {
+  const addLegends = useStore.getState().addLegends
 
+  const resetLegends = useStore.getState().resetLegends
+
+  const generateGradient = useStore.getState().generateGradient
+
+  return (
+    <Group position="apart" my={20}>
+      <Tooltip label="Create a gradient colors from the first to the last color">
+        <Button size="xs" color="cyan" onClick={generateGradient}>
+          Create Gradient
+        </Button>
+      </Tooltip>
+      <Group position="right">
+        <Button size="xs" onClick={addLegends}>
+          Add Legend
+        </Button>
+        <Button size="xs" color="red" onClick={resetLegends}>
+          Reset Legend
+        </Button>
+      </Group>
+    </Group>
+  )
+}
+
+
+/**
+ * Footer contains properties keys selection to apply color based on value
+ * in the legends. This will update all features
+ * 
+ * @returns JSX
+ */
+const FooterButton = () => {
+  const legends = useStore(state => state.legends)
+
+  const keys = useStore(state => state.propertiesKeys)
+
+  const applyColor = useStore.getState().updateFeatureColor
+
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+
+  const updateFeatureColor = () => {
+    if (!selectedKey) return;
+
+    return applyColor(selectedKey, legends)
+  }
+
+  if (!legends.length) return null
+
+  return (
+    <Group position="apart" my={20} align="flex-end">
+      <Select
+        size="xs"
+        searchable
+        data={keys}
+        value={selectedKey}
+        onChange={setSelectedKey}
+        label="Select key to apply the color"
+      />
+      <Button size="xs" onClick={updateFeatureColor}>Apply Color</Button>
+    </Group>
+  )
+}
+
+/**
+ * Color swatch to display all colors in legends
+ * 
+ * @returns JSX
+ */
+const ColorSwatchs = () => {
+  const legends = useStore(state => state.legends)
+
+  return (
+    <Group position="center" spacing="xs">
+      {legends.map((legend, idx) => <ColorSwatch key={idx} color={legend.color} />)}
+    </Group>
+  )
+}
+
+
+/**
+ * Combine all component above
+ * 
+ * @returns JSX
+ */
 export const LegendList = () => {
   const legends = useStore(state => state.legends)
 
@@ -219,18 +312,23 @@ export const LegendList = () => {
   const deleteLegend = useStore.getState().deleteLegend
 
   const debounceUpdate = useDebounce(updateLegend, 200)
-  
-  if (legends.length === 0) return null
+
+  console.log(legends)
 
   return (
     <>
-      {legends.map(item => <Item
-        key={item.uuid}
-        item={item}
-        onUpdate={legend => updateLegend(item.uuid, legend)}
-        onDelete={() => deleteLegend(item.uuid)}
-        onUpdateEnd={legend => debounceUpdate(item.uuid, legend)}
-      />)}
+      <HeaderButton />
+      <ColorSwatchs />
+      {legends.map(item => (
+        <LegendItem
+          item={item}
+          key={item.uuid}
+          onDelete={() => deleteLegend(item.uuid)}
+          onUpdate={legend => updateLegend(item.uuid, legend)}
+          onUpdateEnd={legend => debounceUpdate(item.uuid, legend)}
+        />
+      ))}
+      <FooterButton />
     </>
   )
 }

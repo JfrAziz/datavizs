@@ -2,11 +2,26 @@ import { v4 } from "uuid";
 import { scale } from "chroma-js";
 import { StateCreator } from "zustand";
 import { randomColor } from "@utils/colors";
-import { DataStore, LegendStore } from "@stores/maps/types";
+import { DataStore, LegendOptions, LegendStore } from "@stores/maps/types";
 
+const LegendInitialValue : LegendOptions = {
+  show: false,
+
+  position: {
+    left: 10,
+
+    botton: 10
+  },
+
+  spacing: 0,
+
+  direction: "column",
+}
 
 export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set) => ({
   legends: [],
+
+  legendOptions: LegendInitialValue,
 
   addLegends: () => set(state => ({
     legends: [...state.legends, {

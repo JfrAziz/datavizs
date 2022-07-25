@@ -19,7 +19,7 @@ const useStyles = createStyles(theme => ({
   }
 }))
 
-export const AttributionLayer = () => {
+export const Attribution = () => {
   const { classes } = useStyles()
 
   const baseMap = useStore(state => state.baseMap)

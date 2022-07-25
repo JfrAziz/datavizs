@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
 import { MapWrapper } from "./MapWrapper";
-import { AttributionLayer } from "./OverlayLayer/AttributionLayer";
+import { OverlayLayer } from "./OverlayLayer";
 
 const MapWithNoSSR = dynamic(() => import("@components/Maps/MapComponent"), { ssr: false });
 
 const Maps = () => (
   <MapWrapper>
-    <AttributionLayer />
+    <OverlayLayer />
     <MapWithNoSSR />
   </MapWrapper>
 )

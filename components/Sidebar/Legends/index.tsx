@@ -1,14 +1,13 @@
+import { Divider } from "../Common/Divider";
+import { ShowLegend } from "./Controls";
 import { LegendList } from "./LegendList";
-import { ColorSwatchs } from "./ColorSwatchs";
-import { FooterButton, HeaderButton } from "./Controls";
 
 export function LegendOptions() {
   return (
     <div>
-      <HeaderButton />
-      <ColorSwatchs />
+      <ShowLegend />
+      <Divider label="Legend Value & Color Generator" />
       <LegendList />
-      <FooterButton />
     </div>
   );
 }
