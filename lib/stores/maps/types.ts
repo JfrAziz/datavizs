@@ -60,34 +60,28 @@ export type GeoJSONStore = GeoJSONState & GeoJSONFunction
 export type LegendOptions = {
   show: boolean
 
-  position?: {
-    left: number
-
-    botton: number
-  }
   // 
-  size?: {
-    width?: number
+  position: {
+    x: number
 
-    height?: number
+    y: number
   }
+  width?: number
 
   // 
-  spacing?: number
+  spacing: number
 
   direction: "column" | "row"
 
   // 
-  backgroundColor?: string
+  backgroundColor: string
 
-  textColor?: string
+  textColor: string
 
   // 
-  justify?: boolean
+  textSize: number
 
-  textSize?: number
-
-  symbolSize?: number
+  symbolSize: number
 }
 
 export type minMaxValue = {

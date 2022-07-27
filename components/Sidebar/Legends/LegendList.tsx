@@ -313,8 +313,6 @@ export const LegendList = () => {
 
   const debounceUpdate = useDebounce(updateLegend, 200)
 
-  console.log(legends)
-
   return (
     <>
       <HeaderButton />

@@ -1,19 +1,19 @@
-import { createStyles, Paper } from "@mantine/core"
 import { useStore } from "@stores/maps"
+import { createStyles } from "@mantine/core"
 
 const useStyles = createStyles(theme => ({
   container: {
     position: "absolute",
+    right: 5,
+    bottom: 0,
+    zIndex: 2,
+    paddingTop: 2,
     paddingLeft: 10,
     paddingRight: 10,
-    paddingTop: 2,
     paddingBottom: 2,
-    bottom: 0,
-    right: 5,
-    zIndex: 1,
     fontSize: theme.fontSizes.xs,
 
-    'a' : {
+    'a': {
       color: theme.primaryColor
     }
   }
@@ -23,12 +23,18 @@ export const Attribution = () => {
   const { classes } = useStyles()
 
   const baseMap = useStore(state => state.baseMap)
+  const legendOptions = useStore(state => state.legendOptions)
 
   if (!baseMap) return null;
 
   return (
-    <Paper className={classes.container} radius={0}>
+    <div
+      className={classes.container}
+      style={{
+        backgroundColor: legendOptions.backgroundColor,
+        color: legendOptions.textColor
+      }}>
       <div dangerouslySetInnerHTML={{ __html: `Leaflet | ${baseMap.attribution}` }} />
-    </Paper>
+    </div>
   )
 } 

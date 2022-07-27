@@ -8,14 +8,24 @@ const LegendInitialValue : LegendOptions = {
   show: false,
 
   position: {
-    left: 10,
+    x: 10,
 
-    botton: 10
+    y: 10
   },
+
+  width: undefined,
 
   spacing: 0,
 
   direction: "column",
+
+  backgroundColor: "#FFF",
+
+  textColor: "#666",
+
+  textSize: 12,
+
+  symbolSize: 25
 }
 
 export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set) => ({
