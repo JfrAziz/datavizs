@@ -2,9 +2,27 @@ import { v4 } from "uuid";
 import { scale } from "chroma-js";
 import { StateCreator } from "zustand";
 import { randomColor } from "@utils/colors";
-import { DataStore, LegendOptions, LegendStore } from "@stores/maps/types";
+import { DataStore, Legend, LegendOptions, LegendStore } from "@stores/maps/types";
 
-const LegendInitialValue : LegendOptions = {
+
+/**
+ * create a single type value legend 
+ * @returns Legend
+ */
+const createLegend = (): Legend => ({
+  uuid: v4(),
+  label: "",
+  value: "",
+  hidden: false,
+  type: "single",
+  color: randomColor(),
+})
+
+
+/**
+ * initial value for legend options
+ */
+const LegendOptionsInitialValue: LegendOptions = {
   show: false,
 
   position: {
@@ -21,9 +39,9 @@ const LegendInitialValue : LegendOptions = {
 
   backgroundColor: "#FFF",
 
-  textColor: "#666",
+  fontColor: "#666",
 
-  textSize: 12,
+  fontSize: 12,
 
   symbolSize: 25
 }
@@ -31,30 +49,23 @@ const LegendInitialValue : LegendOptions = {
 export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set) => ({
   legends: [],
 
-  legendOptions: LegendInitialValue,
+  legendOptions: LegendOptionsInitialValue,
 
   addLegends: () => set(state => ({
-    legends: [...state.legends, {
-      uuid: v4(),
-      label: "",
-      value: "",
-      hidden: false,
-      type: "single",
-      color: randomColor(),
-    }]
+    legends: [...state.legends, createLegend()]
   })),
 
   updateLegend: (uuid, legend) => set(state => ({
     legends: state.legends.map((item, id) => item.uuid !== uuid ? item : legend)
   })),
 
-  deleteLegend: (uuid) => {
-    return set(state => ({
-      legends: state.legends.filter((item, id) => item.uuid !== uuid)
-    }))
-  },
+  deleteLegend: (uuid) => set(state => ({
+    legends: state.legends.filter((item, id) => item.uuid !== uuid)
+  })),
 
   resetLegends: () => set({ legends: [] }),
+
+  resetLegendOptions: () => set({ legendOptions: {...LegendOptionsInitialValue, show: true} }),
 
   generateGradient: () => set(state => {
     const length = state.legends.length;

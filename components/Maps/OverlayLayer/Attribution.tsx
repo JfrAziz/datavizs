@@ -32,7 +32,7 @@ export const Attribution = () => {
       className={classes.container}
       style={{
         backgroundColor: legendOptions.backgroundColor,
-        color: legendOptions.textColor
+        color: legendOptions.fontColor
       }}>
       <div dangerouslySetInnerHTML={{ __html: `Leaflet | ${baseMap.attribution}` }} />
     </div>

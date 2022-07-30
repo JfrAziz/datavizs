@@ -75,12 +75,14 @@ export const Legend = () => {
       bounds="parent"
       className={classes.container}
       style={{ backgroundColor: legendOptions.backgroundColor }}
+      size={{ width: legendOptions.width ?? "auto", height: "auto" }}
       default={{
         x: legendOptions.position.x ?? 0,
         y: legendOptions.position.y ?? 0,
         width: legendOptions.width ?? "auto",
         height: "auto"
       }}
+      position={legendOptions.position}
       enableResizing={{
         top: false,
         left: true,
@@ -105,8 +107,8 @@ export const Legend = () => {
               size="sm"
               style={{
                 flex: 1,
-                color: legendOptions.textColor,
-                fontSize: legendOptions.textSize
+                color: legendOptions.fontColor,
+                fontSize: legendOptions.fontSize
               }} >
               {getLabelLegend(item)}
             </Text>

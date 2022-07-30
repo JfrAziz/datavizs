@@ -76,10 +76,10 @@ export type LegendOptions = {
   // 
   backgroundColor: string
 
-  textColor: string
+  fontColor: string
 
   // 
-  textSize: number
+  fontSize: number
 
   symbolSize: number
 }
@@ -120,6 +120,8 @@ export interface LegendFunction {
   deleteLegend: (uuid: string) => void;
 
   resetLegends: () => void;
+
+  resetLegendOptions: () => void;
 
   generateGradient: () => void
 }
