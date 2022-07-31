@@ -66,7 +66,12 @@ export type LegendOptions = {
 
     y: number
   }
-  width?: number
+
+  size: {
+    width: number | "auto"
+
+    height: number | "auto"
+  }
 
   // 
   spacing: number
@@ -122,6 +127,8 @@ export interface LegendFunction {
   resetLegends: () => void;
 
   resetLegendOptions: () => void;
+
+  updateLegendOptions: (legend: Partial<LegendOptions>) => void;
 
   generateGradient: () => void
 }

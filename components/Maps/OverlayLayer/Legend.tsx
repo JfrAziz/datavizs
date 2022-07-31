@@ -1,14 +1,19 @@
-import { Rnd } from "react-rnd"
+import { Rnd, RndResizeCallback } from "react-rnd"
 import { useStore } from "@stores/maps"
 import { PropsWithChildren } from "react";
 import type { Legend as LegendTypes } from "@stores/maps/types"
 import { ColorSwatch, createStyles, Group, Stack, Text } from "@mantine/core"
+import { DraggableEventHandler } from "react-draggable";
 
 
 const useStyles = createStyles(theme => ({
   container: {
     zIndex: 1,
     fontSize: theme.fontSizes.sm,
+
+    ":hover": {
+      border: "2px dashed"
+    }
   },
   wrapper: {
     width: "100%",
@@ -66,49 +71,64 @@ export const Legend = () => {
   const { classes } = useStyles()
 
   const legends = useStore(state => state.legends)
-  const legendOptions = useStore(state => state.legendOptions)
 
-  if (!legendOptions.show) return null;
+  const options = useStore(state => state.legendOptions)
+
+  const updateOptions = useStore.getState().updateLegendOptions
+
+  const updatePositions: DraggableEventHandler = (e, data) => {
+    updateOptions({ position: { x: data.x, y: data.y } })
+  }
+
+  const updateSize: RndResizeCallback = (e, direction, ref) => {
+    switch (direction) {
+      case "bottomRight":
+        updateOptions({ size: { width: ref.offsetWidth, height: ref.offsetHeight } })
+        break
+      case "right":
+        updateOptions({ size: { width: ref.offsetWidth, height: options.size.height } })
+        break
+      default:
+        updateOptions({ size: { width: options.size.width, height: ref.offsetHeight } })
+        break;
+    }
+  }
+
+  if (!options.show) return null;
 
   return (
     <Rnd
       bounds="parent"
+      onResize={updateSize}
+      position={options.position}
+      onDragStop={updatePositions}
       className={classes.container}
-      style={{ backgroundColor: legendOptions.backgroundColor }}
-      size={{ width: legendOptions.width ?? "auto", height: "auto" }}
-      default={{
-        x: legendOptions.position.x ?? 0,
-        y: legendOptions.position.y ?? 0,
-        width: legendOptions.width ?? "auto",
-        height: "auto"
+      default={{ ...options.position, ...options.size }}
+      style={{ backgroundColor: options.backgroundColor }}
+      size={{
+        width: options.size.width,
+        height: options.size.height
       }}
-      position={legendOptions.position}
       enableResizing={{
-        top: false,
-        left: true,
+        bottom: true,
         right: true,
-        bottom: false,
-        topLeft: false,
-        topRight: false,
-        bottomLeft: false,
-        bottomRight: false,
-      }}>
-      <LegendWrapper
-        direction={legendOptions.direction}
-        spacing={legendOptions.spacing}>
+        bottomRight: true
+      }}
+    >
+      <LegendWrapper spacing={options.spacing} direction={options.direction}>
         {legends.filter(item => !item.hidden).map(item => (
           <Group noWrap key={item.uuid}>
             <ColorSwatch
               radius={0}
               color={item.color}
-              size={legendOptions.symbolSize}
+              size={options.symbolSize}
               classNames={{ shadowOverlay: classes.colorSwatch }} />
             <Text
               size="sm"
               style={{
                 flex: 1,
-                color: legendOptions.fontColor,
-                fontSize: legendOptions.fontSize
+                color: options.fontColor,
+                fontSize: options.fontSize
               }} >
               {getLabelLegend(item)}
             </Text>

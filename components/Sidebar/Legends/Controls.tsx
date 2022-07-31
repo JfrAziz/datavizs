@@ -1,10 +1,23 @@
-import { Button, ColorInput, createStyles, Divider, Group, InputWrapper, NumberInput, Select, Slider, Switch } from "@mantine/core"
 import { useStore } from "@stores/maps"
+import { InfoCircle, Refresh } from "tabler-icons-react"
 import { BaseList, ListItem } from "@components/Sidebar/Common/ListItem"
+import {
+  Text,
+  Group,
+  Select,
+  Slider,
+  Switch,
+  Tooltip,
+  ColorInput,
+  ActionIcon,
+  createStyles,
+  InputWrapper,
+} from "@mantine/core"
 
 const useStyles = createStyles(theme => ({
-  split: {
-    paddingTop: theme.spacing.xl,
+  section: {
+    paddingTop: theme.spacing.sm,
+    paddingBottom: theme.spacing.xs,
     [theme.fn.smallerThan(theme.breakpoints.sm)]: {
       flexWrap: "wrap"
     },
@@ -13,49 +26,49 @@ const useStyles = createStyles(theme => ({
 
 export const ShowLegend = () => {
   const { classes, theme } = useStyles()
+
   const legendOptions = useStore(state => state.legendOptions)
+
   const resetOptions = useStore.getState().resetLegendOptions
 
-  const toggleShowLegend = () => useStore.setState(state => ({
-    legendOptions: { ...legendOptions, show: !state.legendOptions.show }
-  }))
+  const updateOptions = useStore.getState().updateLegendOptions
 
-  const changeDirection = (value: "column" | "row") => useStore.setState(state => ({
-    legendOptions: { ...state.legendOptions, direction: value }
-  }))
+  const updateSpacing = (value: number) => updateOptions({ spacing: value })
 
-  const changeSlider = (value: number) => useStore.setState(state => ({
-    legendOptions: { ...state.legendOptions, spacing: value }
-  }))
+  const toggleShowLegend = () => updateOptions({ show: !legendOptions.show })
 
-  const changeFontSize = (value: number | undefined) => useStore.setState(state => ({
-    legendOptions: { ...state.legendOptions, fontSize: value ?? 12 }
-  }))
+  const changeFontColor = (value: string) => updateOptions({ fontColor: value })
 
-  const changeSymbolSize = (value: number | undefined) => useStore.setState(state => ({
-    legendOptions: { ...state.legendOptions, symbolSize: value ?? 25 }
-  }))
+  const changeDirection = (value: "column" | "row") => updateOptions({ direction: value })
 
-  const changeBackgroudColor = (value: string) => useStore.setState(state => ({
-    legendOptions: { ...state.legendOptions, backgroundColor: value }
-  }))
+  const changeBackgroudColor = (value: string) => updateOptions({ backgroundColor: value })
 
-  const changeFontColor = (value: string) => useStore.setState(state => ({
-    legendOptions: { ...state.legendOptions, fontColor: value }
-  }))
+  const updateFontSize = (value: number | undefined) => updateOptions({ fontSize: value ?? 12 })
+
+  const updateSymbolSize = (value: number | undefined) => updateOptions({ symbolSize: value ?? 25 })
+
 
   return (
     <>
-      <ListItem title="Show legend" description="legend will display additional information on the maps">
-        <Switch checked={legendOptions.show} onChange={toggleShowLegend} />
+      <ListItem title="Show legend" description="Legend shows additional information on the maps">
+        <Group>
+          {legendOptions.show && (
+            <Tooltip label="Reset to initial settings">
+              <ActionIcon variant="light" color="red" onClick={resetOptions}>
+                <Refresh size={14} />
+              </ActionIcon>
+            </Tooltip>
+          )}
+          <Switch checked={legendOptions.show} onChange={toggleShowLegend} />
+        </Group>
       </ListItem>
       {legendOptions.show && (
         <>
-          <BaseList grow className={classes.split}>
+          <BaseList grow className={classes.section}>
             <InputWrapper label="Spacing" size="xs">
               <Slider
                 value={legendOptions.spacing}
-                onChange={changeSlider}
+                onChange={updateSpacing}
                 label={(value) => `${value} px`}
                 labelTransition="skew-down"
                 labelTransitionDuration={150}
@@ -74,11 +87,11 @@ export const ShowLegend = () => {
               value={legendOptions.direction}
             />
           </BaseList>
-          <BaseList grow className={classes.split}>
+          <BaseList grow className={classes.section}>
             <InputWrapper label="Font Size" size="xs">
               <Slider
                 value={legendOptions.fontSize}
-                onChange={changeFontSize}
+                onChange={updateFontSize}
                 label={(value) => `${value} px`}
                 labelTransition="skew-down"
                 labelTransitionDuration={150}
@@ -88,28 +101,42 @@ export const ShowLegend = () => {
                   { value: 100, label: '100 px' },
                 ]} />
             </InputWrapper>
-            <InputWrapper label="Symbol Size" size="xs">
-              <Slider
-                value={legendOptions.symbolSize}
-                onChange={changeSymbolSize}
-                label={(value) => `${value} px`}
-                labelTransition="skew-down"
-                labelTransitionDuration={150}
-                labelTransitionTimingFunction="ease"
-                marks={[
-                  { value: 0, label: '0' },
-                  { value: 100, label: '100' },
-                ]} />
-            </InputWrapper>
+            <ColorInput
+              size="xs"
+              label="Font Color"
+              onChange={changeFontColor}
+              value={legendOptions.fontColor}
+            />
           </BaseList>
-          <BaseList grow className={classes.split}>
-            <Group noWrap sx={{ width: "100%" }} grow>
-              <ColorInput size="xs" value={legendOptions.backgroundColor} onChange={changeBackgroudColor} format="rgba" label="Background Color" />
-              <ColorInput size="xs" value={legendOptions.fontColor} onChange={changeFontColor} label="Text Color" />
+          <BaseList grow className={classes.section}>
+            <Group noWrap sx={{ flex: 1 }} grow >
+              <InputWrapper label="Symbol Size" size="xs">
+                <Slider
+                  value={legendOptions.symbolSize}
+                  onChange={updateSymbolSize}
+                  label={(value) => `${value} px`}
+                  labelTransition="skew-down"
+                  labelTransitionDuration={150}
+                  labelTransitionTimingFunction="ease"
+                  marks={[
+                    { value: 0, label: '0' },
+                    { value: 100, label: '100px' },
+                  ]} />
+              </InputWrapper>
+              <ColorInput
+                size="xs"
+                format="rgba"
+                label="Background Color"
+                onChange={changeBackgroudColor}
+                value={legendOptions.backgroundColor}
+              />
             </Group>
           </BaseList>
-          <BaseList className={classes.split}>
-            <Button onClick={resetOptions}>Reset</Button>
+          <BaseList className={classes.section} style={{ paddingTop: theme.spacing.xl }}>
+            <Group style={{ color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6] }} spacing={10}>
+              <InfoCircle strokeWidth={1.5} size={20} />
+              <Text size="xs">You can move and resize the legend by dragging it on map</Text>
+            </Group>
           </BaseList>
         </>
       )}

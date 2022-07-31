@@ -26,20 +26,24 @@ const LegendOptionsInitialValue: LegendOptions = {
   show: false,
 
   position: {
-    x: 10,
+    x: 0,
 
-    y: 10
+    y: 0
   },
 
-  width: undefined,
+  size: {
+    width: "auto",
+
+    height: "auto"
+  },
 
   spacing: 0,
 
   direction: "column",
 
-  backgroundColor: "#FFF",
+  backgroundColor: "#FFFFFF",
 
-  fontColor: "#666",
+  fontColor: "#666666",
 
   fontSize: 12,
 
@@ -65,7 +69,13 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
   resetLegends: () => set({ legends: [] }),
 
-  resetLegendOptions: () => set({ legendOptions: {...LegendOptionsInitialValue, show: true} }),
+  resetLegendOptions: () => set({
+    legendOptions: { ...LegendOptionsInitialValue, show: true }
+  }),
+
+  updateLegendOptions: (legend) => set(state => ({
+    legendOptions: { ...state.legendOptions, ...legend }
+  })),
 
   generateGradient: () => set(state => {
     const length = state.legends.length;
