@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "@utils/debounce";
 import { Legend, minMaxValue } from "@stores/maps/types";
 import { Divider } from "@components/Sidebar/Common/Divider";
-import { Eye, EyeOff, Refresh, Trash } from "tabler-icons-react";
+import { ChevronDown, Eraser, Eye, EyeOff, Palette, Plus, Refresh, Trash } from "tabler-icons-react";
 import {
   Group,
   Stack,
@@ -18,8 +18,31 @@ import {
   NumberInput,
   SegmentedControl,
   NumberInputProps,
+  Menu,
+  createStyles,
 } from "@mantine/core";
 
+
+const useStyles = createStyles(theme => ({
+  button: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  menuControl: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    marginLeft: 2
+  },
+  section: {
+    [theme.fn.smallerThan(theme.breakpoints.sm)]: {
+      flexWrap: "wrap",
+
+      "> div": {
+        flexGrow: 1
+      }
+    },
+  }
+}))
 
 /**
  * Input color components for each legend so we can use single debounce function
@@ -218,47 +241,23 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
  * 
  * @returns JSX
  */
-const HeaderButton = () => {
+const LegendListControl = () => {
+  const { classes, theme } = useStyles()
+
+  const keys = useStore(state => state.propertiesKeys)
+
+  const legends = useStore(state => state.legends)
+
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+
   const addLegends = useStore.getState().addLegends
 
   const resetLegends = useStore.getState().resetLegends
 
-  const generateGradient = useStore.getState().generateGradient
-
-  return (
-    <Group position="apart" my={20}>
-      <Tooltip label="Create a gradient colors from the first to the last color">
-        <Button size="xs" color="cyan" onClick={generateGradient}>
-          Create Gradient
-        </Button>
-      </Tooltip>
-      <Group position="right">
-        <Button size="xs" onClick={addLegends}>
-          Add Legend
-        </Button>
-        <Button size="xs" color="red" onClick={resetLegends}>
-          Reset Legend
-        </Button>
-      </Group>
-    </Group>
-  )
-}
-
-
-/**
- * Footer contains properties keys selection to apply color based on value
- * in the legends. This will update all features
- * 
- * @returns JSX
- */
-const FooterButton = () => {
-  const legends = useStore(state => state.legends)
-
-  const keys = useStore(state => state.propertiesKeys)
-
   const applyColor = useStore.getState().updateFeatureColor
 
-  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+  const generateGradient = useStore.getState().generateGradient
+
 
   const updateFeatureColor = () => {
     if (!selectedKey) return;
@@ -266,22 +265,60 @@ const FooterButton = () => {
     return applyColor(selectedKey, legends)
   }
 
-  if (!legends.length) return null
-
   return (
-    <Group position="apart" my={20} align="flex-end">
+    <Group 
+    position="apart" 
+    my={20} 
+    align="flex-end" 
+    noWrap 
+    className={classes.section}>
       <Select
         size="xs"
         searchable
         data={keys}
         value={selectedKey}
+        label="Associated Key"
+        // style={{ maxWidth: 200 }}
         onChange={setSelectedKey}
-        label="Select key to apply the color"
+        disabled={keys.length === 0}
       />
-      <Button size="xs" onClick={updateFeatureColor}>Apply Color</Button>
+      <Group position="right" noWrap style={{ justifyContent: "center" }}>
+        <Group noWrap spacing={0}>
+          <Tooltip label="Add legend">
+            <Button size="xs" className={classes.button} onClick={addLegends}>
+              <Plus size={14} />
+            </Button>
+          </Tooltip>
+          <Menu size="lg" transition="pop" placement="end" control={
+            <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
+              <ChevronDown size={14} />
+            </ActionIcon>
+          }>
+            <Menu.Item>Generate from unique value</Menu.Item>
+            <Menu.Item>Make from quartile (4 parts)</Menu.Item>
+            <Menu.Item>Make from quintile (5 parts)</Menu.Item>
+            <Menu.Item>Make from decile (10 parts)</Menu.Item>
+          </Menu>
+        </Group>
+        <Tooltip label="Apply to key">
+          <Button size="xs" onClick={updateFeatureColor} disabled={selectedKey === null}>Apply</Button>
+        </Tooltip>
+        <Tooltip label="Create a gradient colors from the first to the last color">
+          <ActionIcon color="grape" variant="filled" onClick={generateGradient}>
+            <Palette size={14} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Clear all legends">
+          <ActionIcon color="red" variant="filled" onClick={resetLegends}>
+            <Eraser size={14} />
+          </ActionIcon>
+        </Tooltip>
+      </Group>
     </Group>
   )
 }
+
+
 
 /**
  * Color swatch to display all colors in legends
@@ -315,7 +352,7 @@ export const LegendList = () => {
 
   return (
     <>
-      <HeaderButton />
+      <LegendListControl />
       <ColorSwatchs />
       {legends.map(item => (
         <LegendItem
@@ -326,7 +363,6 @@ export const LegendList = () => {
           onUpdateEnd={legend => debounceUpdate(item.uuid, legend)}
         />
       ))}
-      <FooterButton />
     </>
   )
 }

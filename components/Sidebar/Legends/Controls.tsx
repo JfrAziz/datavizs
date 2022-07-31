@@ -51,16 +51,7 @@ export const ShowLegend = () => {
   return (
     <>
       <ListItem title="Show legend" description="Legend shows additional information on the maps">
-        <Group>
-          {legendOptions.show && (
-            <Tooltip label="Reset to initial settings">
-              <ActionIcon variant="light" color="red" onClick={resetOptions}>
-                <Refresh size={14} />
-              </ActionIcon>
-            </Tooltip>
-          )}
-          <Switch checked={legendOptions.show} onChange={toggleShowLegend} />
-        </Group>
+        <Switch checked={legendOptions.show} onChange={toggleShowLegend} />
       </ListItem>
       {legendOptions.show && (
         <>
@@ -137,6 +128,11 @@ export const ShowLegend = () => {
               <InfoCircle strokeWidth={1.5} size={20} />
               <Text size="xs">You can move and resize the legend by dragging it on map</Text>
             </Group>
+            <Tooltip label="Reset to initial settings">
+              <ActionIcon variant="light" color="red" onClick={resetOptions}>
+                <Refresh size={14} />
+              </ActionIcon>
+            </Tooltip>
           </BaseList>
         </>
       )}
