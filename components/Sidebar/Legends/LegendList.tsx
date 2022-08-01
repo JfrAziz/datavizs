@@ -254,31 +254,50 @@ const LegendListControl = () => {
 
   const resetLegends = useStore.getState().resetLegends
 
-  const applyColor = useStore.getState().updateFeatureColor
-
   const generateGradient = useStore.getState().generateGradient
 
+  const generateQuantileLegends = useStore.getState().generateQuantileLegends
 
   const updateFeatureColor = () => {
     if (!selectedKey) return;
 
-    return applyColor(selectedKey, legends)
+    return useStore.getState().updateFeatureColor(selectedKey, legends)
   }
 
+  const generateUniqueLegends = () => {
+
+    if (!selectedKey) return;
+
+    return useStore.getState().generateUniqueLegends(selectedKey)
+  }
+
+  const quantileLegends = () => {
+    if (!selectedKey) return;
+
+    return generateQuantileLegends(selectedKey, [0, 0.25, 0.5, 0.75, 1])
+  }
+
+  const quintileLegends = () => {
+    if (!selectedKey) return;
+
+    return generateQuantileLegends(selectedKey, [0, 0.2, 0.4, 0.6, 0.8, 1])
+  }
+
+  const decileLegends = () => {
+    if (!selectedKey) return;
+
+    return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
+  }
+  
+
   return (
-    <Group 
-    position="apart" 
-    my={20} 
-    align="flex-end" 
-    noWrap 
-    className={classes.section}>
+    <Group noWrap position="apart" align="flex-end" className={classes.section}>
       <Select
         size="xs"
         searchable
         data={keys}
         value={selectedKey}
         label="Associated Key"
-        // style={{ maxWidth: 200 }}
         onChange={setSelectedKey}
         disabled={keys.length === 0}
       />
@@ -294,10 +313,10 @@ const LegendListControl = () => {
               <ChevronDown size={14} />
             </ActionIcon>
           }>
-            <Menu.Item>Generate from unique value</Menu.Item>
-            <Menu.Item>Make from quartile (4 parts)</Menu.Item>
-            <Menu.Item>Make from quintile (5 parts)</Menu.Item>
-            <Menu.Item>Make from decile (10 parts)</Menu.Item>
+            <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
+            <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
+            <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
+            <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
           </Menu>
         </Group>
         <Tooltip label="Apply to key">
@@ -329,7 +348,7 @@ const ColorSwatchs = () => {
   const legends = useStore(state => state.legends)
 
   return (
-    <Group position="center" spacing="xs">
+    <Group position="center" spacing="xs" mt={20}>
       {legends.map((legend, idx) => <ColorSwatch key={idx} color={legend.color} />)}
     </Group>
   )

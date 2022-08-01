@@ -130,7 +130,11 @@ export interface LegendFunction {
 
   updateLegendOptions: (legend: Partial<LegendOptions>) => void;
 
-  generateGradient: () => void
+  generateGradient: () => void;
+
+  generateUniqueLegends: (key: string) => void;
+
+  generateQuantileLegends: (key: string, quantile: number[]) => void
 }
 
 export type LegendStore = LegendState & LegendFunction

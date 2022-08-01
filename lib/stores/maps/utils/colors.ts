@@ -18,7 +18,7 @@ export const getFeatureColor = (value: string | number, legends: Legend[]): stri
 
     if (item.value.min === undefined || item.value.max === undefined) return false
 
-    return item.value.min <= value && item.value.max > value
+    return item.value.min <= value && item.value.max >= value
   })
   return selectedColor ? selectedColor.color : DEFAULT_FEATURE_COLOR
 }
