@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useStore } from "@stores/maps";
 import { baseMaps } from "@config/maps";
 import { ColorInput, Select } from "@mantine/core";
-import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
+import { DEFAULT_BASEMAP_COLOR, LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
 import { ListItem } from "@components/Sidebar/Common/ListItem";
 
 
@@ -10,7 +10,7 @@ export function BaseMapsOptions() {
   const baseMap = useStore(state => state.baseMap)
   const setBaseMap = useStore.getState().setBaseMap
 
-  const [color, setColor] = useState(getComputedStyle(document.documentElement).getPropertyValue(LEAFLET_CUSTOM_COLOR_VAR))
+  const [color, setColor] = useState(DEFAULT_BASEMAP_COLOR)
 
   const selectBaseMap = (value: string) => {
     const selectedBaseMap = baseMaps.find((item) => item.name === value) || null
@@ -21,8 +21,6 @@ export function BaseMapsOptions() {
     document.documentElement.style.setProperty(LEAFLET_CUSTOM_COLOR_VAR, value);
     setColor(value)
   }
-
-  console.log(color)
 
   return (
     <>

@@ -288,7 +288,7 @@ const LegendListControl = () => {
 
     return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
   }
-  
+
 
   return (
     <Group noWrap position="apart" align="flex-end" className={classes.section}>
@@ -308,15 +308,18 @@ const LegendListControl = () => {
               <Plus size={14} />
             </Button>
           </Tooltip>
-          <Menu size="lg" transition="pop" placement="end" control={
-            <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
-              <ChevronDown size={14} />
-            </ActionIcon>
-          }>
-            <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
-            <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
-            <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
-            <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
+          <Menu>
+            <Menu.Target>
+              <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
+                <ChevronDown size={14} />
+              </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
+              <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
+              <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
+              <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
+            </Menu.Dropdown>
           </Menu>
         </Group>
         <Tooltip label="Apply to key">
