@@ -15,7 +15,7 @@ const initialValue: MapState = {
   
   baseMap: baseMaps[0],
 
-  showControl: true,
+  showMapControls: true,
 }
 
 export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, get) => ({
@@ -64,5 +64,5 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, g
     donwloadButton.click()
   },
 
-  toggleControl: () => set((state) => ({ showControl: !state.showControl })),
+  toggleMapControls: () => set((state) => ({ showMapControls: !state.showMapControls })),
 })
