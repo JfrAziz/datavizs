@@ -1,5 +1,5 @@
 import useStyles from './Sidebar.styles';
-import { Group, Text } from '@mantine/core';
+import { Group, GroupProps, Text } from '@mantine/core';
 import React, { PropsWithChildren } from 'react';
 
 
@@ -9,10 +9,10 @@ import React, { PropsWithChildren } from 'react';
  * @param props
  * @returns 
  */
-export const BaseList = ({ children }: PropsWithChildren) => {
+export const BaseList = ({ children, ...others }: PropsWithChildren & GroupProps) => {
   const { classes } = useStyles();
   return (
-    <Group position="apart" className={classes.item} noWrap spacing="xl">
+    <Group position="apart" className={classes.item} noWrap spacing="xl" {...others}>
       {children}
     </Group>
   );

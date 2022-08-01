@@ -4,19 +4,45 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "@utils/debounce";
 import { Legend, minMaxValue } from "@stores/maps/types";
 import { Divider } from "@components/Sidebar/Common/Divider";
-import { Eye, EyeOff, Refresh, Trash } from "tabler-icons-react";
+import { ChevronDown, Eraser, Eye, EyeOff, Palette, Plus, Refresh, Trash } from "tabler-icons-react";
 import {
   Group,
   Stack,
+  Select,
+  Button,
   Tooltip,
   TextInput,
   ActionIcon,
   ColorInput,
+  ColorSwatch,
   NumberInput,
   SegmentedControl,
   NumberInputProps,
+  Menu,
+  createStyles,
 } from "@mantine/core";
 
+
+const useStyles = createStyles(theme => ({
+  button: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  menuControl: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    marginLeft: 2
+  },
+  section: {
+    [theme.fn.smallerThan(theme.breakpoints.sm)]: {
+      flexWrap: "wrap",
+
+      "> div": {
+        flexGrow: 1
+      }
+    },
+  }
+}))
 
 /**
  * Input color components for each legend so we can use single debounce function
@@ -27,6 +53,7 @@ interface InputColorProps {
 
   onChange: (value: string) => void
 }
+
 const InputColor = ({ color, onChange }: InputColorProps) => {
   const [value, setColor] = useState<string>(color)
 
@@ -43,7 +70,15 @@ const InputColor = ({ color, onChange }: InputColorProps) => {
     </ActionIcon>
   )
 
-  return <ColorInput sx={{ flex: 1 }} label="Color" format="hex" value={value} onChange={updateColor} rightSection={<RandomButton />} />
+  return <ColorInput
+    size="xs"
+    format="hex"
+    label="Color"
+    value={value}
+    sx={{ flex: 1 }}
+    onChange={updateColor}
+    rightSection={<RandomButton />}
+  />
 }
 
 /**
@@ -69,7 +104,7 @@ const InputText = ({ value, onChange, ...others }: InputTextProps) => {
     onChange(value)
   }
 
-  return <TextInput sx={{ flex: 1 }} {...others} value={val} onChange={e => updateColor(e.target.value)} />
+  return <TextInput sx={{ flex: 1 }} {...others} size="xs" value={val} onChange={e => updateColor(e.target.value)} />
 }
 
 /**
@@ -91,7 +126,7 @@ const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
     if (onChange) return onChange(value)
   }
 
-  return <NumberInput sx={{ flex: 1 }} value={value} precision={precision} onChange={updateMinValue} {...others} />
+  return <NumberInput sx={{ flex: 1 }} size="xs" value={value} precision={precision} onChange={updateMinValue} {...others} />
 }
 
 /**
@@ -127,7 +162,7 @@ const InputMinMax = ({ value, onChange }: InputMinMaxProps) => {
  * Legend list item and handle type value selection. Some value
  * will be updated with delay (debounce), e.g input text, color, and value.
  */
-interface ItemProps {
+interface LegendItemProps {
   item: Legend
 
   onUpdate: (legend: Legend) => void
@@ -137,72 +172,62 @@ interface ItemProps {
   onDelete: (legend: Legend) => void
 }
 
-const Item = ({ item, onDelete, onUpdate, onUpdateEnd }: ItemProps) => {
-  const [legend, setLegend] = useState<Legend>(item)
-
-  const updateState = (value: Legend) => {
-    setLegend(value)
-
-    return onUpdate(value)
-  }
-
+const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) => {
   const updateWithDelay = (value: Legend) => {
-    setLegend(value)
-
     if (onUpdateEnd) return onUpdateEnd(value)
 
     return onUpdate(value)
   }
 
-  const updateColor = (color: string) => updateWithDelay({ ...legend, color: color })
+  const updateColor = (color: string) => updateWithDelay({ ...item, color: color })
 
-  const updateLabel = (label: string) => updateWithDelay({ ...legend, label: label })
+  const updateLabel = (label: string) => updateWithDelay({ ...item, label: label })
 
-  const toggleHidden = () => updateState({ ...legend, hidden: !legend.hidden })
+  const toggleHidden = () => onUpdate({ ...item, hidden: !item.hidden })
 
   const updateType = (type: "range" | "single") => {
-    if (type === "single") return updateState({ ...legend, type: "single", value: "" })
+    if (type === "single") return onUpdate({ ...item, type: "single", value: "" })
 
-    return updateState({ ...legend, type: type, value: { min: undefined, max: undefined } })
+    return onUpdate({ ...item, type: type, value: { min: undefined, max: undefined } })
   }
 
-  const updateValueText = (value: string) => updateWithDelay({ ...legend, type: "single", value: value })
+  const updateValueText = (value: string) => updateWithDelay({ ...item, type: "single", value: value })
 
-  const updateValueRange = (value: minMaxValue) => updateWithDelay({ ...legend, type: "range", value: value })
+  const updateValueRange = (value: minMaxValue) => updateWithDelay({ ...item, type: "range", value: value })
 
   return (
-    <Stack mt="sm" key={legend.uuid}>
-      <Group grow>
-        <InputText label="Label" placeholder="label on legend" value={legend.label} onChange={updateLabel} />
-        <InputColor color={legend.color} onChange={updateColor} />
-      </Group>
-      <Group>
-
+    <Stack mt="sm" key={item.uuid}>
+      <Group align="flex-end">
+        <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
+        <InputColor color={item.color} onChange={updateColor} />
         <Group>
-          <Tooltip label={legend.hidden ? "show in legend" : "hide from legend"}>
-            <ActionIcon variant="filled" color={legend.hidden ? "gray" : "teal"} onClick={toggleHidden}>
-              {legend.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+          <Tooltip label={item.hidden ? "show in legend" : "hide from legend"}>
+            <ActionIcon variant="filled" color={item.hidden ? "gray" : "teal"} onClick={toggleHidden}>
+              {item.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
             </ActionIcon>
           </Tooltip>
 
           <Tooltip label="delete this legend">
-            <ActionIcon color="red" variant="filled" onClick={() => onDelete(legend)}>
+            <ActionIcon color="red" variant="filled" onClick={() => onDelete(item)}>
               <Trash size={14} />
             </ActionIcon>
           </Tooltip>
         </Group>
+      </Group>
+      <Group>
+
         <Tooltip label="set value type to compare with the data">
           <SegmentedControl
-            value={legend.type}
+            value={item.type}
             onChange={updateType}
             size="xs"
             data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
           />
         </Tooltip>
 
-        {legend.type === "single" && <InputText value={legend.value} placeholder="value" onChange={updateValueText} />}
+        {item.type === "single" && <InputText value={item.value} placeholder="value" onChange={updateValueText} />}
 
-        {legend.type === "range" && <InputMinMax value={legend.value} onChange={updateValueRange} />}
+        {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
 
       </Group>
       <Divider mt={0} mb={0} />
@@ -210,7 +235,131 @@ const Item = ({ item, onDelete, onUpdate, onUpdateEnd }: ItemProps) => {
   )
 }
 
+/**
+ * Header Button to add a new legend, reset current legends, and 
+ * generate gradient from available color in the legend
+ * 
+ * @returns JSX
+ */
+const LegendListControl = () => {
+  const { classes, theme } = useStyles()
 
+  const keys = useStore(state => state.propertiesKeys)
+
+  const legends = useStore(state => state.legends)
+
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+
+  const addLegends = useStore.getState().addLegends
+
+  const resetLegends = useStore.getState().resetLegends
+
+  const generateGradient = useStore.getState().generateGradient
+
+  const generateQuantileLegends = useStore.getState().generateQuantileLegends
+
+  const updateFeatureColor = () => {
+    if (!selectedKey) return;
+
+    return useStore.getState().updateFeatureColor(selectedKey, legends)
+  }
+
+  const generateUniqueLegends = () => {
+
+    if (!selectedKey) return;
+
+    return useStore.getState().generateUniqueLegends(selectedKey)
+  }
+
+  const quantileLegends = () => {
+    if (!selectedKey) return;
+
+    return generateQuantileLegends(selectedKey, [0, 0.25, 0.5, 0.75, 1])
+  }
+
+  const quintileLegends = () => {
+    if (!selectedKey) return;
+
+    return generateQuantileLegends(selectedKey, [0, 0.2, 0.4, 0.6, 0.8, 1])
+  }
+
+  const decileLegends = () => {
+    if (!selectedKey) return;
+
+    return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
+  }
+  
+
+  return (
+    <Group noWrap position="apart" align="flex-end" className={classes.section}>
+      <Select
+        size="xs"
+        searchable
+        data={keys}
+        value={selectedKey}
+        label="Associated Key"
+        onChange={setSelectedKey}
+        disabled={keys.length === 0}
+      />
+      <Group position="right" noWrap style={{ justifyContent: "center" }}>
+        <Group noWrap spacing={0}>
+          <Tooltip label="Add legend">
+            <Button size="xs" className={classes.button} onClick={addLegends}>
+              <Plus size={14} />
+            </Button>
+          </Tooltip>
+          <Menu size="lg" transition="pop" placement="end" control={
+            <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
+              <ChevronDown size={14} />
+            </ActionIcon>
+          }>
+            <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
+            <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
+            <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
+            <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
+          </Menu>
+        </Group>
+        <Tooltip label="Apply to key">
+          <Button size="xs" onClick={updateFeatureColor} disabled={selectedKey === null}>Apply</Button>
+        </Tooltip>
+        <Tooltip label="Create a gradient colors from the first to the last color">
+          <ActionIcon color="grape" variant="filled" onClick={generateGradient}>
+            <Palette size={14} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Clear all legends">
+          <ActionIcon color="red" variant="filled" onClick={resetLegends}>
+            <Eraser size={14} />
+          </ActionIcon>
+        </Tooltip>
+      </Group>
+    </Group>
+  )
+}
+
+
+
+/**
+ * Color swatch to display all colors in legends
+ * 
+ * @returns JSX
+ */
+const ColorSwatchs = () => {
+  const legends = useStore(state => state.legends)
+
+  return (
+    <Group position="center" spacing="xs" mt={20}>
+      {legends.map((legend, idx) => <ColorSwatch key={idx} color={legend.color} />)}
+    </Group>
+  )
+}
+
+
+/**
+ * Combine all component above
+ * 
+ * @returns JSX
+ */
 export const LegendList = () => {
   const legends = useStore(state => state.legends)
 
@@ -219,18 +368,20 @@ export const LegendList = () => {
   const deleteLegend = useStore.getState().deleteLegend
 
   const debounceUpdate = useDebounce(updateLegend, 200)
-  
-  if (legends.length === 0) return null
 
   return (
     <>
-      {legends.map(item => <Item
-        key={item.uuid}
-        item={item}
-        onUpdate={legend => updateLegend(item.uuid, legend)}
-        onDelete={() => deleteLegend(item.uuid)}
-        onUpdateEnd={legend => debounceUpdate(item.uuid, legend)}
-      />)}
+      <LegendListControl />
+      <ColorSwatchs />
+      {legends.map(item => (
+        <LegendItem
+          item={item}
+          key={item.uuid}
+          onDelete={() => deleteLegend(item.uuid)}
+          onUpdate={legend => updateLegend(item.uuid, legend)}
+          onUpdateEnd={legend => debounceUpdate(item.uuid, legend)}
+        />
+      ))}
     </>
   )
 }

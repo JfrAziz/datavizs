@@ -1,6 +1,7 @@
 import { FeatureGroup, Map } from "leaflet";
 import { BaseMap } from "@config/maps";
 import { Feature, FeatureCollection, Geometry } from "geojson";
+import { RefObject } from "react";
 
 
 /**
@@ -53,12 +54,41 @@ export type GeoJSONStore = GeoJSONState & GeoJSONFunction
 
 /**
  * Legend state and function for handle legend data and 
- * color generator. Legend value is an array value with
- * size 1 or 2. If the type is equals, just index 0 is used
- * for comparison, but if the type is range, index 0 and 1
- * were used. example [a, b] will be compared a <= value < b 
+ * color generator. 
  * 
  */
+export type LegendOptions = {
+  show: boolean
+
+  // 
+  position: {
+    x: number
+
+    y: number
+  }
+
+  size: {
+    width: number | "auto"
+
+    height: number | "auto"
+  }
+
+  // 
+  spacing: number
+
+  direction: "column" | "row"
+
+  // 
+  backgroundColor: string
+
+  fontColor: string
+
+  // 
+  fontSize: number
+
+  symbolSize: number
+}
+
 export type minMaxValue = {
   min: number | undefined
 
@@ -83,6 +113,8 @@ export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 
 export interface LegendState {
   legends: Legend[];
+
+  legendOptions: LegendOptions;
 }
 
 export interface LegendFunction {
@@ -94,7 +126,15 @@ export interface LegendFunction {
 
   resetLegends: () => void;
 
-  generateGradient: () => void
+  resetLegendOptions: () => void;
+
+  updateLegendOptions: (legend: Partial<LegendOptions>) => void;
+
+  generateGradient: () => void;
+
+  generateUniqueLegends: (key: string) => void;
+
+  generateQuantileLegends: (key: string, quantile: number[]) => void
 }
 
 export type LegendStore = LegendState & LegendFunction
@@ -113,25 +153,29 @@ type MapWrapper = { type: "auto" } | {
 }
 
 export interface MapState {
-  map: Map | null;
-
-  showControl: boolean;
+  mapRef: Map | null;
 
   baseMap: BaseMap | null;
 
   mapWrapper: MapWrapper
+
+  mapWrapperRef: RefObject<HTMLDivElement> | null;
+
+  showControl: boolean;
 }
 
 export interface MapFunction {
-  setMap: (map: Map) => void
+  setMapRef: (map: Map) => void
 
   setBaseMap: (value: BaseMap | null) => void
 
   setMapWrapper: (wrapper: MapWrapper) => void
 
-  toggleControl: () => void;
-
   setMapToCenter: () => void
+
+  downloadMap: (format?: "png" | "jpeg" | "svg") => void
+
+  toggleControl: () => void;
 }
 
 export type MapStore = MapState & MapFunction

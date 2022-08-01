@@ -22,6 +22,8 @@ export function BaseMapsOptions() {
     setColor(value)
   }
 
+  console.log(color)
+
   return (
     <>
       <ListItem title="Base Maps" description="Select base map from various provider" >
@@ -35,7 +37,7 @@ export function BaseMapsOptions() {
       {
         !baseMap && (
           <ListItem title="Background Color" description="Use background color instead?" >
-            <ColorInput value={color} width="10p%" onChange={setBaseColor} />
+            <ColorInput defaultValue="#d5e8eb" value={color} onChange={setBaseColor} />
           </ListItem>
         )
       }

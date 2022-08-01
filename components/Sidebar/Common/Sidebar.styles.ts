@@ -11,12 +11,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  switch: {
-    '& *': {
-      cursor: 'pointer',
-    },
-  },
-
   divider: {
     
   }

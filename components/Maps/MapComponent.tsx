@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import "leaflet/dist/leaflet.css";
 import { BaseMap } from "./BaseMap";
 import { useStore } from "@stores/maps";
@@ -6,25 +5,28 @@ import { MapContainer } from "react-leaflet";
 import { GeoJSONLayer } from "./GeoJSONLayer";
 import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
 
-const Map = () => {
-  const setMap = useStore.getState().setMap
+const MapComponent = () => {
+  const setMap = useStore.getState().setMapRef
+  const mapWrapper = useStore(state => state.mapWrapper)
 
-  const map = useMemo(() => (
+  return (
     <MapContainer
       zoom={3}
+      ref={setMap}
       center={[0, 0]}
       zoomControl={false}
-      scrollWheelZoom={false}
       attributionControl={false}
-      ref={setMap}
-      style={{ height: "100%", width: "100%", zIndex: 0, backgroundColor: `var(${LEAFLET_CUSTOM_COLOR_VAR})` }}
-    >
+      scrollWheelZoom={mapWrapper.type === "auto"}
+      style={{
+        zIndex: 0,
+        height: "100%",
+        width: "100%",
+        backgroundColor: `var(${LEAFLET_CUSTOM_COLOR_VAR})`
+      }} >
       <BaseMap />
       <GeoJSONLayer />
     </MapContainer>
-  ), [])
-
-  return map
+  )
 }
 
-export default Map;
+export default MapComponent;

@@ -14,11 +14,11 @@ export const getFeatureColor = (value: string | number, legends: Legend[]): stri
   let selectedColor: Legend | undefined = undefined
 
   selectedColor = legends.find(item => {
-    if (item.type === "single") return item.value === value
+    if (item.type === "single") return item.value === value.toString()
 
     if (item.value.min === undefined || item.value.max === undefined) return false
 
-    return item.value.min <= value && item.value.max > value
+    return item.value.min <= value && item.value.max >= value
   })
   return selectedColor ? selectedColor.color : DEFAULT_FEATURE_COLOR
 }
