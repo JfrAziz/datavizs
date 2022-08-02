@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => {
   return {
     tab_panel: {
       padding: theme.spacing.md,
-      height: `calc(100vh - ${40 + 2 * theme.spacing.xs}px)`,
+      height: `calc(100vh - ${36 + 2 * theme.spacing.xs}px)`,
       display: 'flex',
       flexDirection: 'column'
     },

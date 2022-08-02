@@ -6,6 +6,7 @@ import { Legend, minMaxValue } from "@stores/maps/types";
 import { Divider } from "@components/Sidebar/Common/Divider";
 import { ChevronDown, Eraser, Eye, EyeOff, Palette, Plus, Refresh, Trash } from "tabler-icons-react";
 import {
+  Menu,
   Group,
   Stack,
   Select,
@@ -16,11 +17,11 @@ import {
   ColorInput,
   ColorSwatch,
   NumberInput,
+  createStyles,
   SegmentedControl,
   NumberInputProps,
-  Menu,
-  createStyles,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 
 
 const useStyles = createStyles(theme => ({
@@ -247,6 +248,12 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
   )
 }
 
+const showNoKeyWarning = () => showNotification({
+  title: "Warning",
+  message: "Please select on of key from geoJSON",
+  color: "yellow"
+})
+
 /**
  * Header Button to add a new legend, reset current legends, and 
  * generate gradient from available color in the legend
@@ -271,32 +278,32 @@ const LegendListControl = () => {
   const generateQuantileLegends = useStore.getState().generateQuantileLegends
 
   const updateFeatureColor = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return useStore.getState().updateFeatureColor(selectedKey, legends)
   }
 
   const generateUniqueLegends = () => {
 
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return useStore.getState().generateUniqueLegends(selectedKey)
   }
 
   const quantileLegends = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return generateQuantileLegends(selectedKey, [0, 0.25, 0.5, 0.75, 1])
   }
 
   const quintileLegends = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return generateQuantileLegends(selectedKey, [0, 0.2, 0.4, 0.6, 0.8, 1])
   }
 
   const decileLegends = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
   }
