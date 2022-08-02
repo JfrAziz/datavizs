@@ -8,14 +8,14 @@ const initialValue: MapState = {
   mapRef: null,
 
   mapWrapperRef: createRef<HTMLDivElement>(),
-  
+
   mapWrapper: {
     type: "auto"
   },
-  
+
   baseMap: baseMaps[0],
 
-  showControl: true,
+  showMapControls: true,
 }
 
 export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, get) => ({
@@ -25,11 +25,11 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, g
 
   setBaseMap: (value) => set({ baseMap: value }),
 
-  setMapWrapper: (map) => set(state => {
-    state.mapRef?.invalidateSize()
-
-    return { mapWrapper: map }
-  }),
+  setMapWrapper: (map) => {
+    set(state => ({ mapWrapper: { ...state.mapWrapper, ...map } }))
+    
+    setTimeout(() => { get().mapRef?.invalidateSize() }, 400);
+  },
 
   setMapToCenter: () => {
     const geoJSONref = get().geoJSONRef
@@ -41,7 +41,7 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, g
 
   downloadMap: async (format) => {
     const mapWrapperRef = get().mapWrapperRef
-    
+
     if (!mapWrapperRef || !mapWrapperRef.current) return;
 
     let dataUrl: string;
@@ -54,7 +54,7 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, g
         dataUrl = await toSvg(mapWrapperRef.current)
         break;
       default:
-        dataUrl =  await toPng(mapWrapperRef.current)
+        dataUrl = await toPng(mapWrapperRef.current)
         break;
     }
 
@@ -64,5 +64,5 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, g
     donwloadButton.click()
   },
 
-  toggleControl: () => set((state) => ({ showControl: !state.showControl })),
+  toggleMapControls: () => set((state) => ({ showMapControls: !state.showMapControls })),
 })

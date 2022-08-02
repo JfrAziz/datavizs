@@ -3,6 +3,7 @@ import { InfoCircle, Refresh } from "tabler-icons-react"
 import { BaseList, ListItem } from "@components/Sidebar/Common/ListItem"
 import {
   Text,
+  Input,
   Group,
   Select,
   Slider,
@@ -11,7 +12,6 @@ import {
   ColorInput,
   ActionIcon,
   createStyles,
-  InputWrapper,
 } from "@mantine/core"
 
 const useStyles = createStyles(theme => ({
@@ -56,7 +56,7 @@ export const ShowLegend = () => {
       {legendOptions.show && (
         <>
           <BaseList grow className={classes.section}>
-            <InputWrapper label="Spacing" size="xs">
+            <Input.Wrapper label="Spacing" size="xs">
               <Slider
                 value={legendOptions.spacing}
                 onChange={updateSpacing}
@@ -68,7 +68,7 @@ export const ShowLegend = () => {
                   { value: 0, label: '0' },
                   { value: 100, label: '100 px' },
                 ]} />
-            </InputWrapper>
+            </Input.Wrapper>
             <Select
               size="xs"
               label="Direction"
@@ -79,7 +79,7 @@ export const ShowLegend = () => {
             />
           </BaseList>
           <BaseList grow className={classes.section}>
-            <InputWrapper label="Font Size" size="xs">
+            <Input.Wrapper label="Font Size" size="xs">
               <Slider
                 value={legendOptions.fontSize}
                 onChange={updateFontSize}
@@ -91,7 +91,7 @@ export const ShowLegend = () => {
                   { value: 0, label: '0' },
                   { value: 100, label: '100 px' },
                 ]} />
-            </InputWrapper>
+            </Input.Wrapper>
             <ColorInput
               size="xs"
               label="Font Color"
@@ -101,7 +101,7 @@ export const ShowLegend = () => {
           </BaseList>
           <BaseList grow className={classes.section}>
             <Group noWrap sx={{ flex: 1 }} grow >
-              <InputWrapper label="Symbol Size" size="xs">
+              <Input.Wrapper label="Symbol Size" size="xs">
                 <Slider
                   value={legendOptions.symbolSize}
                   onChange={updateSymbolSize}
@@ -113,7 +113,7 @@ export const ShowLegend = () => {
                     { value: 0, label: '0' },
                     { value: 100, label: '100px' },
                   ]} />
-              </InputWrapper>
+              </Input.Wrapper>
               <ColorInput
                 size="xs"
                 format="rgba"

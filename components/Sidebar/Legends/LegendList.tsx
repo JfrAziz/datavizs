@@ -151,8 +151,15 @@ const InputMinMax = ({ value, onChange }: InputMinMaxProps) => {
 
   return (
     <>
-      <InputNumber placeholder="min" value={rangeValue.min} onChange={(min) => updateValue({ max: rangeValue.max, min: min })} />
-      <InputNumber placeholder="max" min={rangeValue.min} value={rangeValue.max} onChange={max => updateValue({ min: rangeValue.min, max: max })} />
+      <InputNumber
+        placeholder="min"
+        value={rangeValue.min}
+        onChange={(min) => updateValue({ max: rangeValue.max, min: min })} />
+      <InputNumber
+        placeholder="max"
+        min={rangeValue.min}
+        value={rangeValue.max}
+        onChange={max => updateValue({ min: rangeValue.min, max: max })} />
     </>
   )
 }
@@ -185,15 +192,21 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
 
   const toggleHidden = () => onUpdate({ ...item, hidden: !item.hidden })
 
-  const updateType = (type: "range" | "single") => {
-    if (type === "single") return onUpdate({ ...item, type: "single", value: "" })
-
-    return onUpdate({ ...item, type: type, value: { min: undefined, max: undefined } })
-  }
-
   const updateValueText = (value: string) => updateWithDelay({ ...item, type: "single", value: value })
 
   const updateValueRange = (value: minMaxValue) => updateWithDelay({ ...item, type: "range", value: value })
+
+  const updateType = (type: "range" | "single") => {
+    if (type === "single") {
+      const lastValue = item.type === "range" && item.value.min !== undefined ? item.value.min.toString() : ""
+
+      return onUpdate({ ...item, type: "single", value: lastValue })
+    }
+
+    const lastValue = item.type === "single" && item.value && !Number.isNaN(Number(item.value)) ? Number(item.value) : undefined
+
+    return onUpdate({ ...item, type: type, value: { min: lastValue, max: undefined } })
+  }
 
   return (
     <Stack mt="sm" key={item.uuid}>
@@ -201,12 +214,11 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
         <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
         <InputColor color={item.color} onChange={updateColor} />
         <Group>
-          <Tooltip label={item.hidden ? "show in legend" : "hide from legend"}>
+          <Tooltip label={item.hidden ? "show this legend" : "hide this legend"}>
             <ActionIcon variant="filled" color={item.hidden ? "gray" : "teal"} onClick={toggleHidden}>
               {item.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
             </ActionIcon>
           </Tooltip>
-
           <Tooltip label="delete this legend">
             <ActionIcon color="red" variant="filled" onClick={() => onDelete(item)}>
               <Trash size={14} />
@@ -214,21 +226,21 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
           </Tooltip>
         </Group>
       </Group>
-      <Group>
 
+      <Group>
         <Tooltip label="set value type to compare with the data">
           <SegmentedControl
+            size="xs"
+            color="teal"
             value={item.type}
             onChange={updateType}
-            size="xs"
             data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
           />
         </Tooltip>
 
-        {item.type === "single" && <InputText value={item.value} placeholder="value" onChange={updateValueText} />}
+        {item.type === "single" && <InputText value={item.value} onChange={updateValueText} placeholder="value" />}
 
         {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
-
       </Group>
       <Divider mt={0} mb={0} />
     </Stack>
@@ -288,7 +300,6 @@ const LegendListControl = () => {
 
     return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
   }
-  
 
   return (
     <Group noWrap position="apart" align="flex-end" className={classes.section}>
@@ -308,21 +319,24 @@ const LegendListControl = () => {
               <Plus size={14} />
             </Button>
           </Tooltip>
-          <Menu size="lg" transition="pop" placement="end" control={
-            <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
-              <ChevronDown size={14} />
-            </ActionIcon>
-          }>
-            <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
-            <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
-            <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
-            <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
+          <Menu>
+            <Menu.Target>
+              <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
+                <ChevronDown size={14} />
+              </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
+              <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
+              <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
+              <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
+            </Menu.Dropdown>
           </Menu>
         </Group>
         <Tooltip label="Apply to key">
           <Button size="xs" onClick={updateFeatureColor} disabled={selectedKey === null}>Apply</Button>
         </Tooltip>
-        <Tooltip label="Create a gradient colors from the first to the last color">
+        <Tooltip label="Make gradient colors from the first to the last color">
           <ActionIcon color="grape" variant="filled" onClick={generateGradient}>
             <Palette size={14} />
           </ActionIcon>

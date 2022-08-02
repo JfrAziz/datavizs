@@ -43,6 +43,10 @@ export const ExternalControl = () => {
 
   const map = useStore(state => state.mapRef)
 
+  const showControl = useStore(state => state.showMapControls)
+
+  if (!showControl) return null;
+
   const setCenter = useStore.getState().setMapToCenter
 
   const downloadMap = useStore.getState().downloadMap
@@ -53,17 +57,23 @@ export const ExternalControl = () => {
         <Group grow spacing={0}>
           <Button size="xs" variant="default" aria-label="Zoom In" onClick={() => map?.zoomIn()} className={classes.buttongroup}>
             <Tooltip label="zoom in">
-              <ZoomIn size={16} />
+              <div>
+                <ZoomIn size={16} />
+              </div>
             </Tooltip>
           </Button>
           <Button variant="default" size="xs" aria-label="Zoom Out" onClick={() => map?.zoomOut()} className={classes.buttongroup}>
             <Tooltip label="zoom out">
-              <ZoomOut size={16} />
+              <div>
+                <ZoomOut size={16} />
+              </div>
             </Tooltip>
           </Button>
           <Button variant="default" size="xs" aria-label="Focus to GeoJSON" onClick={setCenter} className={classes.buttongroup}>
             <Tooltip label="focus">
-              <FocusCentered size={16} />
+              <div>
+                <FocusCentered size={16} />
+              </div>
             </Tooltip>
           </Button>
         </Group>
@@ -71,13 +81,16 @@ export const ExternalControl = () => {
           <Button size="xs" className={classes.button} onClick={() => downloadMap()}>
             <Photo size={16} style={{ marginRight: 4 }} /> Export
           </Button>
-          <Menu size="lg" transition="pop" placement="end" control={
-            <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
-              <ChevronDown size={16} />
-            </ActionIcon>
-          }>
-            <Menu.Item onClick={() => downloadMap("jpeg")}>Export to JPEG</Menu.Item>
-            <Menu.Item onClick={() => downloadMap("svg")}>Export to SVG </Menu.Item>
+          <Menu>
+            <Menu.Target>
+              <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl} aria-label="open menu">
+                <ChevronDown size={16} />
+              </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item onClick={() => downloadMap("jpeg")}>Export to JPEG</Menu.Item>
+              <Menu.Item onClick={() => downloadMap("svg")}>Export to SVG </Menu.Item>
+            </Menu.Dropdown>
           </Menu>
         </Group>
       </Group>

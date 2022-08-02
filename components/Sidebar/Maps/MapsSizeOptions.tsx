@@ -21,17 +21,17 @@ export function MapsSizeOptions() {
           <NumberInput
             label="width"
             placeholder="800px"
-            min={400} max={MAPS_MAX_WIDTH}
             value={mapWrapper.width}
+            min={400} max={MAPS_MAX_WIDTH}
             defaultValue={DEFAULT_MAPS_WIDTH}
-            onChange={value => setMapWrapper({ ...mapWrapper, width: value })} />
+            onChange={value => setMapWrapper({ width: value })} />
           <NumberInput
             label="height"
             placeholder="600px"
-            min={400} max={MAPS_MAX_HEIGHT}
             value={mapWrapper.height}
+            min={400} max={MAPS_MAX_HEIGHT}
             defaultValue={DEFAULT_MAPS_HEIGHT}
-            onChange={value => setMapWrapper({ ...mapWrapper, height: value })} />
+            onChange={value => setMapWrapper({ height: value })} />
         </BaseList>
       )}
     </>

@@ -161,7 +161,7 @@ export interface MapState {
 
   mapWrapperRef: RefObject<HTMLDivElement> | null;
 
-  showControl: boolean;
+  showMapControls: boolean;
 }
 
 export interface MapFunction {
@@ -169,13 +169,13 @@ export interface MapFunction {
 
   setBaseMap: (value: BaseMap | null) => void
 
-  setMapWrapper: (wrapper: MapWrapper) => void
+  setMapWrapper: (wrapper: Partial<MapWrapper>) => void
 
   setMapToCenter: () => void
 
   downloadMap: (format?: "png" | "jpeg" | "svg") => void
 
-  toggleControl: () => void;
+  toggleMapControls: () => void;
 }
 
 export type MapStore = MapState & MapFunction
