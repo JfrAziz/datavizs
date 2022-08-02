@@ -169,7 +169,7 @@ export interface MapFunction {
 
   setBaseMap: (value: BaseMap | null) => void
 
-  setMapWrapper: (wrapper: MapWrapper) => void
+  setMapWrapper: (wrapper: Partial<MapWrapper>) => void
 
   setMapToCenter: () => void
 
