@@ -83,7 +83,7 @@ export const ExternalControl = () => {
           </Button>
           <Menu>
             <Menu.Target>
-              <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl}>
+              <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl} aria-label="open menu">
                 <ChevronDown size={16} />
               </ActionIcon>
             </Menu.Target>
