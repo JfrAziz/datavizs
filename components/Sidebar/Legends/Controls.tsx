@@ -1,6 +1,6 @@
 import { useStore } from "@stores/maps"
 import { InfoCircle, Refresh } from "tabler-icons-react"
-import { BaseList, ListItem } from "@components/Sidebar/Common/ListItem"
+import { Options, OptionWrapper } from "@components/Common/Options"
 import {
   Text,
   Input,
@@ -50,12 +50,12 @@ export const ShowLegend = () => {
 
   return (
     <>
-      <ListItem title="Show legend" description="Legend shows additional information on the maps">
+      <Options title="Show legend" description="Legend shows additional information on the maps">
         <Switch checked={legendOptions.show} onChange={toggleShowLegend} />
-      </ListItem>
+      </Options>
       {legendOptions.show && (
         <>
-          <BaseList grow className={classes.section}>
+          <OptionWrapper grow className={classes.section}>
             <Input.Wrapper label="Spacing" size="xs">
               <Slider
                 value={legendOptions.spacing}
@@ -77,8 +77,8 @@ export const ShowLegend = () => {
               onChange={changeDirection}
               value={legendOptions.direction}
             />
-          </BaseList>
-          <BaseList grow className={classes.section}>
+          </OptionWrapper>
+          <OptionWrapper grow className={classes.section}>
             <Input.Wrapper label="Font Size" size="xs">
               <Slider
                 value={legendOptions.fontSize}
@@ -98,8 +98,8 @@ export const ShowLegend = () => {
               onChange={changeFontColor}
               value={legendOptions.fontColor}
             />
-          </BaseList>
-          <BaseList grow className={classes.section}>
+          </OptionWrapper>
+          <OptionWrapper grow className={classes.section}>
             <Group noWrap sx={{ flex: 1 }} grow >
               <Input.Wrapper label="Symbol Size" size="xs">
                 <Slider
@@ -122,8 +122,8 @@ export const ShowLegend = () => {
                 value={legendOptions.backgroundColor}
               />
             </Group>
-          </BaseList>
-          <BaseList className={classes.section} style={{ paddingTop: theme.spacing.xl }}>
+          </OptionWrapper>
+          <OptionWrapper className={classes.section} style={{ paddingTop: theme.spacing.xl }}>
             <Group style={{ color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6] }} spacing={10}>
               <InfoCircle strokeWidth={1.5} size={20} />
               <Text size="xs">You can move and resize the legend by dragging it on map</Text>
@@ -133,7 +133,7 @@ export const ShowLegend = () => {
                 <Refresh size={14} />
               </ActionIcon>
             </Tooltip>
-          </BaseList>
+          </OptionWrapper>
         </>
       )}
     </>

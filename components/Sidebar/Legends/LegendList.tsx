@@ -2,8 +2,8 @@ import { useStore } from "@stores/maps";
 import { randomColor } from "@utils/colors";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@utils/debounce";
+import { Divider } from "@components/Common/Divider";
 import { Legend, minMaxValue } from "@stores/maps/types";
-import { Divider } from "@components/Sidebar/Common/Divider";
 import { ChevronDown, Eraser, Eye, EyeOff, Palette, Plus, Refresh, Trash } from "tabler-icons-react";
 import {
   Menu,

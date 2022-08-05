@@ -5,20 +5,10 @@ import { Dropzone } from '@mantine/dropzone';
 import { Text, Group, useMantineTheme } from '@mantine/core';
 
 
-type DropzoneChildrenProps = {
-  type: "rejected" | "accepted" | "idle"
-}
-
-type activeStatus = {
-  color: string
-
-  text: string
-}
-
-const DropzoneChildren = ({ type }: DropzoneChildrenProps) => {
+const DropzoneChildren = ({ type }: { type: "rejected" | "accepted" | "idle" }) => {
   const theme = useMantineTheme();
 
-  const getActiveColor = (type: "rejected" | "accepted" | "idle"): activeStatus => {
+  const getActiveColor = (type: "rejected" | "accepted" | "idle"): { color: string, text: string } => {
     switch (type) {
       case "accepted":
         return {
@@ -33,7 +23,7 @@ const DropzoneChildren = ({ type }: DropzoneChildrenProps) => {
       default:
         return {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-          text: "Upload geoJSON file"
+          text: "Upload GeoJSON file"
         }
     }
   }
@@ -41,7 +31,7 @@ const DropzoneChildren = ({ type }: DropzoneChildrenProps) => {
   const activeState = getActiveColor(type)
 
   return (
-    <div style={{ pointerEvents: 'none' }}>
+    <div style={{ pointerEvents: 'none', paddingBottom: 20 }}>
       <Group position="center">
         <CloudUpload size={50} color={activeState.color} />
       </Group>
@@ -58,7 +48,7 @@ const DropzoneChildren = ({ type }: DropzoneChildrenProps) => {
 export function FileImport({ callback }: { callback: () => void }) {
   const importGeoJSON = useStore.getState().importGeoJSON
 
-  const showFailedImportNotifications = () => showNotification({
+  const showErrorNotifications = () => showNotification({
     title: "Error Imported File",
     message: "Please import valid GeoJSON Collection files",
     color: "red"
@@ -67,10 +57,9 @@ export function FileImport({ callback }: { callback: () => void }) {
   const processFile = async (files: File[]) => {
     try {
       importGeoJSON(await files[0].text())
-    } catch (error) {
-      showFailedImportNotifications()
-    } finally {
       callback()
+    } catch (error) {
+      showErrorNotifications()
     }
   }
 
@@ -79,27 +68,17 @@ export function FileImport({ callback }: { callback: () => void }) {
       radius="md"
       onDrop={processFile}
       maxSize={10 * 1024 ** 2}
-      onReject={showFailedImportNotifications}
-      accept={[
-        "application/json",
-        "application/geo+json",
-      ]}
-      style={{
-        borderWidth: 1,
-        paddingBottom: 50
-      }}
-    >
-      <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
-        <Dropzone.Accept>
-          <DropzoneChildren type='accepted' />
-        </Dropzone.Accept>
-        <Dropzone.Reject>
-          <DropzoneChildren type='rejected' />
-        </Dropzone.Reject>
-        <Dropzone.Idle>
-          <DropzoneChildren type='idle' />
-        </Dropzone.Idle>
-      </Group>
+      onReject={showErrorNotifications}
+      accept={["application/json", "application/geo+json"]}>
+      <Dropzone.Idle>
+        <DropzoneChildren type='idle' />
+      </Dropzone.Idle>
+      <Dropzone.Accept>
+        <DropzoneChildren type='accepted' />
+      </Dropzone.Accept>
+      <Dropzone.Reject>
+        <DropzoneChildren type='rejected' />
+      </Dropzone.Reject>
     </Dropzone>
   );
 }

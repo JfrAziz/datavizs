@@ -1,9 +1,9 @@
 import { v4 } from "uuid";
 import { scale } from "chroma-js";
 import { StateCreator } from "zustand";
+import { quantile } from "@utils/stats";
 import { randomColor } from "@utils/colors";
 import { DataStore, Legend, LegendOptions, LegendStore } from "@stores/maps/types";
-import { quantile } from "../utils/stats";
 
 
 /**
@@ -114,7 +114,7 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
   generateQuantileLegends: (key, quantileValue) => {
     const data = get().features
-      .map(item => item.properties[key])
+      .map(item => Number(item.properties[key]))
       .filter(item => item)
       .sort((a, b) => a - b)
 

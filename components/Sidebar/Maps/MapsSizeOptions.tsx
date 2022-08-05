@@ -1,6 +1,6 @@
 import { useStore } from "@stores/maps";
 import { NumberInput, Select } from "@mantine/core";
-import { BaseList, ListItem } from "@components/Sidebar/Common/ListItem";
+import { Options, OptionWrapper } from "@components/Common/Options";
 import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH, MAPS_MAX_HEIGHT, MAPS_MAX_WIDTH } from "@config/maps";
 
 export function MapsSizeOptions() {
@@ -9,15 +9,15 @@ export function MapsSizeOptions() {
 
   return (
     <>
-      <ListItem title="Maps Size" description="Set width and height of maps" >
+      <Options title="Maps Size" description="Set width and height of maps" >
         <Select
           value={mapWrapper.type}
           defaultValue="auto"
           data={["auto", "custom"]}
           onChange={type => setMapWrapper({ type: type as "custom" | "auto" })} />
-      </ListItem>
+      </Options>
       {mapWrapper.type === "custom" && (
-        <BaseList>
+        <OptionWrapper>
           <NumberInput
             label="width"
             placeholder="800px"
@@ -32,7 +32,7 @@ export function MapsSizeOptions() {
             min={400} max={MAPS_MAX_HEIGHT}
             defaultValue={DEFAULT_MAPS_HEIGHT}
             onChange={value => setMapWrapper({ height: value })} />
-        </BaseList>
+        </OptionWrapper>
       )}
     </>
   );
