@@ -14,7 +14,7 @@ interface ImportModalBodyProps {
 const ImportModalBody = ({ modals }: ImportModalBodyProps) => {
   return (
     <>
-      <ServerImport />
+      <ServerImport callback={() => modals.closeAll()} />
       <Divider my={20} label="or Upload your GeoJSON" labelPosition='center' />
       <FileImport callback={() => modals.closeAll()} />
     </>
