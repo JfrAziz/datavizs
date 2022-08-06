@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { showNotification } from "@mantine/notifications";
 import { DeviceFloppy, Plus, Search, Trash } from "tabler-icons-react";
-import { ActionIcon, createStyles, Group, MantineTheme, Text, TextInput, Tooltip, useMantineTheme } from "@mantine/core";
+import { ActionIcon, createStyles, Group, MantineTheme, Text, TextInput, Tooltip } from "@mantine/core";
 import DataEditor, { EditableGridCell, GridCell, GridCellKind, GridColumn, GridSelection, Item } from "@glideapps/glide-data-grid";
 
 
@@ -67,9 +67,9 @@ const DataTable = () => {
   const updateFeatureByUUID = useStore.getState().updateFeatureByUUID
   const deleteFeaturebyUUIDs = useStore.getState().deleteFeaturebyUUIDs
 
+  const [newKey, setNewKey] = useState<string>("")
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [gridSelection, setGridSelection] = useState<GridSelection | undefined>(undefined)
-  const [newKey, setNewKey] = useState<string>("")
 
   const columns: GridColumn[] = columnNames.map((keyName) => ({ title: keyName, id: keyName }))
 

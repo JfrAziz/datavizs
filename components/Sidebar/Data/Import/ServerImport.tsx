@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import { useState } from "react";
 import { useStore } from "@stores/maps";
-import { useDisclosure } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { AlertTriangle, Folder, Map } from "tabler-icons-react"
 import {
@@ -174,8 +173,8 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
     } catch (error) {
 
       return showNotification({
-        title: "Error Imported File",
-        message: "Please import valid GeoJSON Collection files",
+        title: "Error Import GeoJSON Data",
+        message: "Failed to load geoJSON data",
         color: "red"
       })
     }

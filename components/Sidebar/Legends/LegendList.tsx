@@ -1,6 +1,7 @@
 import { useStore } from "@stores/maps";
 import { randomColor } from "@utils/colors";
 import { useEffect, useState } from "react";
+import { getPrecision } from "@utils/stats";
 import { useDebounce } from "@utils/debounce";
 import { Divider } from "@components/Common/Divider";
 import { Legend, minMaxValue } from "@stores/maps/types";
@@ -113,16 +114,11 @@ const InputText = ({ value, onChange, ...others }: InputTextProps) => {
  * state to update a precision of input number dynamically.
  */
 const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
-  const [precision, setPrecision] = useState<number>(0)
+  const [precision, setPrecision] = useState<number>(value ? getPrecision(value) : 0)
 
   const updateMinValue = (value: number) => {
 
-    if (value !== undefined) {
-      const nmbStr = value.toString().split(".")
-
-      if (nmbStr[1]) setPrecision(nmbStr[1].length <= 3 ? nmbStr[1].length : 3)
-      else setPrecision(0)
-    }
+    if (value !== undefined) setPrecision(getPrecision(value))
 
     if (onChange) return onChange(value)
   }

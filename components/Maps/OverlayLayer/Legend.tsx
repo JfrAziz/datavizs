@@ -1,25 +1,25 @@
-import { Rnd, RndResizeCallback } from "react-rnd"
 import { useStore } from "@stores/maps"
 import { PropsWithChildren } from "react";
+import { Rnd, RndResizeCallback } from "react-rnd"
+import { DraggableEventHandler } from "react-draggable";
 import type { Legend as LegendTypes } from "@stores/maps/types"
 import { ColorSwatch, createStyles, Group, Stack, Text } from "@mantine/core"
-import { DraggableEventHandler } from "react-draggable";
 
 
 const useStyles = createStyles(theme => ({
   container: {
     zIndex: 1,
-    fontSize: theme.fontSizes.sm,
+    border: "2px solid transparent",
 
     ":hover": {
-      border: "2px dashed"
+      border: `2px dashed ${theme.colors.gray[5]}`
     }
   },
   wrapper: {
     width: "100%",
     height: "100%",
     overflow: "hidden",
-    padding: 10
+    padding: theme.spacing.xs
   },
   colorSwatch: {
     boxShadow: "unset"

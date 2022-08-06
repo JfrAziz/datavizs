@@ -1,7 +1,7 @@
 import { useStore } from '@stores/maps';
+import { Dropzone } from '@mantine/dropzone';
 import { CloudUpload } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
-import { Dropzone } from '@mantine/dropzone';
 import { Text, Group, useMantineTheme } from '@mantine/core';
 
 
@@ -49,7 +49,7 @@ export function FileImport({ callback }: { callback: () => void }) {
   const importGeoJSON = useStore.getState().importGeoJSON
 
   const showErrorNotifications = () => showNotification({
-    title: "Error Imported File",
+    title: "Error Import File",
     message: "Please import valid GeoJSON Collection files",
     color: "red"
   })
