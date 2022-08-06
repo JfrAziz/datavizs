@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useStore } from "@stores/maps";
-import { Divider } from "@components/Sidebar/Common/Divider";
 import { ImportGeoJSON } from "./Import";
+import { Divider } from "@components/Common/Divider";
 
 const DataTable = dynamic(() => import("./DataTable"), { ssr: false })
 

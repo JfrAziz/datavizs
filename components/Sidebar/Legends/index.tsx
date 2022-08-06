@@ -1,6 +1,6 @@
-import { Divider } from "../Common/Divider";
 import { ShowLegend } from "./Controls";
 import { LegendList } from "./LegendList";
+import { Divider } from "@components/Common/Divider";
 
 export function LegendOptions() {
   return (

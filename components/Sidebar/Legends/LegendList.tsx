@@ -1,11 +1,13 @@
 import { useStore } from "@stores/maps";
 import { randomColor } from "@utils/colors";
 import { useEffect, useState } from "react";
+import { getPrecision } from "@utils/stats";
 import { useDebounce } from "@utils/debounce";
+import { Divider } from "@components/Common/Divider";
 import { Legend, minMaxValue } from "@stores/maps/types";
-import { Divider } from "@components/Sidebar/Common/Divider";
 import { ChevronDown, Eraser, Eye, EyeOff, Palette, Plus, Refresh, Trash } from "tabler-icons-react";
 import {
+  Menu,
   Group,
   Stack,
   Select,
@@ -16,11 +18,11 @@ import {
   ColorInput,
   ColorSwatch,
   NumberInput,
+  createStyles,
   SegmentedControl,
   NumberInputProps,
-  Menu,
-  createStyles,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 
 
 const useStyles = createStyles(theme => ({
@@ -112,16 +114,11 @@ const InputText = ({ value, onChange, ...others }: InputTextProps) => {
  * state to update a precision of input number dynamically.
  */
 const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
-  const [precision, setPrecision] = useState<number>(0)
+  const [precision, setPrecision] = useState<number>(value ? getPrecision(value) : 0)
 
   const updateMinValue = (value: number) => {
 
-    if (value !== undefined) {
-      const nmbStr = value.toString().split(".")
-
-      if (nmbStr[1]) setPrecision(nmbStr[1].length <= 3 ? nmbStr[1].length : 3)
-      else setPrecision(0)
-    }
+    if (value !== undefined) setPrecision(getPrecision(value))
 
     if (onChange) return onChange(value)
   }
@@ -247,6 +244,12 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
   )
 }
 
+const showNoKeyWarning = () => showNotification({
+  title: "Warning",
+  message: "Please select on of key from geoJSON",
+  color: "yellow"
+})
+
 /**
  * Header Button to add a new legend, reset current legends, and 
  * generate gradient from available color in the legend
@@ -271,32 +274,32 @@ const LegendListControl = () => {
   const generateQuantileLegends = useStore.getState().generateQuantileLegends
 
   const updateFeatureColor = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return useStore.getState().updateFeatureColor(selectedKey, legends)
   }
 
   const generateUniqueLegends = () => {
 
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return useStore.getState().generateUniqueLegends(selectedKey)
   }
 
   const quantileLegends = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return generateQuantileLegends(selectedKey, [0, 0.25, 0.5, 0.75, 1])
   }
 
   const quintileLegends = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return generateQuantileLegends(selectedKey, [0, 0.2, 0.4, 0.6, 0.8, 1])
   }
 
   const decileLegends = () => {
-    if (!selectedKey) return;
+    if (!selectedKey) return showNoKeyWarning();
 
     return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
   }

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useStore } from "@stores/maps";
 import { baseMaps } from "@config/maps";
 import { ColorInput, Select } from "@mantine/core";
+import { Options } from "@components/Common/Options";
 import { DEFAULT_BASEMAP_COLOR, LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
-import { ListItem } from "@components/Sidebar/Common/ListItem";
 
 
 export function BaseMapsOptions() {
@@ -24,19 +24,19 @@ export function BaseMapsOptions() {
 
   return (
     <>
-      <ListItem title="Base Maps" description="Select base map from various provider" >
+      <Options title="Base Maps" description="Select base map from various provider" >
         <Select
           placeholder="Pick one"
           data={[...baseMaps.map(item => item.name), "No Base Map"]}
           value={baseMap ? baseMap.name : "No Base Map"}
           onChange={selectBaseMap}
         />
-      </ListItem>
+      </Options>
       {
         !baseMap && (
-          <ListItem title="Background Color" description="Use background color instead?" >
+          <Options title="Background Color" description="Use background color instead?" >
             <ColorInput defaultValue="#d5e8eb" value={color} onChange={setBaseColor} />
-          </ListItem>
+          </Options>
         )
       }
     </>

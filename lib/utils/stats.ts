@@ -22,3 +22,16 @@ export function quantile(array: number[], quantileValue: number | number[]) : nu
 
   return array[index] + (array[index + 1] - array[index]) * (idx - Math.floor(idx));
 }
+
+/**
+ * get precision of number, with epsilon 3.
+ * 
+ * @param value 
+ * @returns 
+ */
+export const getPrecision = (value: number) => {
+  const nmbStr = value.toString().split(".")
+
+  if (nmbStr[1]) return nmbStr[1].length <= 3 ? nmbStr[1].length : 3
+  return 0
+}
