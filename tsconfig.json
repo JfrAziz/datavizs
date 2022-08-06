@@ -16,11 +16,11 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@stores/*": ["lib/stores/*"],
-      "@utils/*": ["lib/utils/*"],
+      "@lib/*": ["lib/*"],
       "@styles/*": ["styles/*"],
       "@config/*": ["config/*"],
       "@components/*": ["components/*"],
+      "@geojson/*": ["features/geojson/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

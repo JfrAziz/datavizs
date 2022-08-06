@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Maps from '@components/Maps';
+import Maps from '@geojson/Maps';
 import type { NextPage } from 'next'
-import Sidebar from '@components/Sidebar';
+import Sidebar from '@geojson/Sidebar';
 import { createStyles } from '@mantine/core';
 import { MantineProvider } from '@components/Provider/MantineProvider';
 
