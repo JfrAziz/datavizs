@@ -1,6 +1,6 @@
 import { useStore } from "@geojson/store";
 import { useCallback, useState } from "react";
-import { ThemeProvider } from "styled-components";
+import "@glideapps/glide-data-grid/dist/index.css";
 import { showNotification } from "@mantine/notifications";
 import { DeviceFloppy, Plus, Search, Trash } from "tabler-icons-react";
 import { ActionIcon, createStyles, Group, MantineTheme, Text, TextInput, Tooltip } from "@mantine/core";
@@ -233,28 +233,27 @@ const DataTable = () => {
           </Group>
         </Group>
       </Group>
-      <ThemeProvider theme={getTheme(theme)}>
-        <DataEditor
-          width="100%"
-          onPaste={true}
-          rowSelect="multi"
-          rowMarkers="both"
-          columns={columns}
-          minColumnWidth={200}
-          columnSelect="single"
-          rows={features.length}
-          showSearch={showSearch}
-          rowSelectionMode="multi"
-          getCellContent={getContent}
-          onCellEdited={onCellEdited}
-          getCellsForSelection={true}
-          gridSelection={gridSelection}
-          keybindings={{ search: true }}
-          onSearchClose={() => setShowSearch(!showSearch)}
-          onGridSelectionChange={(newValue) => setGridSelection(newValue)}
-        />
-        <div id="portal" style={{ position: "fixed", left: 0, right: 0, top: 0, zIndex: 9999 }} />
-      </ThemeProvider>
+      <DataEditor
+        width="100%"
+        onPaste={true}
+        rowSelect="multi"
+        rowMarkers="both"
+        columns={columns}
+        minColumnWidth={200}
+        columnSelect="single"
+        rows={features.length}
+        showSearch={showSearch}
+        theme={getTheme(theme)}
+        rowSelectionMode="multi"
+        getCellContent={getContent}
+        onCellEdited={onCellEdited}
+        getCellsForSelection={true}
+        gridSelection={gridSelection}
+        keybindings={{ search: true }}
+        onSearchClose={() => setShowSearch(!showSearch)}
+        onGridSelectionChange={(newValue) => setGridSelection(newValue)}
+      />
+      <div id="portal" style={{ position: "fixed", left: 0, right: 0, top: 0, zIndex: 9999 }} />
     </>
   )
 }

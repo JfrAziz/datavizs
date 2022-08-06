@@ -5,8 +5,7 @@ import { randomColor } from "@lib/misc/colors"
 import { ActionIcon, ColorInput, NumberInput, NumberInputProps, TextInput } from "@mantine/core"
 
 /**
- * Input number for handle range input each legend. This component has
- * state to update a precision of input number dynamically.
+ * This component has state to update a precision of input number dynamically.
  */
 export const InputNumber = ({ value, onChange, ...others }: NumberInputProps) => {
   const [precision, setPrecision] = useState<number>(value ? getPrecision(value) : 0)
@@ -22,7 +21,7 @@ export const InputNumber = ({ value, onChange, ...others }: NumberInputProps) =>
 }
 
 /**
- * Input color outside control of value, so when value changed from outside
+ * Input color with outside control, so when value changed from outside
  * the value inside state will be updated. This include random color generator
  * 
  */
