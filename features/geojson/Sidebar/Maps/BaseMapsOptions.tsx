@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { baseMaps } from "@config/maps";
 import { useStore } from "@geojson/store";
 import { Options } from "@components/Options";
 import { ColorInput, Select } from "@mantine/core";
-import { DEFAULT_BASEMAP_COLOR, LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
+import { DEFAULT_BASEMAP_COLOR, LEAFLET_CUSTOM_COLOR_VAR, baseMaps } from "@config/leaflet";
 
 
 export function BaseMapsOptions() {

@@ -240,6 +240,8 @@ const DataTable = () => {
         rowMarkers="both"
         columns={columns}
         minColumnWidth={200}
+        smoothScrollX={true}
+        smoothScrollY={true}
         columnSelect="single"
         rows={features.length}
         showSearch={showSearch}

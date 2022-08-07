@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { GeoJSONExtended } from "@geojson/store/types";
-import { DEFAULT_FEATURE_COLOR } from "@config/colors";
+import { DEFAULT_FEATURE_COLOR } from "@config/leaflet";
 
 
 /**

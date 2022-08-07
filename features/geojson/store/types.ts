@@ -1,7 +1,7 @@
 import { RefObject } from "react";
-import { BaseMap } from "@config/maps";
-import { Feature, FeatureCollection, Geometry } from "geojson";
+import { BaseMap } from "@config/leaflet";
 import { FeatureGroup, Map } from "leaflet";
+import { Feature, FeatureCollection, Geometry } from "geojson";
 
 
 /**

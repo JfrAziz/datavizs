@@ -2,7 +2,7 @@ import { useStore } from "@geojson/store"
 import { PropsWithChildren } from "react"
 import { ExternalControl } from "./ExternalControl";
 import { createStyles, Paper, ScrollArea } from "@mantine/core"
-import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH } from "@config/maps"
+import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH } from "@config/leaflet"
 
 
 const useStyles = createStyles({

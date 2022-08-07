@@ -3,7 +3,7 @@ import { BaseMap } from "./BaseMap";
 import { useStore } from "@geojson/store";
 import { MapContainer } from "react-leaflet";
 import { GeoJSONLayer } from "./GeoJSONLayer";
-import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/colors";
+import { LEAFLET_CUSTOM_COLOR_VAR } from "@config/leaflet";
 
 const MapComponent = () => {
   const setMap = useStore.getState().setMapRef

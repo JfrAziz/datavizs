@@ -1,6 +1,6 @@
 import { createRef } from "react";
 import { StateCreator } from "zustand";
-import { baseMaps } from "@config/maps";
+import { baseMaps } from "@config/leaflet";
 import { toPng, toSvg, toJpeg } from 'html-to-image';
 import { DataStore, MapState, MapStore } from "@geojson/store/types";
 

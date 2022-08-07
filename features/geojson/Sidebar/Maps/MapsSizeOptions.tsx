@@ -1,7 +1,7 @@
 import { useStore } from "@geojson/store";
 import { NumberInput, Select } from "@mantine/core";
 import { Options, OptionWrapper } from "@components/Options";
-import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH, MAPS_MAX_HEIGHT, MAPS_MAX_WIDTH } from "@config/maps";
+import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH, MAPS_MAX_HEIGHT, MAPS_MAX_WIDTH } from "@config/leaflet";
 
 export function MapsSizeOptions() {
   const mapWrapper = useStore(state => state.mapWrapper)

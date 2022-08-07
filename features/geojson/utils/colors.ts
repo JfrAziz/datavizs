@@ -1,5 +1,5 @@
 import { Legend } from "@geojson/store/types";
-import { DEFAULT_FEATURE_COLOR } from "@config/colors";
+import { DEFAULT_FEATURE_COLOR } from "@config/leaflet";
 
 /**
  * Legend value is an array value with size 1 or 2. If the type is equals, 
