@@ -114,6 +114,8 @@ export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 export interface LegendState {
   legends: Legend[];
 
+  legendTitle: string;
+
   legendOptions: LegendOptions;
 }
 
@@ -134,7 +136,9 @@ export interface LegendFunction {
 
   generateUniqueLegends: (key: string) => void;
 
-  generateQuantileLegends: (key: string, quantile: number[]) => void
+  generateQuantileLegends: (key: string, quantile: number[]) => void;
+
+  updateLegendTitle: (title: string) => void
 }
 
 export type LegendStore = LegendState & LegendFunction

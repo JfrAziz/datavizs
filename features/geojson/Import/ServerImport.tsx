@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useState } from "react";
 import { useStore } from "@geojson/store";
+import { GEOJSON_REPOSITORY } from "@config/app";
 import { showNotification } from "@mantine/notifications";
 import { AlertTriangle, Folder, Map } from "tabler-icons-react"
 import {
@@ -17,6 +18,7 @@ import {
   Breadcrumbs,
   createStyles,
   UnstyledButton,
+  LoadingOverlay,
 } from "@mantine/core"
 
 const useStyles = createStyles((theme) => ({
@@ -49,6 +51,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface GeoJSONResponse {
+  id: string
+
   name: string
 
   type: "folder" | "geojson"
@@ -96,7 +100,7 @@ const MapItem = ({ item, onClick }: { item: GeoJSONResponse, onClick: () => void
   const { classes } = useStyles()
 
   return (
-    <HoverCard width={256} withArrow withinPortal={true} openDelay={200} closeDelay={400} shadow="md">
+    <HoverCard width={256} withArrow withinPortal={true} openDelay={500} closeDelay={400} shadow="md">
       <HoverCard.Target>
         <UnstyledButton className={classes.button} onClick={onClick}  >
           <Group align="center" >
@@ -127,6 +131,8 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
 
   const [folders, setFolders] = useState<FolderStructure[]>([{ name: "Home", endpoint: endpoint }])
 
+  const [geoJSONLoading, setGeoJSONLoading] = useState<boolean>(false);
+
   /**
    * add folder to breadcrumbs
    * 
@@ -149,34 +155,36 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
   const removeFolder = (idx: number) => {
     if (idx + 1 === folders.length) return;
 
-    const arr = folders;
+    const newFolders = folders.filter((item, index) => index <= idx )
 
-    arr.splice(-(idx + 1))
+    setFolders(newFolders)
 
-    setFolders(arr)
-
-    return setEndpoint(arr[idx].endpoint)
+    return setEndpoint(newFolders[idx].endpoint)
   }
 
   /**
-   * import geoJSON from URL then close the modal by calling the callback
+   * import geoJSON from URL then calling the callback
    * 
    * @param url 
    * @returns 
    */
   const importFromUrl = async (url: string) => {
     try {
+      // set loading
+      setGeoJSONLoading(true)
+
       importGeoJSON(await fetch(url).then(res => res.text()))
 
       return callback()
 
     } catch (error) {
-
-      return showNotification({
-        title: "Error Import GeoJSON Data",
-        message: "Failed to load geoJSON data",
+      showNotification({
+        title: "Import Error!",
+        message: "Failed to load geoJSON data from server",
         color: "red"
       })
+    } finally {
+      setGeoJSONLoading(false)
     }
   }
 
@@ -204,6 +212,7 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
             <Text size="sm" >Failed to Load Data From Server</Text>
           </Stack>
         )}
+        <LoadingOverlay visible={geoJSONLoading} overlayBlur={2} />
 
         <Skeleton visible={!data} width="100%">
           <SimpleGrid
@@ -214,11 +223,11 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
               { maxWidth: 755, cols: 2, spacing: 'xs' },
               { maxWidth: 600, cols: 1, spacing: 0 },
             ]}>
-            {data && data.map((item, index) => {
+            {data && data.map(item => {
 
               if (item.type === "folder") return (
                 <FolderItem
-                  key={index}
+                  key={item.id}
                   item={item}
                   onClick={() => addFolder({
                     name: item.name,
@@ -228,7 +237,7 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
 
               if (item.type === "geojson") return (
                 <MapItem
-                  key={index}
+                  key={item.id}
                   item={item}
                   onClick={() => importFromUrl(getUrl(item.endpoint))}
                 />)
@@ -236,6 +245,10 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
           </SimpleGrid>
         </Skeleton>
       </ScrollArea>
+
+      <Anchor size="xs" href={GEOJSON_REPOSITORY} target="_blank">
+        improve the collection
+      </Anchor>
     </>
   )
 }

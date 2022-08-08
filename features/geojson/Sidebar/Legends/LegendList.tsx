@@ -140,7 +140,6 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
           </Tooltip>
         </Group>
       </Group>
-
       <Group>
         <Tooltip label="set value type to compare with the data">
           <SegmentedControl
@@ -151,9 +150,7 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
             data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
           />
         </Tooltip>
-
         {item.type === "single" && <InputText value={item.value} onChange={updateValueText} placeholder="value" />}
-
         {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
       </Group>
       <Divider mt={0} mb={0} />

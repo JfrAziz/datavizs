@@ -1,10 +1,10 @@
 import { useStore } from '@geojson/store';
-import { FileImport } from './FileImport';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
-import { ServerImport } from './ServerImport';
 import { Divider } from '@components/Divider';
 import { Options } from '@components/Options';
+import { FileImport } from '@geojson/Import/FileImport';
+import { ServerImport } from '@geojson/Import/ServerImport';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
 
 interface ImportModalBodyProps {
@@ -21,7 +21,7 @@ const ImportModalBody = ({ modals }: ImportModalBodyProps) => {
   )
 }
 
-export function ImportGeoJSON() {
+export function ImportModal() {
   const modals = useModals();
   const geoJSONKey = useStore.getState().geoJSONKey
 
@@ -30,6 +30,7 @@ export function ImportGeoJSON() {
       title: 'Import GeoJSON',
       size: 'xl',
       centered: true,
+      closeOnClickOutside: false,
       onClose: () => modals.closeAll(),
       children: <ImportModalBody modals={modals} />,
     });
@@ -48,7 +49,7 @@ export function ImportGeoJSON() {
   }
 
   return (
-    <Options title="Import Data" description="Import geojson">
+    <Options title="Import Data" description="Import from existing collection or upload your data">
       <Button onClick={openModal}>Import Data</Button>
     </Options>
   );

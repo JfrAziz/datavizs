@@ -11,7 +11,7 @@ export const MantineProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineRootProvider theme={{ colorScheme, primaryColor: 'teal' }} withGlobalStyles withNormalizeCSS>
+      <MantineRootProvider theme={{ colorScheme, primaryColor: 'teal', loader: 'bars' }} withGlobalStyles withNormalizeCSS>
         <NotificationsProvider>
           <ModalsProvider>
             {children}

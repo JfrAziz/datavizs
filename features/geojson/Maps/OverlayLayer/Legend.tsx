@@ -21,10 +21,33 @@ const useStyles = createStyles(theme => ({
     overflow: "hidden",
     padding: theme.spacing.xs
   },
+  title: {
+    fontWeight: "bold",
+    padding: theme.spacing.xs,
+    paddingBottom: 0,
+  },
   colorSwatch: {
     boxShadow: "unset"
   }
 }))
+
+
+/**
+ * Title of Legend
+ * 
+ * @returns JSX
+ */
+const LegendTitle = () => {
+  const { classes } = useStyles()
+
+  const title = useStore(state => state.legendTitle)
+
+  const options = useStore(state => state.legendOptions)
+
+  if (!title) return null;
+
+  return <Text className={classes.title} style={{ color: options.fontColor, fontSize: options.fontSize }}>{title}</Text>
+}
 
 
 interface LegendWrapperProps extends PropsWithChildren {
@@ -34,8 +57,9 @@ interface LegendWrapperProps extends PropsWithChildren {
 }
 
 /**
+ * Wrapper for legend item
  * 
- * @param param0 
+ * @param param LegendWrapperProps 
  * @returns 
  */
 const LegendWrapper = ({ direction, spacing, children }: LegendWrapperProps) => {
@@ -50,27 +74,57 @@ const LegendWrapper = ({ direction, spacing, children }: LegendWrapperProps) => 
 }
 
 /**
- * return label for each legend
+ * Display all legend value and colors
  * 
- * @param item 
  * @returns 
  */
-const getLabelLegend = (item: LegendTypes): string | null => {
-  if (item.label) return item.label
-
-  if (item.type === "single") return item.value
-
-  return `${item.value.min ?? ""} - ${item.value.max ?? ""}`
-}
-
-/**
- * 
- * @returns JSX
- */
-export const Legend = () => {
+const LegendItem = () => {
   const { classes } = useStyles()
 
   const legends = useStore(state => state.legends)
+
+  const options = useStore(state => state.legendOptions)
+
+  const getLabelLegend = (item: LegendTypes): string | null => {
+    if (item.label) return item.label
+  
+    if (item.type === "single") return item.value
+  
+    return `${item.value.min ?? ""} - ${item.value.max ?? ""}`
+  }
+
+  return (
+    <LegendWrapper spacing={options.spacing} direction={options.direction}>
+      {legends.filter(item => !item.hidden).map(item => (
+        <Group noWrap key={item.uuid}>
+          <ColorSwatch
+            radius={0}
+            color={item.color}
+            size={options.symbolSize}
+            classNames={{ shadowOverlay: classes.colorSwatch }} />
+          <Text
+            size="sm"
+            style={{
+              flex: 1,
+              color: options.fontColor,
+              fontSize: options.fontSize
+            }} >
+            {getLabelLegend(item)}
+          </Text>
+        </Group>
+      ))}
+    </LegendWrapper>
+  )
+}
+
+
+/**
+ * Legend Container with drag & drop and resizing feature
+ * 
+ * @returns 
+ */
+export const Legend = () => {
+  const { classes } = useStyles()
 
   const options = useStore(state => state.legendOptions)
 
@@ -113,28 +167,9 @@ export const Legend = () => {
         bottom: true,
         right: true,
         bottomRight: true
-      }}
-    >
-      <LegendWrapper spacing={options.spacing} direction={options.direction}>
-        {legends.filter(item => !item.hidden).map(item => (
-          <Group noWrap key={item.uuid}>
-            <ColorSwatch
-              radius={0}
-              color={item.color}
-              size={options.symbolSize}
-              classNames={{ shadowOverlay: classes.colorSwatch }} />
-            <Text
-              size="sm"
-              style={{
-                flex: 1,
-                color: options.fontColor,
-                fontSize: options.fontSize
-              }} >
-              {getLabelLegend(item)}
-            </Text>
-          </Group>
-        ))}
-      </LegendWrapper>
+      }}>
+      <LegendTitle />
+      <LegendItem />
     </Rnd>
   )
 }

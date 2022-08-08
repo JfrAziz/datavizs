@@ -3,7 +3,7 @@ import Maps from '@geojson/Maps';
 import type { NextPage } from 'next'
 import Sidebar from '@geojson/Sidebar';
 import { createStyles } from '@mantine/core';
-import { MantineProvider } from '@components/Provider/MantineProvider';
+import { MantineProvider } from '@components/MantineProvider';
 
 
 const useStyles = createStyles((theme) => {

@@ -81,7 +81,7 @@ export const ExternalControl = () => {
           <Button size="xs" className={classes.button} onClick={() => downloadMap()}>
             <Photo size={16} style={{ marginRight: 4 }} /> Export
           </Button>
-          <Menu>
+          <Menu position="top-end">
             <Menu.Target>
               <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl} aria-label="open menu">
                 <ChevronDown size={16} />
