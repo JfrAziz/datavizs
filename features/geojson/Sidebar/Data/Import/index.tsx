@@ -30,6 +30,7 @@ export function ImportGeoJSON() {
       title: 'Import GeoJSON',
       size: 'xl',
       centered: true,
+      closeOnClickOutside: false,
       onClose: () => modals.closeAll(),
       children: <ImportModalBody modals={modals} />,
     });
