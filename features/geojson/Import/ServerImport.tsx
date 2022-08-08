@@ -162,7 +162,7 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
   }
 
   /**
-   * import geoJSON from URL then close the modal by calling the callback
+   * import geoJSON from URL then calling the callback
    * 
    * @param url 
    * @returns 
