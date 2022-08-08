@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { useStore } from "@geojson/store";
-import { Divider } from "@components/Divider";
 import { ImportModal } from "./ImportModal";
+import { WelcomeAlert } from "./WelcomeAlert";
+import { Divider } from "@components/Divider";
 
 const DataTable = dynamic(() => import("./DataTable"), { ssr: false })
 
@@ -13,7 +14,9 @@ export function Data() {
     <>
       <ImportModal />
       <Divider />
-      {features.length !== 0 && <DataTable key={geoJSONKey} />}
+      {features.length !== 0
+        ? <DataTable key={geoJSONKey} />
+        : <WelcomeAlert />}
     </>
   );
 }

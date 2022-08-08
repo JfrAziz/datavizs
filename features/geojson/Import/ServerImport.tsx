@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useState } from "react";
 import { useStore } from "@geojson/store";
+import { GEOJSON_REPOSITORY } from "@config/app";
 import { showNotification } from "@mantine/notifications";
 import { AlertTriangle, Folder, Map } from "tabler-icons-react"
 import {
@@ -178,8 +179,8 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
 
     } catch (error) {
       showNotification({
-        title: "Error Import GeoJSON Data",
-        message: "Failed to load geoJSON data",
+        title: "Import Error!",
+        message: "Failed to load geoJSON data from server",
         color: "red"
       })
     } finally {
@@ -244,6 +245,10 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
           </SimpleGrid>
         </Skeleton>
       </ScrollArea>
+
+      <Anchor size="xs" href={GEOJSON_REPOSITORY} target="_blank">
+        improve the collection
+      </Anchor>
     </>
   )
 }

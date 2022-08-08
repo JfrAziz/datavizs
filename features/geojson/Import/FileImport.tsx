@@ -49,8 +49,8 @@ export function FileImport({ callback }: { callback: () => void }) {
   const importGeoJSON = useStore.getState().importGeoJSON
 
   const showErrorNotifications = () => showNotification({
-    title: "Error Import File",
-    message: "Please import valid GeoJSON Collection files",
+    title: "Import Error!",
+    message: "Please import valid GeoJSON with Feature Collection",
     color: "red"
   })
 

@@ -49,7 +49,7 @@ export function ImportModal() {
   }
 
   return (
-    <Options title="Import Data" description="Import geojson">
+    <Options title="Import Data" description="Import from existing collection or upload your data">
       <Button onClick={openModal}>Import Data</Button>
     </Options>
   );
