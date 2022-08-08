@@ -1,5 +1,5 @@
-import { LegendSettings } from "./Controls";
 import { LegendList } from "./LegendList";
+import { LegendSettings } from "./Settings";
 import { Divider } from "@components/Divider";
 
 export function LegendOptions() {
