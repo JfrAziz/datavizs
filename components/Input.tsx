@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Refresh } from "tabler-icons-react"
 import { getPrecision } from "@lib/misc/stats"
 import { randomColor } from "@lib/misc/colors"
-import { ActionIcon, ColorInput, NumberInput, NumberInputProps, TextInput } from "@mantine/core"
+import { ActionIcon, ColorInput, NumberInput, NumberInputProps, TextInput, TextInputProps } from "@mantine/core"
 
 /**
  * This component has state to update a precision of input number dynamically.
@@ -61,7 +61,7 @@ export const InputColor = ({ color, onChange, ...others }: InputColorProps) => {
 /**
  * Input text (string or number) with debounce function to update the value.
  */
- interface InputTextProps {
+ interface InputTextProps extends Omit<TextInputProps, "onChange"> {
   value: string | number;
 
   label?: string;

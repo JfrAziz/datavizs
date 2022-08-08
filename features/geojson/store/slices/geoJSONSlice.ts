@@ -22,7 +22,7 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
   importGeoJSON: (jsonString) => {
     const { json, propertiesKeys } = configureFCProperties(validateFC(JSON.parse(jsonString) as unknown as GeoJSONExtended))
 
-    set(({ geoJSONKey: v4(), features: json.features, propertiesKeys: propertiesKeys, legends: [] }))
+    set(({ geoJSONKey: v4(), features: json.features, propertiesKeys: propertiesKeys, legends: [], legendTitle: "" }))
   },
 
   setGeoJSONRef: (ref) => set({ geoJSONRef: ref }),

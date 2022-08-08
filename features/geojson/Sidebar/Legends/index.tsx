@@ -1,11 +1,11 @@
-import { ShowLegend } from "./Controls";
+import { LegendSettings } from "./Controls";
 import { LegendList } from "./LegendList";
 import { Divider } from "@components/Divider";
 
 export function LegendOptions() {
   return (
     <div>
-      <ShowLegend />
+      <LegendSettings />
       <Divider label="Legend Value & Color Generator" />
       <LegendList />
     </div>

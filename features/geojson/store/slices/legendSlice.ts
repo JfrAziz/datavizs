@@ -70,6 +70,8 @@ const LegendOptionsInitialValue: LegendOptions = {
 export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set, get) => ({
   legends: [],
 
+  legendTitle: "",
+
   legendOptions: LegendOptionsInitialValue,
 
   addLegends: () => set(state => ({
@@ -130,5 +132,7 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
     }
 
     set({ legends: result })
-  }
+  },
+
+  updateLegendTitle: (title) => set({ legendTitle: title })
 })
