@@ -88,6 +88,38 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
   resetLegends: () => set({ legends: [] }),
 
+  moveLegend: (from, to) => {
+    const legends = [...get().legends]
+
+    if (from === to) return;
+
+    if (from < 0 || to < 0) return;
+
+    if (from > legends.length - 1 || to > legends.length - 1) return;
+
+    // swap array
+    [legends[from], legends[to]] = [legends[to], legends[from]]
+
+    return set({ legends: legends })
+  },
+
+  sortLegend: (by, order) => {
+    const legends = [...get().legends]
+
+    legends.sort((a, b) => {
+      if (by === "label") return a.label > b.label ? 1 : -1
+
+      const valueA = a.type === "range" ? a.value.min : a.value
+      const valueB = b.type === "range" ? b.value.min : b.value
+
+      return (valueA ?? 0) > (valueB ?? 0) ? 1 : -1
+    })
+
+    if (order === "desc") legends.reverse()
+
+    return set({ legends: legends })
+  },
+
   resetLegendOptions: () => set({
     legendOptions: { ...LegendOptionsInitialValue, show: true }
   }),
@@ -127,7 +159,7 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
     for (let index = 0; index < quantileResults.length - 1; index++) {
       const min = quantileResults[index];
       const max = quantileResults[index + 1]
-      
+
       result.push(createRangeLegend(min, max))
     }
 

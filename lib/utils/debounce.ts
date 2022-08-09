@@ -53,7 +53,7 @@ function debounce<F extends FunctionWithArguments>(fn: F, ms: number): DebounceR
 export const useDebounce = <F extends FunctionWithArguments>(fn: F, ms: number): DebouncedFunction<F> => {
   const [debouncedFun, teardown] = debounce(fn, ms);
 
-  useEffect(() => () => teardown(), []);
+  useEffect(() => () => teardown(), [teardown]);
 
   return debouncedFun;
 };

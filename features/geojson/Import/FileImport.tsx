@@ -67,7 +67,6 @@ export function FileImport({ callback }: { callback: () => void }) {
     <Dropzone
       radius="md"
       onDrop={processFile}
-      maxSize={10 * 1024 ** 2}
       onReject={showErrorNotifications}
       accept={["application/json", "application/geo+json"]}>
       <Dropzone.Idle>

@@ -185,7 +185,7 @@ const TitleAndOthers = () => {
         </Tooltip>
         <Tooltip label="Move and resize the legend by dragging it on map">
           <ThemeIcon variant="light" size={30}>
-            <QuestionMark size={20} />
+            <QuestionMark size={16} />
           </ThemeIcon>
         </Tooltip>
         <Text className={classes.info} size="xs">
