@@ -12,6 +12,7 @@ import {
   Trash,
   EyeOff,
   Palette,
+  ArrowsSort,
   ChevronDown,
   ArrowNarrowUp,
   ArrowNarrowDown,
@@ -154,6 +155,7 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd, onMove }: LegendIte
             {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
           </Group>
         </Stack>
+        <Divider style={{ marginBottom: 0 }} orientation="vertical" />
         <Group align="flex-end">
           <Stack >
             <Tooltip label="delete this legend">
@@ -205,11 +207,14 @@ const LegendListControl = () => {
 
   const addLegends = useStore.getState().addLegends
 
+  const sortLegend = useStore.getState().sortLegend
+
   const resetLegends = useStore.getState().resetLegends
 
   const generateGradient = useStore.getState().generateGradient
 
   const generateQuantileLegends = useStore.getState().generateQuantileLegends
+
 
   const updateFeatureColor = () => {
     if (!selectedKey) return showNoKeyWarning();
@@ -256,9 +261,9 @@ const LegendListControl = () => {
       <Group position="right" noWrap style={{ justifyContent: "center" }}>
         <Group noWrap spacing={0}>
           <Tooltip label="Add legend">
-            <Button size="xs" className={classes.button} onClick={addLegends}>
+            <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.button} onClick={addLegends}  >
               <Plus size={14} />
-            </Button>
+            </ActionIcon>
           </Tooltip>
           <Menu>
             <Menu.Target>
@@ -277,6 +282,19 @@ const LegendListControl = () => {
         <Tooltip label="Apply to key">
           <Button size="xs" onClick={updateFeatureColor} disabled={selectedKey === null}>Apply</Button>
         </Tooltip>
+        <Menu>
+          <Menu.Target>
+            <ActionIcon variant="filled" size={30}>
+              <ArrowsSort size={14} />
+            </ActionIcon>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item onClick={() => sortLegend("label", "asc")}>Sort by label (asc)</Menu.Item>
+            <Menu.Item onClick={() => sortLegend("label", "desc")}>Sort by label (desc)</Menu.Item>
+            <Menu.Item onClick={() => sortLegend("value", "asc")}>Sort by value (asc)</Menu.Item>
+            <Menu.Item onClick={() => sortLegend("value", "desc")}>Sort by label (desc)</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
         <Tooltip label="Make gradient colors from the first to the last color">
           <ActionIcon color="violet.7" variant="filled" onClick={generateGradient}>
             <Palette size={14} />
@@ -322,7 +340,7 @@ export const LegendList = () => {
 
   const deleteLegend = useStore.getState().deleteLegend
 
-  const moveLegend = useStore.getState().moveLegendItem
+  const moveLegend = useStore.getState().moveLegend
 
   const debounceUpdate = useDebounce(updateLegend, 200)
 

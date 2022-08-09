@@ -88,7 +88,7 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
   resetLegends: () => set({ legends: [] }),
 
-  moveLegendItem: (from, to) => {
+  moveLegend: (from, to) => {
     const legends = [...get().legends]
 
     if (from === to) return;
@@ -99,6 +99,23 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
     // swap array
     [legends[from], legends[to]] = [legends[to], legends[from]]
+
+    return set({ legends: legends })
+  },
+
+  sortLegend: (by, order) => {
+    const legends = [...get().legends]
+
+    legends.sort((a, b) => {
+      if (by === "label") return a.label > b.label ? 1 : -1
+
+      const valueA = a.type === "range" ? a.value.min : a.value
+      const valueB = b.type === "range" ? b.value.min : b.value
+
+      return (valueA ?? 0) > (valueB ?? 0) ? 1 : -1
+    })
+
+    if (order === "desc") legends.reverse()
 
     return set({ legends: legends })
   },

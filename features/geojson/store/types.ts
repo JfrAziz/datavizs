@@ -128,7 +128,9 @@ export interface LegendFunction {
 
   resetLegends: () => void;
 
-  moveLegendItem: (from: number, to: number) => void;
+  moveLegend: (from: number, to: number) => void;
+
+  sortLegend: (by: "label" | "value", order: "asc" | "desc") => void
 
   resetLegendOptions: () => void;
 
