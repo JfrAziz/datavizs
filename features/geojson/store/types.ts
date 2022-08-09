@@ -128,6 +128,8 @@ export interface LegendFunction {
 
   resetLegends: () => void;
 
+  moveLegendItem: (from: number, to: number) => void;
+
   resetLegendOptions: () => void;
 
   updateLegendOptions: (legend: Partial<LegendOptions>) => void;

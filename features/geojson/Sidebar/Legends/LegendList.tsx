@@ -5,7 +5,17 @@ import { useDebounce } from "@lib/utils/debounce";
 import { showNotification } from "@mantine/notifications";
 import { Legend, minMaxValue } from "@geojson/store/types";
 import { InputColor, InputNumber, InputText } from "@components/Input";
-import { ChevronDown, Eraser, Eye, EyeOff, Palette, Plus, Trash } from "tabler-icons-react";
+import {
+  Eye,
+  Plus,
+  Eraser,
+  Trash,
+  EyeOff,
+  Palette,
+  ChevronDown,
+  ArrowNarrowUp,
+  ArrowNarrowDown,
+} from "tabler-icons-react";
 import {
   Menu,
   Group,
@@ -18,6 +28,7 @@ import {
   createStyles,
   SegmentedControl,
 } from "@mantine/core";
+import { OptionWrapper } from "@components/Options";
 
 
 
@@ -91,14 +102,13 @@ interface LegendItemProps {
   onUpdateEnd?: (legend: Legend) => void
 
   onDelete: (legend: Legend) => void
+
+  onMove: (offset: number) => void
 }
 
-const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) => {
-  const updateWithDelay = (value: Legend) => {
-    if (onUpdateEnd) return onUpdateEnd(value)
+const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd, onMove }: LegendItemProps) => {
 
-    return onUpdate(value)
-  }
+  const updateWithDelay = (value: Legend) => onUpdateEnd ? onUpdateEnd(value) : onUpdate(value)
 
   const updateColor = (color: string) => updateWithDelay({ ...item, color: color })
 
@@ -123,38 +133,52 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd }: LegendItemProps) 
   }
 
   return (
-    <Stack mt="sm" key={item.uuid}>
-      <Group align="flex-end">
-        <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
-        <InputColor color={item.color} onChange={updateColor} />
-        <Group>
-          <Tooltip label={item.hidden ? "show this legend" : "hide this legend"}>
-            <ActionIcon variant="filled" color={item.hidden ? "gray" : "teal"} onClick={toggleHidden}>
-              {item.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+    <>
+      <Group mb="sm" noWrap align="stretch">
+        <Stack style={{ flex: 1 }}>
+          <Group>
+            <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
+            <InputColor label="Color" color={item.color} onChange={updateColor} />
+          </Group>
+          <Group>
+            <Tooltip label="set value type to compare with the data">
+              <SegmentedControl
+                size="xs"
+                color="teal"
+                value={item.type}
+                onChange={updateType}
+                data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
+              />
+            </Tooltip>
+            {item.type === "single" && <InputText value={item.value} onChange={updateValueText} placeholder="value" />}
+            {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
+          </Group>
+        </Stack>
+        <Group align="flex-end">
+          <Stack >
+            <Tooltip label="delete this legend">
+              <ActionIcon mb={3.5} color="red" variant="filled" onClick={() => onDelete(item)}>
+                <Trash size={14} />
+              </ActionIcon>
+            </Tooltip>
+            <Tooltip label={item.hidden ? "show this legend" : "hide this legend"}>
+              <ActionIcon mb={2} variant="filled" color={item.hidden ? "gray" : "teal"} onClick={toggleHidden}>
+                {item.hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+              </ActionIcon>
+            </Tooltip>
+          </Stack>
+          <Stack>
+            <ActionIcon mb={3.5} variant="filled" onClick={() => onMove(-1)}>
+              <ArrowNarrowUp size={14} />
             </ActionIcon>
-          </Tooltip>
-          <Tooltip label="delete this legend">
-            <ActionIcon color="red" variant="filled" onClick={() => onDelete(item)}>
-              <Trash size={14} />
+            <ActionIcon mb={2} variant="filled" onClick={() => onMove(1)}>
+              <ArrowNarrowDown size={14} />
             </ActionIcon>
-          </Tooltip>
+          </Stack>
         </Group>
       </Group>
-      <Group>
-        <Tooltip label="set value type to compare with the data">
-          <SegmentedControl
-            size="xs"
-            color="teal"
-            value={item.type}
-            onChange={updateType}
-            data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
-          />
-        </Tooltip>
-        {item.type === "single" && <InputText value={item.value} onChange={updateValueText} placeholder="value" />}
-        {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
-      </Group>
       <Divider mt={0} mb={0} />
-    </Stack>
+    </>
   )
 }
 
@@ -254,7 +278,7 @@ const LegendListControl = () => {
           <Button size="xs" onClick={updateFeatureColor} disabled={selectedKey === null}>Apply</Button>
         </Tooltip>
         <Tooltip label="Make gradient colors from the first to the last color">
-          <ActionIcon color="grape" variant="filled" onClick={generateGradient}>
+          <ActionIcon color="violet.7" variant="filled" onClick={generateGradient}>
             <Palette size={14} />
           </ActionIcon>
         </Tooltip>
@@ -279,7 +303,7 @@ const ColorSwatchs = () => {
   const legends = useStore(state => state.legends)
 
   return (
-    <Group position="center" spacing="xs" mt={20}>
+    <Group position="center" spacing="xs" mt={20} mb={10}>
       {legends.map((legend, idx) => <ColorSwatch key={idx} color={legend.color} />)}
     </Group>
   )
@@ -298,17 +322,20 @@ export const LegendList = () => {
 
   const deleteLegend = useStore.getState().deleteLegend
 
+  const moveLegend = useStore.getState().moveLegendItem
+
   const debounceUpdate = useDebounce(updateLegend, 200)
 
   return (
     <>
       <LegendListControl />
       <ColorSwatchs />
-      {legends.map(item => (
+      {legends.map((item, index) => (
         <LegendItem
           item={item}
           key={item.uuid}
           onDelete={() => deleteLegend(item.uuid)}
+          onMove={offset => moveLegend(index, index + offset)}
           onUpdate={legend => updateLegend(item.uuid, legend)}
           onUpdateEnd={legend => debounceUpdate(item.uuid, legend)}
         />

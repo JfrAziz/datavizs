@@ -41,19 +41,19 @@ const Sidebar = () => {
       </Tabs.Panel>
 
       <Tabs.Panel value="legends" className={classes.tab_panel}>
-        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={200} scrollbarSize={5} >
+        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={100} scrollbarSize={5} offsetScrollbars >
           <LegendOptions />
         </ScrollArea>
       </Tabs.Panel>
 
       <Tabs.Panel value="maps" className={classes.tab_panel}>
-        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={200} scrollbarSize={5} >
+        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={100} scrollbarSize={5} offsetScrollbars >
           <Maps />
         </ScrollArea>
       </Tabs.Panel>
 
       <Tabs.Panel value="apps" className={classes.tab_panel}>
-        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={200} scrollbarSize={5} >
+        <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={100} scrollbarSize={5} offsetScrollbars >
           <AppsSettings />
         </ScrollArea>
       </Tabs.Panel>
