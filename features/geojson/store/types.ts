@@ -45,7 +45,7 @@ export interface GeoJSONFunction {
 
   addPropertiesKey: (key: string) => void;
 
-  deletePropertiesKey: (key: string) => void;
+  deletePropertiesKeys: (keys: string[]) => void;
 
   updateFeatureColor: (key: string, legends: Legend[]) => void;
 }
