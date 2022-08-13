@@ -24,11 +24,11 @@ const useStyles = createStyles({
 const GeoJSONData = () => {
   const { classes } = useStyles()
 
+  const [newKey, setNewKey] = useState<string>("")
+
   const features = useStore(state => state.features)
 
   const columnNames = useStore(state => state.propertiesKeys)
-
-  const [newKey, setNewKey] = useState<string>("")
 
   const {
     rows,
@@ -184,9 +184,6 @@ const GeoJSONData = () => {
       <DataTable
         rows={rows}
         columns={columns}
-        rowMarkers="both"
-        smoothScrollX={true}
-        smoothScrollY={true}
         showSearch={showSearch}
         onSearchClose={toggleSearch}
         getCellContent={getContent}

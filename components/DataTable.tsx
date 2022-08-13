@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { MantineTheme, useMantineTheme } from "@mantine/core"
 import DataEditor, { DataEditorProps, GridColumn, GridSelection } from "@glideapps/glide-data-grid"
 
-type DataTableSelection = { type: "column" | "row", data: number[] }
+
 
 /**
  * datatable hooks for handling universal internal state
@@ -51,50 +51,19 @@ export const useDataTable = (cols: string[], rows: number) => {
   const toggleSearch = () => setShowSearch(!showSearch)
 
   /**
-   * get selection index by columns or by rows
-   * 
-   * @param gridSelection 
-   * @param type "columns" | "rows"
-   * @returns 
-   */
-  const getSelectedIndex = (gridSelection: GridSelection, type: "columns" | "rows"): number[] => {
-    if (!gridSelection || !gridSelection[type].length) return []
-
-    const firstIdx = gridSelection[type].first()
-    const lastIndesx = gridSelection[type].last()
-
-    if (firstIdx === undefined || lastIndesx === undefined) return []
-
-    if (firstIdx === lastIndesx) return [firstIdx]
-
-    const selectedIdx = []
-
-    for (let index = firstIdx; index <= lastIndesx; index++) {
-      if (gridSelection[type].hasIndex(index)) selectedIdx.push(index)
-    }
-
-    return selectedIdx
-  }
-
-
-  /**
    * get selection either by columns or rows, and also return the all selected index
    * 
    * @returns 
    */
-  const getSelection = (): DataTableSelection | undefined => {
+  const getSelection = (): { type: "column" | "row", data: number[] } | undefined => {
     if (gridSelection === undefined) return
 
     if (gridSelection.columns.last() !== undefined) {
-      const selectedIdx = getSelectedIndex(gridSelection, "columns")
-
-      return { type: "column", data: selectedIdx }
+      return { type: "column", data: gridSelection.columns.toArray() }
     }
 
     if (gridSelection.rows.last() !== undefined) {
-      const selectedIdx = getSelectedIndex(gridSelection, "rows")
-
-      return { type: "row", data: selectedIdx }
+      return { type: "row", data: gridSelection.rows.toArray() }
     }
   }
 
@@ -109,6 +78,8 @@ export const useDataTable = (cols: string[], rows: number) => {
     getSelection
   }
 }
+
+
 
 /**
  * Custom Datatable from DataGrid with mantine theme
@@ -158,7 +129,17 @@ export const DataTable = (props: DataEditorProps) => {
 
   return (
     <>
-      <DataEditor width="100%" onPaste={true} theme={getTheme(theme)} getCellsForSelection={true} keybindings={{ search: true }} {...props} />
+      <DataEditor
+        width="100%"
+        onPaste={true}
+        rowSelect="multi"
+        rowMarkers="both"
+        smoothScrollY={true}
+        smoothScrollX={true}
+        theme={getTheme(theme)}
+        rowSelectionMode="multi"
+        getCellsForSelection={true}
+        keybindings={{ search: true }} {...props} />
       <div id="portal" style={{ position: "fixed", left: 0, right: 0, top: 0, zIndex: 9999 }} />
     </>
   )
