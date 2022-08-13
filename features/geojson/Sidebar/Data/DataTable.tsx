@@ -71,6 +71,8 @@ const DataTable = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [gridSelection, setGridSelection] = useState<GridSelection | undefined>(undefined)
 
+  // const [columns, setColumn] = useState<GridColumn[]>(columnNames.map((keyName) => ({ title: keyName, id: keyName })))
+
   const columns: GridColumn[] = columnNames.map((keyName) => ({ title: keyName, id: keyName }))
 
 
