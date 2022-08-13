@@ -21,7 +21,7 @@ const useStyles = createStyles({
 })
 
 
-const DataTable2 = () => {
+const GeoJSONData = () => {
   const { classes } = useStyles()
 
   const features = useStore(state => state.features)
@@ -114,17 +114,18 @@ const DataTable2 = () => {
   const deleteSelection = () => {
     const selection = getSelection()
 
-    if (!selection) return;
+    if (!selection) return showNotification({
+      title: "Error",
+      message: "No columns or row selected",
+      color: "red"
+    });
 
     if (selection.type === "column") {
+      const selectedColumn = columnNames.filter((item, idx) => selection.data.includes(idx))
 
-      const selectedColumn = columnNames.find((name, idx) => idx === selection.data)
+      useStore.getState().deletePropertiesKeys(selectedColumn)
 
-      if (!selectedColumn) return;
-
-      useStore.getState().deletePropertiesKey(selectedColumn)
-
-      return showNotification({
+      showNotification({
         title: "Success",
         message: `${selectedColumn} has been deleted`,
         color: "teal"
@@ -136,16 +137,16 @@ const DataTable2 = () => {
         .filter((item, idx) => selection.data.includes(idx))
         .map(item => item.properties.uuid)
 
-      setGridSelection(undefined)
-
       useStore.getState().deleteFeaturebyUUIDs(uuids)
 
-      return showNotification({
+      showNotification({
         title: "Success",
         message: `${uuids.length} data deleted`,
         color: "teal"
       })
     }
+
+    return setGridSelection(undefined)
   }
 
   return (
@@ -184,8 +185,6 @@ const DataTable2 = () => {
         rows={rows}
         columns={columns}
         rowMarkers="both"
-        columnSelect="single"
-        rowSelectionMode="multi"
         smoothScrollX={true}
         smoothScrollY={true}
         showSearch={showSearch}
@@ -200,4 +199,4 @@ const DataTable2 = () => {
   )
 }
 
-export default DataTable2
+export default GeoJSONData

@@ -47,11 +47,12 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
     propertiesKeys: [...state.propertiesKeys, key]
   })),
 
-  deletePropertiesKey: (key) => {
-    if (['color', 'uuid'].includes(key)) return; // don't delete uuid and color properties
+  deletePropertiesKeys: (keys) => {
+    keys = keys.filter(key => !['color', 'uuid'].includes(key))
+
     return set((state) => ({
-      features: state.features.map((item) => ({ ...item, properties: omit(item.properties, key) })),
-      propertiesKeys: state.propertiesKeys.filter(keyName => keyName !== key)
+      features: state.features.map((item) => ({ ...item, properties: omit(item.properties, keys) })),
+      propertiesKeys: state.propertiesKeys.filter(keyName => !keys.includes(keyName))
     }))
   },
 

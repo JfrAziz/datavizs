@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { MantineTheme, useMantineTheme } from "@mantine/core"
 import DataEditor, { DataEditorProps, GridColumn, GridSelection } from "@glideapps/glide-data-grid"
 
-type DataTableSelection = { type: "column", data: number } | { type: "row", data: number[] }
+type DataTableSelection = { type: "column" | "row", data: number[] }
 
 /**
  * datatable hooks for handling universal internal state
@@ -24,8 +24,7 @@ export const useDataTable = (cols: string[], rows: number) => {
    * 
    */
   useEffect(() => {
-    const newCols: GridColumn[] = cols.map((name) => ({ title: name, id: name }))
-    setColumn(newCols)
+    setColumn(cols.map((name) => ({ title: name, id: name })))
   }, [cols])
 
   /**
@@ -52,16 +51,17 @@ export const useDataTable = (cols: string[], rows: number) => {
   const toggleSearch = () => setShowSearch(!showSearch)
 
   /**
-   * custom function to get selected rows index from grid selection
+   * get selection index by columns or by rows
    * 
    * @param gridSelection 
+   * @param type "columns" | "rows"
    * @returns 
    */
-  const getSelectedRowIndex = (gridSelection: GridSelection): number[] => {
-    if (!gridSelection || !gridSelection.rows.length) return []
+  const getSelectedIndex = (gridSelection: GridSelection, type: "columns" | "rows"): number[] => {
+    if (!gridSelection || !gridSelection[type].length) return []
 
-    const firstIdx = gridSelection.rows.first()
-    const lastIndesx = gridSelection.rows.last()
+    const firstIdx = gridSelection[type].first()
+    const lastIndesx = gridSelection[type].last()
 
     if (firstIdx === undefined || lastIndesx === undefined) return []
 
@@ -70,30 +70,15 @@ export const useDataTable = (cols: string[], rows: number) => {
     const selectedIdx = []
 
     for (let index = firstIdx; index <= lastIndesx; index++) {
-      if (gridSelection.rows.hasIndex(index)) selectedIdx.push(index)
+      if (gridSelection[type].hasIndex(index)) selectedIdx.push(index)
     }
 
     return selectedIdx
   }
 
-  /**
-   * custom function to get selected column index from grid selection
-   * 
-   * @param gridSelection 
-   * @returns 
-   */
-  const getSelectedColumnIndex = (gridSelection: GridSelection): number | undefined => {
-    if (gridSelection === undefined) return
-
-    const columnIdx = gridSelection.columns.last()
-
-    if (columnIdx === undefined) return;
-
-    return gridSelection?.columns?.last()
-  }
 
   /**
-   * get selection either by column or row, and also return the all selected index
+   * get selection either by columns or rows, and also return the all selected index
    * 
    * @returns 
    */
@@ -101,15 +86,14 @@ export const useDataTable = (cols: string[], rows: number) => {
     if (gridSelection === undefined) return
 
     if (gridSelection.columns.last() !== undefined) {
-      const selectedIndex = getSelectedColumnIndex(gridSelection)
+      const selectedIdx = getSelectedIndex(gridSelection, "columns")
 
-      if (selectedIndex === undefined) return;
-
-      return { type: "column", data: selectedIndex }
+      return { type: "column", data: selectedIdx }
     }
 
     if (gridSelection.rows.last() !== undefined) {
-      const selectedIdx = getSelectedRowIndex(gridSelection)
+      const selectedIdx = getSelectedIndex(gridSelection, "rows")
+
       return { type: "row", data: selectedIdx }
     }
   }

@@ -4,7 +4,7 @@ import { ImportModal } from "./ImportModal";
 import { WelcomeAlert } from "./WelcomeAlert";
 import { Divider } from "@components/Divider";
 
-const DataTable2 = dynamic(() => import("./DataTable2"), { ssr: false })
+const GeoJSONData = dynamic(() => import("./GeoJSONData"), { ssr: false })
 
 export function Data() {
   const geoJSONKey = useStore(state => state.geoJSONKey)
@@ -15,7 +15,7 @@ export function Data() {
       <ImportModal />
       <Divider />
       {features.length !== 0
-        ? <DataTable2 key={geoJSONKey} />
+        ? <GeoJSONData key={geoJSONKey} />
         : <WelcomeAlert />}
     </>
   );

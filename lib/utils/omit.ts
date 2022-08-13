@@ -4,8 +4,8 @@
  * @param omitKey string
  * @returns any
  */
-export function omit(obj: any, omitKey: string) : any {
+export function omit(obj: any, omitKey: string[]) : any {
   return Object.keys(obj)
-    .filter(key => key != omitKey)
+    .filter(key => !omitKey.includes(key))
     .reduce((result, key) => ({ ...result, [key]: obj[key] }), {});
 }
