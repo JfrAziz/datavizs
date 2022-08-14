@@ -1,5 +1,5 @@
 import { Data } from '@geojson/Sidebar/Data';
-import { Maps } from '@geojson/Sidebar/Maps';
+import { Layers } from '@geojson/Sidebar/Layers';
 import { AppsSettings } from '@geojson/Sidebar/Apps';
 import { LegendOptions } from '@geojson/Sidebar/Legends';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
@@ -28,8 +28,8 @@ const Sidebar = () => {
         <Tabs.Tab value="legends" icon={<Adjustments size={14} />}>
           Legends
         </Tabs.Tab>
-        <Tabs.Tab value="maps" icon={<Map size={14} />}>
-          Maps
+        <Tabs.Tab value="layers" icon={<Map size={14} />}>
+          Layers
         </Tabs.Tab>
         <Tabs.Tab value="apps" icon={<Settings size={14} />}>
           Apps
@@ -46,9 +46,9 @@ const Sidebar = () => {
         </ScrollArea>
       </Tabs.Panel>
 
-      <Tabs.Panel value="maps" className={classes.tab_panel}>
+      <Tabs.Panel value="layers" className={classes.tab_panel}>
         <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={100} scrollbarSize={5} offsetScrollbars >
-          <Maps />
+          <Layers />
         </ScrollArea>
       </Tabs.Panel>
 

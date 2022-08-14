@@ -29,7 +29,7 @@ export function quantile(array: number[], quantileValue: number | number[]) : nu
  * @param value 
  * @returns 
  */
-export const getPrecision = (value: number) => {
+export const getPrecision = (value: number): number => {
   const nmbStr = value.toString().split(".")
 
   if (nmbStr[1]) return nmbStr[1].length <= 3 ? nmbStr[1].length : 3

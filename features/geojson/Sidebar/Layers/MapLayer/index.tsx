@@ -1,13 +1,11 @@
 import { BaseMapsOptions } from "./BaseMapsOptions";
 import { MapsSizeOptions } from "./MapsSizeOptions";
-import { MapsControlOptions } from "./MapsControlOptions";
 
-export function Maps() {
+export const MapLayer = () => {
   return (
-    <div>
-      <MapsControlOptions />
+    <>
       <BaseMapsOptions />
       <MapsSizeOptions />
-    </div>
+    </>
   );
 }
