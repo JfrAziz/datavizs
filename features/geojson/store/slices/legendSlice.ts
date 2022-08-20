@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { scale } from "chroma-js";
+import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
@@ -133,7 +133,7 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
     if (length <= 2) return {}
 
-    const gradientArray = scale([state.legends[0].color, state.legends[length - 1].color]).mode('lch').colors(length)
+    const gradientArray = chroma.scale([state.legends[0].color, state.legends[length - 1].color]).mode('lch').colors(length).map(color => chroma(color).css())
 
     return { legends: state.legends.map((legend, index) => ({ ...legend, color: gradientArray[index] })) }
   }),

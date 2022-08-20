@@ -10,8 +10,8 @@ const createStyles = (color: string) : PathOptions => ({
   fillColor: color,
   weight: 1,
   opacity: 1,
-  color: '#888',
-  dashArray: '3',
+  color: '#fff',
+  dashArray: '0',
   fillOpacity: 1
 })
 

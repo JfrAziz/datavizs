@@ -3,18 +3,21 @@ import { FeatureProperties } from '@geojson/store/types';
 import { Text, Paper, Group, ScrollArea, ColorPicker } from '@mantine/core';
 
 interface GeoJSONPopupProps {
+  uuid: string
+
   properties: FeatureProperties
+  
   updateProperties: (uuid: string, properties: FeatureProperties) => void
 }
 
-export const GeoJSONPopup: FC<GeoJSONPopupProps> = ({ properties, updateProperties }) => {
+export const GeoJSONPopup: FC<GeoJSONPopupProps> = ({ uuid, properties, updateProperties }) => {
   const [color, setColor] = useState(properties.color)
 
   const keys = Object.keys(properties).filter(item => item !== "uuid" && item !== "color")
 
   const updateColor = (color: string) => {
     setColor(color)
-    updateProperties(properties.uuid, { ...properties, color: color })
+    updateProperties(uuid, { ...properties, color: color })
   }
   
   return (
@@ -22,7 +25,7 @@ export const GeoJSONPopup: FC<GeoJSONPopupProps> = ({ properties, updateProperti
       <div style={{ height: "100%", display: "flex", maxHeight: 200 }}>
         <ScrollArea style={{ width: 250 }} scrollbarSize={3}>
           {keys.map(key => (
-            <Group position="apart" noWrap spacing="xl" mb="sm" key={`${properties.uuid}_${key}`}>
+            <Group position="apart" noWrap spacing="xl" mb="sm" key={`${uuid}_${key}`}>
               <Text size="sm">{key}</Text>
               <Text align='right' size="sm">{properties?.[key]}</Text>
             </Group>

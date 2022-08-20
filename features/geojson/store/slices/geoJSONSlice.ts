@@ -4,6 +4,10 @@ import { StateCreator } from "zustand";
 import { getFeatureColor } from "@geojson/utils/colors";
 import { configureFCProperties, validateFC } from "@geojson/utils/featureCollection";
 import { DataStore, GeoJSONState, GeoJSONStore, GeoJSONExtended } from "@geojson/store/types";
+import centerOfMass from "@turf/center-of-mass";
+import centroid from "@turf/centroid";
+import pointOnFeature from "@turf/point-on-feature";
+import { AllGeoJSON } from "@turf/helpers";
 
 const geoJSONStateInitialValue: GeoJSONState = {
   geoJSONKey: null,
@@ -28,7 +32,7 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
   setGeoJSONRef: (ref) => set({ geoJSONRef: ref }),
 
   deleteFeaturebyUUIDs: (uuids) => set((state) => {
-    const features = state.features.filter(item => !uuids.includes(item.properties.uuid))
+    const features = state.features.filter(item => !uuids.includes(item.uuid))
 
     if (!features.length) return geoJSONStateInitialValue
 
@@ -37,7 +41,7 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
 
   updateFeatureByUUID: (uuid, properties) => set((state) => ({
     features: state.features.map((item) => {
-      if (item.properties.uuid !== uuid) return item
+      if (item.uuid !== uuid) return item
       return { ...item, properties: properties }
     })
   })),
@@ -48,7 +52,7 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
   })),
 
   deletePropertiesKeys: (keys) => {
-    keys = keys.filter(key => !['color', 'uuid'].includes(key))
+    keys = keys.filter(key => !['color'].includes(key))
 
     return set((state) => ({
       features: state.features.map((item) => ({ ...item, properties: omit(item.properties, keys) })),
@@ -58,5 +62,28 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
 
   updateFeatureColor: (key, legends) => set((state) => ({
     features: state.features.map((item) => ({ ...item, properties: { ...item.properties, color: getFeatureColor(item.properties[key], legends) } })),
+  })),
+
+  updateCenterCoordinates: (type) => set(state => ({
+    features: state.features.map(item => {
+      let coordinates;
+      switch (type) {
+        case "centerOfMass":
+          coordinates = centerOfMass(item)
+          break;
+        case "centroid":
+          coordinates = centroid(item as AllGeoJSON)
+          break;
+        case "pointOnFeature":
+          coordinates = pointOnFeature(item as AllGeoJSON)
+          break;
+      }
+      return {
+        ...item, coordinates: {
+          x: coordinates.geometry.coordinates[0],
+          y: coordinates.geometry.coordinates[1],
+        }
+      }
+    })
   }))
 })

@@ -138,7 +138,7 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd, onMove }: LegendIte
         <Stack style={{ flex: 1 }}>
           <Group>
             <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
-            <InputColor label="Color" color={item.color} onChange={updateColor} />
+            <InputColor label="Color" color={item.color} onChange={updateColor} format="rgba" />
           </Group>
           <Group>
             <Tooltip label="set value type to compare with the data">

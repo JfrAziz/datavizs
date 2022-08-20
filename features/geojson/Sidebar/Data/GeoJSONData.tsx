@@ -63,7 +63,7 @@ const GeoJSONData = () => {
   const onCellEdited = useCallback((cell: Item, newValue: EditableGridCell) => {
     const [col, row] = cell;
 
-    const uuid = features[row].properties.uuid
+    const uuid = features[row].uuid
 
     const keyName = columnNames[col];
 
@@ -135,7 +135,7 @@ const GeoJSONData = () => {
     if (selection.type === "row") {
       const uuids = features
         .filter((item, idx) => selection.data.includes(idx))
-        .map(item => item.properties.uuid)
+        .map(item => item.uuid)
 
       useStore.getState().deleteFeaturebyUUIDs(uuids)
 

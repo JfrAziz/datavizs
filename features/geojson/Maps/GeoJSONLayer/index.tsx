@@ -3,7 +3,7 @@ import { useStore } from "@geojson/store";
 import { GeoJSONPopup } from "./GeoJSONPopup";
 import { useDebounce } from "@lib/utils/debounce";
 import { GeoJSONComponent } from "./GeoJSONComponent";
-import { useMap, FeatureGroup, Popup } from "react-leaflet";
+import { useMap, FeatureGroup, Popup, Marker } from "react-leaflet";
 import { FeatureExtended, FeatureProperties } from "@geojson/store/types";
 
 
@@ -15,7 +15,7 @@ interface GeoJSONProps {
 const GeoJSON = ({ feature, updateProperties }: GeoJSONProps) => (
   <GeoJSONComponent data={feature}>
     <Popup minWidth={100} closeButton={false}>
-      <GeoJSONPopup properties={feature.properties} updateProperties={updateProperties} />
+      <GeoJSONPopup uuid={feature.uuid} properties={feature.properties} updateProperties={updateProperties} />
     </Popup>
   </GeoJSONComponent>
 )
@@ -41,7 +41,7 @@ export const GeoJSONLayer = () => {
 
   return (
     <FeatureGroup ref={setGeoJSONRef} key={geoJSONKey}>
-      {features.map((item) => <GeoJSON key={item.properties.uuid} updateProperties={updateFeatureByUUID} feature={item} />)}
+      {features.map((item) => <GeoJSON key={item.uuid} updateProperties={updateFeatureByUUID} feature={item} />)}
     </FeatureGroup>
   )
 };

@@ -5,18 +5,29 @@ import { Feature, FeatureCollection, Geometry } from "geojson";
 
 
 /**
- * Extended Feature Collection with custom properties. Every features has uuid 
- * properties to make easier to update, delete, and rendered on react component
+ * Extended Feature Properties with color properties to save color on each features
  */
 export interface FeatureProperties {
-  uuid: string;
   color: string;
+
   [name: string]: any;
 }
 
-export type FeatureExtended = Feature<Geometry, FeatureProperties>
+/**
+ * Every features has uuid to make easier to update, delete, and rendered on react component
+ */
+export interface FeatureExtended extends Feature<Geometry, FeatureProperties> {
+  uuid: string
 
-export type GeoJSONExtended = FeatureCollection<Geometry, FeatureProperties>
+  coordinates: {
+    x: number
+    y: number
+  }
+}
+
+export interface GeoJSONExtended extends FeatureCollection {
+  features: Array<FeatureExtended>
+}
 
 
 /**
@@ -48,6 +59,8 @@ export interface GeoJSONFunction {
   deletePropertiesKeys: (keys: string[]) => void;
 
   updateFeatureColor: (key: string, legends: Legend[]) => void;
+
+  updateCenterCoordinates: (type: "centroid" | "centerOfMass" | "pointOnFeature") => void
 }
 
 export type GeoJSONStore = GeoJSONState & GeoJSONFunction
