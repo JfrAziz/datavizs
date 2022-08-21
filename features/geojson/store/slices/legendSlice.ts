@@ -3,7 +3,7 @@ import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
-import { DataStore, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
+import { Store, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
 
 
 /**
@@ -67,7 +67,7 @@ const LegendOptionsInitialValue: LegendOptions = {
   symbolSize: 25
 }
 
-export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set, get) => ({
+export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set, get) => ({
   legends: [],
 
   legendTitle: "",

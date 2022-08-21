@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@geojson/store";
 import { Divider } from "@components/Divider";
 import { useDebounce } from "@lib/utils/debounce";
@@ -214,12 +214,14 @@ const LegendListControl = () => {
 
   const generateQuantileLegends = useStore.getState().generateQuantileLegends
 
+  const syncFeatureWithLegend = useDebounce(useStore.getState().syncFeatureWithLegend, 300)
 
-  const updateFeatureColor = () => {
-    if (!selectedKey) return showNoKeyWarning();
+  useEffect(() => {
+    if (!selectedKey || !legends.length) return;
 
-    return useStore.getState().syncFeatureWithLegend(selectedKey, legends)
-  }
+    syncFeatureWithLegend(selectedKey, legends)
+  }, [legends, selectedKey, syncFeatureWithLegend])
+  
 
   const generateUniqueLegends = () => {
 
@@ -272,15 +274,12 @@ const LegendListControl = () => {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={generateUniqueLegends}>Generate from unique value</Menu.Item>
-              <Menu.Item onClick={quantileLegends}>Make from quartile (4 parts)</Menu.Item>
-              <Menu.Item onClick={quintileLegends}>Make from quintile (5 parts)</Menu.Item>
-              <Menu.Item onClick={decileLegends}>Make from decile (10 parts)</Menu.Item>
+              <Menu.Item onClick={quantileLegends}>Generate from quartile (4 parts)</Menu.Item>
+              <Menu.Item onClick={quintileLegends}>Generate from quintile (5 parts)</Menu.Item>
+              <Menu.Item onClick={decileLegends}>Generate from decile (10 parts)</Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Group>
-        <Tooltip label="Apply to key">
-          <Button size="xs" onClick={updateFeatureColor} disabled={selectedKey === null}>Apply</Button>
-        </Tooltip>
         <Menu>
           <Menu.Target>
             <ActionIcon variant="filled" size={30}>

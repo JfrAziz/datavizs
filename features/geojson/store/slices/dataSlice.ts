@@ -2,13 +2,11 @@ import { v4 } from "uuid";
 import { omit } from "@lib/utils/omit";
 import { StateCreator } from "zustand";
 import { getFeatureColor } from "@geojson/utils/colors";
+import { Store, DataState, DataStore, GeoJSONExtended } from "@geojson/store/types";
 import { configureFCProperties, validateFC } from "@geojson/utils/featureCollection";
-import { DataStore, GeoJSONState, GeoJSONStore, GeoJSONExtended } from "@geojson/store/types";
 
-const geoJSONStateInitialValue: GeoJSONState = {
+const dataStateInitialValue: DataState = {
   geoJSONKey: null,
-
-  geoJSONRef: null,
 
   features: [],
 
@@ -16,10 +14,9 @@ const geoJSONStateInitialValue: GeoJSONState = {
 
 }
 
-export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> = (set) => ({
-  ...geoJSONStateInitialValue,
+export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set) => ({
+  ...dataStateInitialValue,
 
-  setGeoJSONRef: (ref) => set({ geoJSONRef: ref }),
 
   importGeoJSON: (jsonString) => {
     const { json, propertiesKeys } = configureFCProperties(validateFC(JSON.parse(jsonString) as unknown as GeoJSONExtended))
@@ -36,7 +33,7 @@ export const createGeoJSONSlice: StateCreator<DataStore, [], [], GeoJSONStore> =
   deleteFeaturebyUUIDs: (uuids) => set((state) => {
     const features = state.features.filter(item => !uuids.includes(item.uuid))
 
-    if (!features.length) return geoJSONStateInitialValue
+    if (!features.length) return dataStateInitialValue
 
     return { features: features }
   }),

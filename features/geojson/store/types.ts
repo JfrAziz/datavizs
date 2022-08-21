@@ -39,21 +39,17 @@ export interface GeoJSONExtended extends FeatureCollection {
  * GeoJSON state and function for handle features collection data
  * 
  */
-export interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
+export interface DataState extends Omit<GeoJSONExtended, "type"> {
   geoJSONKey: string | null;
-
-  geoJSONRef: FeatureGroup | null;
 
   features: GeoJSONExtended["features"] | [];
 
   propertiesKeys: string[];
 }
 
-export interface GeoJSONFunction {
+export interface DataFunction {
 
   importGeoJSON: (jsonString: string) => void;
-
-  setGeoJSONRef: (geoJSON: FeatureGroup | null) => void;
 
   updateFeatureProperties: (uuid: string, properties: FeatureProperties) => void;
 
@@ -68,7 +64,7 @@ export interface GeoJSONFunction {
   updatePointCoordinate: (uuid: string, lat: number, lng: number) => void
 }
 
-export type GeoJSONStore = GeoJSONState & GeoJSONFunction
+export type DataStore = DataState & DataFunction
 
 /**
  * Legend state and function for handle legend data and 
@@ -129,6 +125,14 @@ interface LegendCreator<T extends "single" | "range"> {
 
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 
+interface ProportionalCircle {
+  min: number
+
+  max: number
+
+  color: string
+}
+
 export interface LegendState {
   legends: Legend[];
 
@@ -167,8 +171,7 @@ export type LegendStore = LegendState & LegendFunction
 
 
 /**
- * Map Settings state for handle maps
- * 
+ * MapWrapper for handing map size
  */
 type MapWrapper = { type: "auto" } | {
   type: "custom"
@@ -178,20 +181,41 @@ type MapWrapper = { type: "auto" } | {
   height?: number
 }
 
-export interface MapState {
+/**
+ * global features settings
+ */
+export interface GeoJSONSettings {
+  opacity: number
+
+  borderColor: string
+
+  borderOpacity: number  
+}
+
+/**
+ * State value for all settings
+ */
+export interface SettingsState {
   mapRef: Map | null;
+
+  geoJSONRef: FeatureGroup | null;
+
+  mapWrapperRef: RefObject<HTMLDivElement> | null;
+  
+  mapWrapper: MapWrapper
 
   baseMap: BaseMap | null;
 
-  mapWrapper: MapWrapper
-
-  mapWrapperRef: RefObject<HTMLDivElement> | null;
-
   showMapControls: boolean;
+
+  geoJSONSettings: GeoJSONSettings
+
 }
 
-export interface MapFunction {
+export interface SettingsFunction {
   setMapRef: (map: Map) => void
+
+  setGeoJSONRef: (geoJSON: FeatureGroup | null) => void;
 
   setBaseMap: (value: BaseMap | null) => void
 
@@ -204,11 +228,11 @@ export interface MapFunction {
   toggleMapControls: () => void;
 }
 
-export type MapStore = MapState & MapFunction
+export type SettingsStore = SettingsState & SettingsFunction
 
 
 /**
  * All combined state
  * 
  */
-export type DataStore = GeoJSONStore & LegendStore & MapStore
+export type Store = DataStore & LegendStore & SettingsStore

@@ -49,8 +49,6 @@ export const ExternalControl = () => {
 
   const setCenter = useStore.getState().setMapToCenter
 
-  const updateCenter = useStore.getState().updateCenterCoordinates
-
   const downloadMap = useStore.getState().downloadMap
 
   return (
@@ -95,22 +93,6 @@ export const ExternalControl = () => {
             </Menu.Dropdown>
           </Menu>
         </Group>
-        {/* <Group noWrap spacing={0}>
-          <Button size="xs" className={classes.button} onClick={() => updateCenter("centroid")}>
-            <Photo size={16} style={{ marginRight: 4 }} /> Update Centroid
-          </Button>
-          <Menu position="top-end">
-            <Menu.Target>
-              <ActionIcon variant="filled" size={30} color={theme.primaryColor} className={classes.menuControl} aria-label="open menu">
-                <ChevronDown size={16} />
-              </ActionIcon>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item onClick={() => updateCenter("centerOfMass")}>Center of Mass</Menu.Item>
-              <Menu.Item onClick={() => updateCenter("pointOnFeature")}>Point on Features</Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </Group> */}
       </Group>
     </div>
   )
