@@ -67,7 +67,7 @@ const GeoJSONData = () => {
 
     const keyName = columnNames[col];
 
-    useStore.getState().updateFeatureByUUID(uuid, {
+    useStore.getState().updateFeatureProperties(uuid, {
       ...features[row].properties,
       [keyName]: newValue.data
     })

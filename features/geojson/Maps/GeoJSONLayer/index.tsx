@@ -1,24 +1,8 @@
 import { useEffect } from "react";
 import { useStore } from "@geojson/store";
-import { GeoJSONPopup } from "./GeoJSONPopup";
-import { useDebounce } from "@lib/utils/debounce";
 import { GeoJSONComponent } from "./GeoJSONComponent";
-import { useMap, FeatureGroup, Popup, Marker } from "react-leaflet";
-import { FeatureExtended, FeatureProperties } from "@geojson/store/types";
+import { useMap, FeatureGroup, Circle } from "react-leaflet";
 
-
-interface GeoJSONProps {
-  feature: FeatureExtended
-  updateProperties: (uuid: string, properties: FeatureProperties) => void
-}
-
-const GeoJSON = ({ feature, updateProperties }: GeoJSONProps) => (
-  <GeoJSONComponent data={feature}>
-    <Popup minWidth={100} closeButton={false}>
-      <GeoJSONPopup uuid={feature.uuid} properties={feature.properties} updateProperties={updateProperties} />
-    </Popup>
-  </GeoJSONComponent>
-)
 
 export const GeoJSONLayer = () => {
   const map = useMap()
@@ -27,7 +11,6 @@ export const GeoJSONLayer = () => {
   const geojsonRef = useStore(state => state.geoJSONRef)
 
   const setGeoJSONRef = useStore.getState().setGeoJSONRef
-  const updateFeatureByUUID = useDebounce(useStore.getState().updateFeatureByUUID, 500)
 
   useEffect(() => {
     if (!features.length) return;
@@ -41,7 +24,9 @@ export const GeoJSONLayer = () => {
 
   return (
     <FeatureGroup ref={setGeoJSONRef} key={geoJSONKey}>
-      {features.map((item) => <GeoJSON key={item.uuid} updateProperties={updateFeatureByUUID} feature={item} />)}
+      {features.map((item) => <GeoJSONComponent key={item.uuid} feature={item} />)}
+      {/* {features.map((item) => <Circle key={item.uuid} center={item.point} radius={item.point.radius} pathOptions={{ color: item.point.color, fillColor: item.point.color }} />)} */}
     </FeatureGroup>
+
   )
 };

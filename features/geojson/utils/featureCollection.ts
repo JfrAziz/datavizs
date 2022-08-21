@@ -2,9 +2,7 @@ import { v4 } from "uuid";
 import { AllGeoJSON } from "@turf/helpers";
 import pointOnFeature from "@turf/point-on-feature";
 import { GeoJSONExtended } from "@geojson/store/types";
-import { DEFAULT_FEATURE_COLOR } from "@config/leaflet";
-import centerOfMass from "@turf/center-of-mass";
-import centroid from "@turf/centroid";
+import { DEFAULT_CIRCLE_COLOR, DEFAULT_FEATURE_COLOR } from "@config/leaflet";
 
 
 /**
@@ -52,9 +50,11 @@ export const configureFCProperties = (json: GeoJSONExtended): { json: GeoJSONExt
     const point = pointOnFeature(item as AllGeoJSON)
 
     Object.assign(json.features[idx], {
-      coordinates: {
-        x: point.geometry.coordinates[0],
-        y: point.geometry.coordinates[1]
+      point: {
+        lat: point.geometry.coordinates[1],
+        lng: point.geometry.coordinates[0],
+        radius: 1000, // meters
+        color: DEFAULT_CIRCLE_COLOR
       }
     })
   });

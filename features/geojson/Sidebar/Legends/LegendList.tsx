@@ -218,7 +218,7 @@ const LegendListControl = () => {
   const updateFeatureColor = () => {
     if (!selectedKey) return showNoKeyWarning();
 
-    return useStore.getState().updateFeatureColor(selectedKey, legends)
+    return useStore.getState().syncFeatureWithLegend(selectedKey, legends)
   }
 
   const generateUniqueLegends = () => {

@@ -19,9 +19,14 @@ export interface FeatureProperties {
 export interface FeatureExtended extends Feature<Geometry, FeatureProperties> {
   uuid: string
 
-  coordinates: {
-    x: number
-    y: number
+  point: {
+    lat: number
+
+    lng: number
+
+    radius: number
+
+    color: string
   }
 }
 
@@ -50,7 +55,7 @@ export interface GeoJSONFunction {
 
   setGeoJSONRef: (geoJSON: FeatureGroup | null) => void;
 
-  updateFeatureByUUID: (uuid: string, properties: FeatureProperties) => void;
+  updateFeatureProperties: (uuid: string, properties: FeatureProperties) => void;
 
   deleteFeaturebyUUIDs: (uuids: string[]) => void;
 
@@ -58,9 +63,9 @@ export interface GeoJSONFunction {
 
   deletePropertiesKeys: (keys: string[]) => void;
 
-  updateFeatureColor: (key: string, legends: Legend[]) => void;
+  syncFeatureWithLegend: (key: string, legends: Legend[]) => void;
 
-  updateCenterCoordinates: (type: "centroid" | "centerOfMass" | "pointOnFeature") => void
+  updatePointCoordinate: (uuid: string, lat: number, lng: number) => void
 }
 
 export type GeoJSONStore = GeoJSONState & GeoJSONFunction
