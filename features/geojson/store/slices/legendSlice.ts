@@ -4,6 +4,7 @@ import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
 import { Store, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
+import { DEFAULT_BASEMAP_COLOR, DEFAULT_CIRCLE_COLOR } from "@config/leaflet";
 
 
 /**
@@ -73,6 +74,20 @@ export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set,
   legendTitle: "",
 
   legendOptions: LegendOptionsInitialValue,
+
+  associatedKey: "",
+
+  proportionalCircle: {
+    min: 1000,
+
+    max: 1000,
+    
+    show: false,
+    
+    color: DEFAULT_CIRCLE_COLOR,
+
+    borderColor: DEFAULT_CIRCLE_COLOR
+  },
 
   addLegends: () => set(state => ({
     legends: [...state.legends, createSingleLegend()]
@@ -166,5 +181,9 @@ export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set,
     set({ legends: result })
   },
 
-  updateLegendTitle: (title) => set({ legendTitle: title })
+  updateAssociatedKey: (key) => set({ associatedKey: key }),
+
+  updateLegendTitle: (title) => set({ legendTitle: title }),
+
+  updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } }))
 })

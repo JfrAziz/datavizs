@@ -24,9 +24,12 @@ export interface FeatureExtended extends Feature<Geometry, FeatureProperties> {
 
     lng: number
 
-    radius: number
-
-    color: string
+    /**
+     * percent of max to min, radius will be calculate by 
+     * 
+     * radius (meters) = min + percentOfRadius * (max - min)
+     */
+    radius: number 
   }
 }
 
@@ -126,11 +129,15 @@ interface LegendCreator<T extends "single" | "range"> {
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 
 interface ProportionalCircle {
+  show: boolean;
+
   min: number
 
   max: number
 
   color: string
+
+  borderColor: string
 }
 
 export interface LegendState {
@@ -139,6 +146,10 @@ export interface LegendState {
   legendTitle: string;
 
   legendOptions: LegendOptions;
+
+  associatedKey: string
+
+  proportionalCircle: ProportionalCircle
 }
 
 export interface LegendFunction {
@@ -164,7 +175,11 @@ export interface LegendFunction {
 
   generateQuantileLegends: (key: string, quantile: number[]) => void;
 
+  updateAssociatedKey: (key: string) => void
+
   updateLegendTitle: (title: string) => void
+
+  updateProportionalCircle: (settings: Partial<ProportionalCircle>) => void
 }
 
 export type LegendStore = LegendState & LegendFunction
@@ -189,7 +204,7 @@ export interface GeoJSONSettings {
 
   borderColor: string
 
-  borderOpacity: number  
+  borderOpacity: number
 }
 
 /**
@@ -201,7 +216,7 @@ export interface SettingsState {
   geoJSONRef: FeatureGroup | null;
 
   mapWrapperRef: RefObject<HTMLDivElement> | null;
-  
+
   mapWrapper: MapWrapper
 
   baseMap: BaseMap | null;

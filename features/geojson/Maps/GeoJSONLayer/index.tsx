@@ -7,8 +7,12 @@ import { useMap, FeatureGroup, Circle } from "react-leaflet";
 export const GeoJSONLayer = () => {
   const map = useMap()
   const features = useStore(state => state.features)
+
   const geoJSONKey = useStore(state => state.geoJSONKey)
+
   const geojsonRef = useStore(state => state.geoJSONRef)
+
+  const proportionalCircle = useStore(state => state.proportionalCircle)
 
   const setGeoJSONRef = useStore.getState().setGeoJSONRef
 
@@ -25,7 +29,21 @@ export const GeoJSONLayer = () => {
   return (
     <FeatureGroup ref={setGeoJSONRef} key={geoJSONKey}>
       {features.map((item) => <GeoJSONComponent key={item.uuid} feature={item} />)}
-      {/* {features.map((item) => <Circle key={item.uuid} center={item.point} radius={item.point.radius} pathOptions={{ color: item.point.color, fillColor: item.point.color }} />)} */}
+      {proportionalCircle.show && features.map((item) => {
+
+        const radius = proportionalCircle.min + item.point.radius * (proportionalCircle.max - proportionalCircle.min)
+
+        return <Circle
+          key={item.uuid}
+          center={item.point}
+          radius={radius}
+          pathOptions={{ 
+            weight: 2,
+            color: proportionalCircle.borderColor,
+            fillColor: proportionalCircle.color,
+            fillOpacity: 1
+           }} />
+      })}
     </FeatureGroup>
 
   )

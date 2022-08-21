@@ -1,9 +1,8 @@
 import { v4 } from "uuid";
 import { omit } from "@lib/utils/omit";
 import { StateCreator } from "zustand";
-import { getFeatureColor } from "@geojson/utils/colors";
 import { Store, DataState, DataStore, GeoJSONExtended } from "@geojson/store/types";
-import { configureFCProperties, validateFC } from "@geojson/utils/featureCollection";
+import { configureFCProperties, getAssociatedValue, validateFC } from "@geojson/utils/featureCollection";
 
 const dataStateInitialValue: DataState = {
   geoJSONKey: null,
@@ -27,6 +26,7 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set) => 
       geoJSONKey: v4(),
       features: json.features,
       propertiesKeys: propertiesKeys,
+      associatedKey: ""
     }))
   },
 
@@ -57,10 +57,14 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set) => 
   },
 
   syncFeatureWithLegend: (key, legends) => set((state) => ({
-    features: state.features.map((item) => ({
-      ...item,
-      properties: { ...item.properties, color: getFeatureColor(item.properties[key], legends) }
-    })),
+    features: state.features.map((item) => {
+      const { color, percentRadius } = getAssociatedValue(item.properties[key], legends)
+      return {
+        ...item,
+        point: { ...item.point, radius: percentRadius },
+        properties: { ...item.properties, color: color }
+      }
+    }),
   })),
 
   updatePointCoordinate: (uuid, lat, lng) => set(state => ({

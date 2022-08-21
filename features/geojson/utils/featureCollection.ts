@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
 import { AllGeoJSON } from "@turf/helpers";
 import pointOnFeature from "@turf/point-on-feature";
-import { GeoJSONExtended } from "@geojson/store/types";
-import { DEFAULT_CIRCLE_COLOR, DEFAULT_FEATURE_COLOR } from "@config/leaflet";
+import { GeoJSONExtended, Legend } from "@geojson/store/types";
+import { DEFAULT_FEATURE_COLOR } from "@config/leaflet";
 
 
 /**
@@ -53,8 +53,7 @@ export const configureFCProperties = (json: GeoJSONExtended): { json: GeoJSONExt
       point: {
         lat: point.geometry.coordinates[1],
         lng: point.geometry.coordinates[0],
-        radius: 1000, // meters
-        color: DEFAULT_CIRCLE_COLOR
+        radius: 0, // percent of max and min
       }
     })
   });
@@ -62,4 +61,31 @@ export const configureFCProperties = (json: GeoJSONExtended): { json: GeoJSONExt
   const propertiesKeys = Object.keys(json.features[0].properties)
 
   return { json, propertiesKeys };
+}
+
+/**
+ * Legend value is an array value with size 1 or 2. If the type is equals, 
+ * just index 0 is used for comparison, but if the type is range, index 0 and 1
+ * were used. example [a, b] will be compared a <= value < b 
+ * 
+ * @param value 
+ * @param legends 
+ * @returns string
+ */
+export const getAssociatedValue = (value: string | number, legends: Legend[]): { color: string, percentRadius: number } => {
+  let selectedLegend: Legend | undefined = undefined
+
+  selectedLegend = legends.find(item => {
+    if (item.type === "single") return item.value.toString() === value.toString()
+
+    if (item.value.min === undefined || item.value.max === undefined) return false
+
+    return item.value.min <= value && item.value.max >= value
+  })
+
+  if (selectedLegend === undefined) return { color: DEFAULT_FEATURE_COLOR, percentRadius: 0 };
+
+  const idx = legends.findIndex(item => item.uuid === selectedLegend?.uuid)
+
+  return { color: selectedLegend.color, percentRadius: (idx + 1) / legends.length }
 }
