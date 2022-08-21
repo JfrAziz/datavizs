@@ -1,8 +1,8 @@
-import { ColorInput, createStyles, Group, Input, Stack, Switch, Text, ThemeIcon } from "@mantine/core"
-import { useStore } from "@geojson/store"
-import { Options } from "@components/Options"
 import { InputMinMax } from "./Common"
+import { useStore } from "@geojson/store"
+import { Settings } from "@components/Settings"
 import { QuestionMark } from "tabler-icons-react"
+import { ColorInput, createStyles, Group, Input, Stack, Switch, Text, ThemeIcon } from "@mantine/core"
 
 const useStyles = createStyles(theme => ({
   item: {
@@ -34,12 +34,12 @@ export const ProportionalCircleSettings = () => {
 
   return (
     <>
-      <Options title="Proportional Circle" description="Show circle on each features with proportional size based on legend value">
+      <Settings title="Proportional Circle" description="Show circle on each features with proportional size based on legend value">
         <Switch checked={options.show} onChange={toggleProportionalCircle} />
-      </Options>
+      </Settings>
       {options.show && (
         <Stack mt={20}>
-          <Input.Wrapper label="Min Max Radius" size="xs">
+          <Input.Wrapper label="Min Max Radius (meters)" size="xs">
             <Group>
               <InputMinMax value={options} onChange={(value) => update({ min: value.min, max: value.max })} />
             </Group>

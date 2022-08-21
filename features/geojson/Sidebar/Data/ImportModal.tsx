@@ -2,7 +2,7 @@ import { useStore } from '@geojson/store';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
 import { Divider } from '@components/Divider';
-import { Options } from '@components/Options';
+import { Settings } from '@components/Settings';
 import { FileImport } from '@geojson/Import/FileImport';
 import { ServerImport } from '@geojson/Import/ServerImport';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
@@ -49,8 +49,8 @@ export function ImportModal() {
   }
 
   return (
-    <Options title="Import Data" description="Import from existing collection or upload your data">
+    <Settings title="Import Data" description="Import from existing collection or upload your data">
       <Button onClick={openModal}>Import Data</Button>
-    </Options>
+    </Settings>
   );
 }

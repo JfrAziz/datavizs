@@ -2,7 +2,7 @@
 export const DEFAULT_FEATURE_COLOR = "#aaaaaa";
 
 // default color for proportional circle
-export const DEFAULT_CIRCLE_COLOR = "#aaaaaa";
+export const DEFAULT_CIRCLE_COLOR = "#1FCFB7";
 
 // defautl basemap color
 export const DEFAULT_BASEMAP_COLOR = "#d5e8eb";
