@@ -1,6 +1,9 @@
 // default color for each features
 export const DEFAULT_FEATURE_COLOR = "#aaaaaa";
 
+// default color for proportional circle
+export const DEFAULT_CIRCLE_COLOR = "#aaaaaa";
+
 // defautl basemap color
 export const DEFAULT_BASEMAP_COLOR = "#d5e8eb";
 

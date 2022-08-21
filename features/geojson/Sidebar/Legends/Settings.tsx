@@ -17,6 +17,7 @@ import {
   ColorInput,
   createStyles,
 } from "@mantine/core"
+import { Divider } from "@components/Divider"
 
 
 const useStyles = createStyles(theme => ({
@@ -214,7 +215,7 @@ export const LegendSettings = () => {
 
   return (
     <>
-      <Options title="Show legend" description="Legend shows additional information on the maps">
+      <Options title="Legend" description="Show legend & additional information on the maps">
         <Switch checked={options.show} onChange={toggleShowLegend} />
       </Options>
       {options.show && (
@@ -223,6 +224,7 @@ export const LegendSettings = () => {
           <FontOptions options={options} updateOptions={updateOptions} />
           <BackgroundAndSymbol options={options} updateOptions={updateOptions} />
           <TitleAndOthers />
+          <Divider />
         </>
       )}
     </>

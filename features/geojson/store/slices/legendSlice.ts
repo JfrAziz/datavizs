@@ -1,9 +1,10 @@
 import { v4 } from "uuid";
-import { scale } from "chroma-js";
+import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
-import { DataStore, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
+import { Store, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
+import { DEFAULT_BASEMAP_COLOR, DEFAULT_CIRCLE_COLOR } from "@config/leaflet";
 
 
 /**
@@ -67,12 +68,26 @@ const LegendOptionsInitialValue: LegendOptions = {
   symbolSize: 25
 }
 
-export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (set, get) => ({
+export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set, get) => ({
   legends: [],
 
   legendTitle: "",
 
   legendOptions: LegendOptionsInitialValue,
+
+  associatedKey: "",
+
+  proportionalCircle: {
+    min: 1000,
+
+    max: 1000,
+    
+    show: false,
+    
+    color: DEFAULT_CIRCLE_COLOR,
+
+    borderColor: DEFAULT_CIRCLE_COLOR
+  },
 
   addLegends: () => set(state => ({
     legends: [...state.legends, createSingleLegend()]
@@ -133,7 +148,7 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
 
     if (length <= 2) return {}
 
-    const gradientArray = scale([state.legends[0].color, state.legends[length - 1].color]).mode('lch').colors(length)
+    const gradientArray = chroma.scale([state.legends[0].color, state.legends[length - 1].color]).mode('lch').colors(length).map(color => chroma(color).css())
 
     return { legends: state.legends.map((legend, index) => ({ ...legend, color: gradientArray[index] })) }
   }),
@@ -166,5 +181,9 @@ export const createLegendSlice: StateCreator<DataStore, [], [], LegendStore> = (
     set({ legends: result })
   },
 
-  updateLegendTitle: (title) => set({ legendTitle: title })
+  updateAssociatedKey: (key) => set({ associatedKey: key }),
+
+  updateLegendTitle: (title) => set({ legendTitle: title }),
+
+  updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } }))
 })
