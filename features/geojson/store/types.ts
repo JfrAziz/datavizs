@@ -64,7 +64,9 @@ export interface DataFunction {
 
   syncFeatureWithLegend: (key: string, legends: Legend[]) => void;
 
-  updatePointCoordinate: (uuid: string, lat: number, lng: number) => void
+  updatePointCoordinate: (uuid: string, lat: number, lng: number) => void;
+
+  downloadGeoJSON: () => string
 }
 
 export type DataStore = DataState & DataFunction

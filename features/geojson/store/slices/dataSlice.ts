@@ -13,7 +13,7 @@ const dataStateInitialValue: DataState = {
 
 }
 
-export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set) => ({
+export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get) => ({
   ...dataStateInitialValue,
 
 
@@ -69,5 +69,18 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set) => 
 
   updatePointCoordinate: (uuid, lat, lng) => set(state => ({
     features: state.features.map(item => item.uuid !== uuid ? item : { ...item, point: { ...item.point, lat: lat, lng: lng } })
-  }))
+  })),
+
+  downloadGeoJSON: () => {
+    const geoJSON = {
+      type: "FeatureCollection",
+      features: get().features.map(feature => ({
+        properties: { ...feature.properties },
+        geometry: { ...feature.geometry },
+        type: feature.type,
+      }))
+    }
+
+    return JSON.stringify(geoJSON)
+  }
 })

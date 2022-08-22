@@ -80,7 +80,7 @@ const GeoJSONData = () => {
    * @returns
    */
   const downloadToGeoJSON = () => {
-    const blob = new Blob([JSON.stringify({ type: "FeatureCollection", features: features })], { type: 'text/plain' })
+    const blob = new Blob([useStore.getState().downloadGeoJSON()], { type: 'text/plain' })
     return window.URL.createObjectURL(blob)
   }
 
