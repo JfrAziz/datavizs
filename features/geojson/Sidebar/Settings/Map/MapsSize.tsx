@@ -18,25 +18,22 @@ export function MapsSizeSettings() {
           onChange={type => setMapWrapper({ type: type as "custom" | "auto" })} />
       </Settings>
       {mapWrapper.type === "custom" && (
-        <>
-          <Group position="apart" mt="lg">
-            <NumberInput
-              label="width"
-              placeholder="800px"
-              value={mapWrapper.width}
-              min={400} max={MAPS_MAX_WIDTH}
-              defaultValue={DEFAULT_MAPS_WIDTH}
-              onChange={value => setMapWrapper({ width: value })} />
-            <NumberInput
-              label="height"
-              placeholder="600px"
-              value={mapWrapper.height}
-              min={400} max={MAPS_MAX_HEIGHT}
-              defaultValue={DEFAULT_MAPS_HEIGHT}
-              onChange={value => setMapWrapper({ height: value })} />
-          </Group>
-          <Divider />
-        </>
+        <Group position="apart" mt="lg">
+          <NumberInput
+            label="width"
+            placeholder="800px"
+            value={mapWrapper.width}
+            min={400} max={MAPS_MAX_WIDTH}
+            defaultValue={DEFAULT_MAPS_WIDTH}
+            onChange={value => setMapWrapper({ width: value })} />
+          <NumberInput
+            label="height"
+            placeholder="600px"
+            value={mapWrapper.height}
+            min={400} max={MAPS_MAX_HEIGHT}
+            defaultValue={DEFAULT_MAPS_HEIGHT}
+            onChange={value => setMapWrapper({ height: value })} />
+        </Group>
       )}
     </>
   );

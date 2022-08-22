@@ -8,27 +8,27 @@ import { FeatureExtended, GeoJSONSettings } from '@geojson/store/types';
 
 interface GeoJSONProps {
   feature: FeatureExtended
+
+  settings: GeoJSONSettings
 }
 
-export const GeoJSONComponent = ({ feature }: GeoJSONProps) => {
+export const GeoJSONComponent = ({ feature, settings }: GeoJSONProps) => {
   const [latLng, setLatLng] = useState<LatLng>(new LatLng(feature.point.lat, feature.point.lng))
 
-  const geoJSONSettings = useStore(state => state.geoJSONSettings)
-
   const createStyles = (settings: { color: string } & GeoJSONSettings): PathOptions => ({
-    weight: 1,
+    opacity: 1,
     dashArray: '0',
     fillColor: settings.color,
     color: settings.borderColor,
+    weight: settings.borderWidth,
     fillOpacity: settings.opacity,
-    opacity: settings.borderOpacity,
   })
 
   return (
     <GeoJSON
       data={feature}
       onEachFeature={(f, l) => l.on("click", (e) => setLatLng(e.latlng))}
-      style={createStyles({ ...geoJSONSettings, color: feature.properties.color, })} >
+      style={createStyles({ ...settings, color: feature.properties.color, })} >
       <Popup minWidth={100} closeButton={false}>
         <GeoJSONPopup latLng={latLng} feature={feature} />
       </Popup>

@@ -20,7 +20,7 @@ const initialValue: SettingsState = {
   geoJSONSettings: {
     borderColor: "#FFF",
 
-    borderOpacity: 1,
+    borderWidth: 1,
 
     opacity: 1
   },
@@ -39,7 +39,7 @@ export const createSettingsSlice: StateCreator<Store, [], [], SettingsStore> = (
 
   setMapWrapper: (map) => {
     set(state => ({ mapWrapper: { ...state.mapWrapper, ...map } }))
-    
+
     setTimeout(() => { get().mapRef?.invalidateSize() }, 400);
   },
 
@@ -77,4 +77,6 @@ export const createSettingsSlice: StateCreator<Store, [], [], SettingsStore> = (
   },
 
   toggleMapControls: () => set((state) => ({ showMapControls: !state.showMapControls })),
+
+  updateGeoJSONSettings: (settings) => set(state => ({ geoJSONSettings: { ...state.geoJSONSettings, ...settings } }))
 })

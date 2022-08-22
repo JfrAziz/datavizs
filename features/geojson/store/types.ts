@@ -128,7 +128,7 @@ interface LegendCreator<T extends "single" | "range"> {
 
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 
-interface ProportionalCircle {
+export interface ProportionalCircle {
   show: boolean;
 
   min: number
@@ -204,7 +204,7 @@ export interface GeoJSONSettings {
 
   borderColor: string
 
-  borderOpacity: number
+  borderWidth: number
 }
 
 /**
@@ -241,6 +241,8 @@ export interface SettingsFunction {
   downloadMap: (format?: "png" | "jpeg" | "svg") => void
 
   toggleMapControls: () => void;
+
+  updateGeoJSONSettings: (settings: Partial<GeoJSONSettings>) => void;
 }
 
 export type SettingsStore = SettingsState & SettingsFunction

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useStore } from "@geojson/store";
-import { handleNaN } from "@lib/utils/NaN";
+import { useMap, FeatureGroup } from "react-leaflet";
 import { GeoJSONComponent } from "./GeoJSONComponent";
-import { useMap, FeatureGroup, Circle } from "react-leaflet";
+import { ProportionalCircle } from "./ProportionalCircle";
 
 
 export const GeoJSONLayer = () => {
@@ -13,7 +13,8 @@ export const GeoJSONLayer = () => {
 
   const geojsonRef = useStore(state => state.geoJSONRef)
 
-  const proportionalCircle = useStore(state => state.proportionalCircle)
+  const circleSettings = useStore(state => state.proportionalCircle)
+  const geoJSOnSettings = useStore(state => state.geoJSONSettings)
 
   const setGeoJSONRef = useStore.getState().setGeoJSONRef
 
@@ -29,23 +30,9 @@ export const GeoJSONLayer = () => {
 
   return (
     <FeatureGroup ref={setGeoJSONRef} key={geoJSONKey}>
-      {features.map((item) => <GeoJSONComponent key={item.uuid} feature={item} />)}
-      {proportionalCircle.show && features.map((item) => {
-
-        const radius = handleNaN(proportionalCircle.min, 0) + item.point.radius * (handleNaN(proportionalCircle.max, 0) - handleNaN(proportionalCircle.min, 0))
-
-        return <Circle
-          key={item.uuid}
-          center={item.point}
-          radius={radius}
-          pathOptions={{
-            weight: 2,
-            color: proportionalCircle.borderColor,
-            fillColor: proportionalCircle.color,
-            fillOpacity: 1
-          }} />
-      })}
+      {features.map((item) => <GeoJSONComponent key={item.uuid} feature={item} settings={geoJSOnSettings} />)}
+      {circleSettings.show &&
+        features.map((item) => <ProportionalCircle key={item.uuid} feature={item} settings={circleSettings} />)}
     </FeatureGroup>
-
   )
 };
