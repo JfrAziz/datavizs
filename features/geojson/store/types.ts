@@ -5,41 +5,56 @@ import { Feature, FeatureCollection, Geometry } from "geojson";
 
 
 /**
- * Extended Feature Collection with custom properties. Every features has uuid 
- * properties to make easier to update, delete, and rendered on react component
+ * Extended Feature Properties with color properties to save color on each features
  */
 export interface FeatureProperties {
-  uuid: string;
   color: string;
+
   [name: string]: any;
 }
 
-export type FeatureExtended = Feature<Geometry, FeatureProperties>
+/**
+ * Every features has uuid to make easier to update, delete, and rendered on react component
+ */
+export interface FeatureExtended extends Feature<Geometry, FeatureProperties> {
+  uuid: string
 
-export type GeoJSONExtended = FeatureCollection<Geometry, FeatureProperties>
+  point: {
+    lat: number
+
+    lng: number
+
+    /**
+     * percent of max to min, radius will be calculate by 
+     * 
+     * radius (meters) = min + percentOfRadius * (max - min)
+     */
+    radius: number 
+  }
+}
+
+export interface GeoJSONExtended extends FeatureCollection {
+  features: Array<FeatureExtended>
+}
 
 
 /**
  * GeoJSON state and function for handle features collection data
  * 
  */
-export interface GeoJSONState extends Omit<GeoJSONExtended, "type"> {
+export interface DataState extends Omit<GeoJSONExtended, "type"> {
   geoJSONKey: string | null;
-
-  geoJSONRef: FeatureGroup | null;
 
   features: GeoJSONExtended["features"] | [];
 
   propertiesKeys: string[];
 }
 
-export interface GeoJSONFunction {
+export interface DataFunction {
 
   importGeoJSON: (jsonString: string) => void;
 
-  setGeoJSONRef: (geoJSON: FeatureGroup | null) => void;
-
-  updateFeatureByUUID: (uuid: string, properties: FeatureProperties) => void;
+  updateFeatureProperties: (uuid: string, properties: FeatureProperties) => void;
 
   deleteFeaturebyUUIDs: (uuids: string[]) => void;
 
@@ -47,10 +62,14 @@ export interface GeoJSONFunction {
 
   deletePropertiesKeys: (keys: string[]) => void;
 
-  updateFeatureColor: (key: string, legends: Legend[]) => void;
+  syncFeatureWithLegend: (key: string, legends: Legend[]) => void;
+
+  updatePointCoordinate: (uuid: string, lat: number, lng: number) => void;
+
+  downloadGeoJSON: () => string
 }
 
-export type GeoJSONStore = GeoJSONState & GeoJSONFunction
+export type DataStore = DataState & DataFunction
 
 /**
  * Legend state and function for handle legend data and 
@@ -111,12 +130,28 @@ interface LegendCreator<T extends "single" | "range"> {
 
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">
 
+export interface ProportionalCircle {
+  show: boolean;
+
+  min: number
+
+  max: number
+
+  color: string
+
+  borderColor: string
+}
+
 export interface LegendState {
   legends: Legend[];
 
   legendTitle: string;
 
   legendOptions: LegendOptions;
+
+  associatedKey: string
+
+  proportionalCircle: ProportionalCircle
 }
 
 export interface LegendFunction {
@@ -142,15 +177,18 @@ export interface LegendFunction {
 
   generateQuantileLegends: (key: string, quantile: number[]) => void;
 
+  updateAssociatedKey: (key: string) => void
+
   updateLegendTitle: (title: string) => void
+
+  updateProportionalCircle: (settings: Partial<ProportionalCircle>) => void
 }
 
 export type LegendStore = LegendState & LegendFunction
 
 
 /**
- * Map Settings state for handle maps
- * 
+ * MapWrapper for handing map size
  */
 type MapWrapper = { type: "auto" } | {
   type: "custom"
@@ -160,20 +198,41 @@ type MapWrapper = { type: "auto" } | {
   height?: number
 }
 
-export interface MapState {
+/**
+ * global features settings
+ */
+export interface GeoJSONSettings {
+  opacity: number
+
+  borderColor: string
+
+  borderWidth: number
+}
+
+/**
+ * State value for all settings
+ */
+export interface SettingsState {
   mapRef: Map | null;
 
-  baseMap: BaseMap | null;
-
-  mapWrapper: MapWrapper
+  geoJSONRef: FeatureGroup | null;
 
   mapWrapperRef: RefObject<HTMLDivElement> | null;
 
+  mapWrapper: MapWrapper
+
+  baseMap: BaseMap | null;
+
   showMapControls: boolean;
+
+  geoJSONSettings: GeoJSONSettings
+
 }
 
-export interface MapFunction {
+export interface SettingsFunction {
   setMapRef: (map: Map) => void
+
+  setGeoJSONRef: (geoJSON: FeatureGroup | null) => void;
 
   setBaseMap: (value: BaseMap | null) => void
 
@@ -184,13 +243,15 @@ export interface MapFunction {
   downloadMap: (format?: "png" | "jpeg" | "svg") => void
 
   toggleMapControls: () => void;
+
+  updateGeoJSONSettings: (settings: Partial<GeoJSONSettings>) => void;
 }
 
-export type MapStore = MapState & MapFunction
+export type SettingsStore = SettingsState & SettingsFunction
 
 
 /**
  * All combined state
  * 
  */
-export type DataStore = GeoJSONStore & LegendStore & MapStore
+export type Store = DataStore & LegendStore & SettingsStore

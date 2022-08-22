@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useStore } from "@geojson/store";
-import { Options } from "@components/Options";
-import { ColorInput, Select } from "@mantine/core";
+import { Settings } from "@components/Settings";
+import { ColorInput, Group, Select, Text } from "@mantine/core";
 import { DEFAULT_BASEMAP_COLOR, LEAFLET_CUSTOM_COLOR_VAR, baseMaps } from "@config/leaflet";
+import { Divider } from "@components/Divider";
 
 
-export function BaseMapsOptions() {
+export function BaseMapsSettings() {
   const baseMap = useStore(state => state.baseMap)
   const setBaseMap = useStore.getState().setBaseMap
 
@@ -23,20 +24,26 @@ export function BaseMapsOptions() {
 
   return (
     <>
-      <Options title="Base Maps" description="Select base map from various provider" >
+      <Settings title="Base Maps" description="Select base map from various provider" >
         <Select
           placeholder="Pick one"
           data={[...baseMaps.map(item => item.name), "No Base Map"]}
           value={baseMap ? baseMap.name : "No Base Map"}
           onChange={selectBaseMap}
         />
-      </Options>
-      {
-        !baseMap && (
-          <Options title="Background Color" description="Use background color instead?" >
+      </Settings>
+      {!baseMap && (
+        <>
+          <Group position="apart" mt="lg">
+            <div>
+              <Text>Background Color</Text>
+              <Text size="xs" color="dimmed">Use background color instead?</Text>
+            </div>
             <ColorInput defaultValue="#d5e8eb" value={color} onChange={setBaseColor} />
-          </Options>
-        )
+          </Group>
+          <Divider />
+        </>
+      )
       }
     </>
   );

@@ -1,29 +1,37 @@
-import { FeatureExtended } from '@geojson/store/types';
-import { geoJSON, FeatureGroup, PathOptions } from "leaflet";
-import { createElementObject, createPathComponent, LeafletContextInterface, PathProps, extendContext } from '@react-leaflet/core'
+import { useState } from 'react';
+import { useStore } from '@geojson/store';
+import { GeoJSONPopup } from './GeoJSONPopup';
+import { PathOptions, LatLng } from "leaflet";
+import { Popup, GeoJSON } from "react-leaflet";
+import { FeatureExtended, GeoJSONSettings } from '@geojson/store/types';
 
-interface GeoJSONProps extends PathProps, React.PropsWithChildren {
-  data: FeatureExtended;
+
+interface GeoJSONProps {
+  feature: FeatureExtended
+
+  settings: GeoJSONSettings
 }
 
-const createStyles = (color: string) : PathOptions => ({
-  fillColor: color,
-  weight: 1,
-  opacity: 1,
-  color: '#888',
-  dashArray: '3',
-  fillOpacity: 1
-})
+export const GeoJSONComponent = ({ feature, settings }: GeoJSONProps) => {
+  const [latLng, setLatLng] = useState<LatLng>(new LatLng(feature.point.lat, feature.point.lng))
 
-const createGeoJSON = (props: GeoJSONProps, context: LeafletContextInterface) => {
-  const geoJSONObject = geoJSON(props.data, { style: createStyles(props.data.properties.color), })
-  return createElementObject(geoJSONObject, extendContext(context, { overlayContainer: geoJSONObject }))
+  const createStyles = (settings: { color: string } & GeoJSONSettings): PathOptions => ({
+    opacity: 1,
+    dashArray: '0',
+    fillColor: settings.color,
+    color: settings.borderColor,
+    weight: settings.borderWidth,
+    fillOpacity: settings.opacity,
+  })
+
+  return (
+    <GeoJSON
+      data={feature}
+      onEachFeature={(f, l) => l.on("click", (e) => setLatLng(e.latlng))}
+      style={createStyles({ ...settings, color: feature.properties.color, })} >
+      <Popup minWidth={100} closeButton={false}>
+        <GeoJSONPopup latLng={latLng} feature={feature} />
+      </Popup>
+    </GeoJSON>
+  )
 }
-
-const updateGeoJSON = (instance: FeatureGroup, props: GeoJSONProps, prevProps: GeoJSONProps) => {
-  if (props.data.properties.color !== prevProps.data.properties.color) {
-    instance.setStyle(createStyles(props.data.properties.color))
-  }
-}
-
-export const GeoJSONComponent = createPathComponent(createGeoJSON, updateGeoJSON)

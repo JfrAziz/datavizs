@@ -2,10 +2,12 @@ import { createRef } from "react";
 import { StateCreator } from "zustand";
 import { baseMaps } from "@config/leaflet";
 import { toPng, toSvg, toJpeg } from 'html-to-image';
-import { DataStore, MapState, MapStore } from "@geojson/store/types";
+import { Store, SettingsState, SettingsStore } from "@geojson/store/types";
 
-const initialValue: MapState = {
+const initialValue: SettingsState = {
   mapRef: null,
+
+  geoJSONRef: null,
 
   mapWrapperRef: createRef<HTMLDivElement>(),
 
@@ -15,19 +17,29 @@ const initialValue: MapState = {
 
   baseMap: baseMaps[0],
 
+  geoJSONSettings: {
+    borderColor: "#FFF",
+
+    borderWidth: 1,
+
+    opacity: 1
+  },
+
   showMapControls: true,
 }
 
-export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, get) => ({
+export const createSettingsSlice: StateCreator<Store, [], [], SettingsStore> = (set, get) => ({
   ...initialValue,
 
   setMapRef: (map) => set({ mapRef: map }),
+
+  setGeoJSONRef: (ref) => set({ geoJSONRef: ref }),
 
   setBaseMap: (value) => set({ baseMap: value }),
 
   setMapWrapper: (map) => {
     set(state => ({ mapWrapper: { ...state.mapWrapper, ...map } }))
-    
+
     setTimeout(() => { get().mapRef?.invalidateSize() }, 400);
   },
 
@@ -65,4 +77,6 @@ export const createMapSlice: StateCreator<DataStore, [], [], MapStore> = (set, g
   },
 
   toggleMapControls: () => set((state) => ({ showMapControls: !state.showMapControls })),
+
+  updateGeoJSONSettings: (settings) => set(state => ({ geoJSONSettings: { ...state.geoJSONSettings, ...settings } }))
 })

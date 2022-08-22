@@ -3,7 +3,7 @@ import { InputText } from "@components/Input"
 import { useDebounce } from "@lib/utils/debounce"
 import { QuestionMark } from "tabler-icons-react"
 import { LegendOptions } from "@geojson/store/types"
-import { Options, OptionWrapper } from "@components/Options"
+import { Settings, SettingsWrapper } from "@components/Settings"
 import {
   Text,
   Input,
@@ -17,6 +17,7 @@ import {
   ColorInput,
   createStyles,
 } from "@mantine/core"
+import { Divider } from "@components/Divider"
 
 
 const useStyles = createStyles(theme => ({
@@ -67,7 +68,7 @@ const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) =>
   const changeDirection = (value: "column" | "row") => updateOptions({ direction: value })
 
   return (
-    <OptionWrapper grow className={classes.section}>
+    <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Spacing" size="xs" className={classes.item} >
         <Slider
           value={options.spacing}
@@ -84,7 +85,7 @@ const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) =>
       <Input.Wrapper label="Direction" size="xs" className={classes.item}>
         <Select defaultValue="column" data={["column", "row"]} value={options.direction} onChange={changeDirection} />
       </Input.Wrapper>
-    </OptionWrapper>
+    </SettingsWrapper>
   )
 }
 
@@ -103,7 +104,7 @@ const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
   const updateFontSize = (value: number | undefined) => updateOptions({ fontSize: value ?? 12 })
 
   return (
-    <OptionWrapper grow className={classes.section}>
+    <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Font Size" size="xs" className={classes.item}>
         <Slider
           value={options.fontSize}
@@ -120,7 +121,7 @@ const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
       <Input.Wrapper label="Font Color" size="xs" className={classes.item}>
         <ColorInput value={options.fontColor} onChange={changeFontColor} />
       </Input.Wrapper>
-    </OptionWrapper>
+    </SettingsWrapper>
   )
 }
 
@@ -139,7 +140,7 @@ const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) =>
   const updateSymbolSize = (value: number | undefined) => updateOptions({ symbolSize: value ?? 25 })
 
   return (
-    <OptionWrapper grow className={classes.section}>
+    <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Symbol Size" size="xs" className={classes.item}>
         <Slider
           value={options.symbolSize}
@@ -156,7 +157,7 @@ const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) =>
       <Input.Wrapper label="Background Color" size="xs" className={classes.item}>
         <ColorInput format="rgba" onChange={changeBackgroudColor} value={options.backgroundColor} />
       </Input.Wrapper>
-    </OptionWrapper>
+    </SettingsWrapper>
   )
 }
 
@@ -176,7 +177,7 @@ const TitleAndOthers = () => {
   const updateTitle = useDebounce(useStore.getState().updateLegendTitle, 500)
 
   return (
-    <OptionWrapper className={classes.section} grow align="flex-end">
+    <SettingsWrapper className={classes.section} grow align="flex-end">
       <Group className={classes.item}>
         <Tooltip label="Reset legend to initial settings">
           <Button size="xs" variant="light" color="red" onClick={resetOptions}>
@@ -195,7 +196,7 @@ const TitleAndOthers = () => {
       <Input.Wrapper label="Title" placeholder="Legend Title" size="xs" className={classes.item}>
         <InputText value={legendTitle} onChange={value => updateTitle(value)} />
       </Input.Wrapper>
-    </OptionWrapper>
+    </SettingsWrapper>
   )
 }
 
@@ -214,15 +215,16 @@ export const LegendSettings = () => {
 
   return (
     <>
-      <Options title="Show legend" description="Legend shows additional information on the maps">
+      <Settings title="Legend" description="Show legend & additional information on the maps">
         <Switch checked={options.show} onChange={toggleShowLegend} />
-      </Options>
+      </Settings>
       {options.show && (
         <>
           <SpacingAndDirection options={options} updateOptions={updateOptions} />
           <FontOptions options={options} updateOptions={updateOptions} />
           <BackgroundAndSymbol options={options} updateOptions={updateOptions} />
           <TitleAndOthers />
+          <Divider />
         </>
       )}
     </>
