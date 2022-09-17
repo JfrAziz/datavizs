@@ -6,7 +6,7 @@ import { LegendListHeader } from "./ListHeader";
 import { AssociatedKey } from "./AssociatedKey";
 import { ProportionalCircleSettings } from "./ProportionalCircle";
 
-export function LegendOptions() {
+export function Legend() {
   return (
     <>
       <AssociatedKey />

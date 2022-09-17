@@ -3,7 +3,7 @@ import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
-import { Store, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
+import { Store, Legend, LegendOptions, MapInformationStore } from "@geojson/store/types";
 import { DEFAULT_BASEMAP_COLOR, DEFAULT_CIRCLE_COLOR } from "@config/leaflet";
 
 
@@ -68,7 +68,7 @@ const LegendOptionsInitialValue: LegendOptions = {
   symbolSize: 25
 }
 
-export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set, get) => ({
+export const createMapInformationSlice: StateCreator<Store, [], [], MapInformationStore> = (set, get) => ({
   legends: [],
 
   legendTitle: "",

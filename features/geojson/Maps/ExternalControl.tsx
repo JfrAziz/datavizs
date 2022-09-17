@@ -43,10 +43,6 @@ export const ExternalControl = () => {
 
   const map = useStore(state => state.mapRef)
 
-  const showControl = useStore(state => state.showMapControls)
-
-  if (!showControl) return null;
-
   const setCenter = useStore.getState().setMapToCenter
 
   const downloadMap = useStore.getState().downloadMap

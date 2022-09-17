@@ -1,6 +1,6 @@
 import { Data } from '@geojson/Sidebar/Data';
 import { AppsSettings } from '@geojson/Sidebar/Apps';
-import { LegendOptions } from '@geojson/Sidebar/Legends';
+import { Maps } from '@geojson/Sidebar/Maps';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
 import { Settings as SettingsMenu } from '@geojson/Sidebar/Settings';
 import { Adjustments, Map, Settings, Table } from 'tabler-icons-react';
@@ -25,10 +25,10 @@ const Sidebar = () => {
         <Tabs.Tab value="data" icon={<Table size={14} />}>
           Data
         </Tabs.Tab>
-        <Tabs.Tab value="legends" icon={<Adjustments size={14} />}>
-          Legends
+        <Tabs.Tab value="maps" icon={<Map size={14} />}>
+          Maps
         </Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<Map size={14} />}>
+        <Tabs.Tab value="settings" icon={<Adjustments size={14} />}>
           Settings
         </Tabs.Tab>
         <Tabs.Tab value="apps" icon={<Settings size={14} />}>
@@ -40,9 +40,9 @@ const Sidebar = () => {
         <Data />
       </Tabs.Panel>
 
-      <Tabs.Panel value="legends" className={classes.tab_panel}>
+      <Tabs.Panel value="maps" className={classes.tab_panel}>
         <ScrollArea sx={{ flex: 1 }} type="scroll" scrollHideDelay={100} scrollbarSize={5} offsetScrollbars >
-          <LegendOptions />
+          <Maps />
         </ScrollArea>
       </Tabs.Panel>
 

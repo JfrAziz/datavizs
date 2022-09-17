@@ -1,7 +1,7 @@
-import { InputMinMax } from "./Common"
 import { useStore } from "@geojson/store"
 import { Settings } from "@components/Settings"
 import { QuestionMark } from "tabler-icons-react"
+import { InputMinMax } from "@components/Input/InputMinMax"
 import { ColorInput, createStyles, Group, Input, Stack, Switch, Text, ThemeIcon } from "@mantine/core"
 
 const useStyles = createStyles(theme => ({
