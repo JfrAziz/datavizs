@@ -8,7 +8,7 @@ import { ProportionalCircleSettings } from "./ProportionalCircle";
 
 export function LegendOptions() {
   return (
-    <div>
+    <>
       <AssociatedKey />
       <LegendSettings />
       <ProportionalCircleSettings />
@@ -16,6 +16,6 @@ export function LegendOptions() {
       <LegendListHeader />
       <ColorSwatchs />
       <LegendList />
-    </div>
+    </>
   );
 }

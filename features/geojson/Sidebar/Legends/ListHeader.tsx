@@ -124,7 +124,7 @@ export const LegendListHeader = () => {
           </Menu.Dropdown>
         </Menu>
       </Group>
-      <Group position="right" noWrap style={{ justifyContent: "center" }}>
+      <Group position="right" noWrap >
         <Menu>
           <Menu.Target>
             <ActionIcon variant="filled" size={30}>

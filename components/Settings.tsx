@@ -12,7 +12,7 @@ import { Group, GroupProps, Text } from '@mantine/core';
 export const SettingsWrapper = ({ children, ...others }: PropsWithChildren & GroupProps) => {
   const { classes } = useStyles();
   return (
-    <Group position="apart" className={classes.options} noWrap spacing="xl" {...others}>
+    <Group position="apart" className={classes.settings} noWrap spacing="xl" {...others}>
       {children}
     </Group>
   );
