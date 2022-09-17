@@ -19,7 +19,7 @@ const useStyles = createStyles(theme => ({
   }
 }))
 
-export const ProportionalCircleSettings = () => {
+export const ProportionalCircle = () => {
   const { classes } = useStyles()
 
   const options = useStore(state => state.proportionalCircle)

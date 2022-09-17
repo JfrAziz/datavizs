@@ -7,22 +7,22 @@ import { Settings } from "@components/Settings"
  * 
  * @returns 
  */
-export const AssociatedKey = () => {
-  const selectedKey = useStore(state => state.associatedKey)
+export const LegendKey = () => {
+  const selectedKey = useStore(state => state.legendKey)
 
   const keys = useStore(state => state.propertiesKeys)
 
-  const setSelectedKey = useStore.getState().updateAssociatedKey
+  const setSelectedKey = useStore.getState().updateLegendKey
 
   return (
     <Settings title="Associated Key" description="Select key where the legend value will be applied">
       <Select
         size="xs"
         searchable
-        data={keys}
         value={selectedKey}
         onChange={setSelectedKey}
         disabled={keys.length === 0}
+        data={keys.filter(key => key !== "color")}
       />
     </Settings>
   )

@@ -1,19 +1,19 @@
-import { LegendList } from "./List";
+import { LegendKey } from "./LegendKey";
+import { LegendList } from "./LegendList";
 import { LegendSettings } from "./Settings";
 import { ColorSwatchs } from "./ColorSwatch";
 import { Divider } from "@components/Divider";
-import { LegendListHeader } from "./ListHeader";
-import { AssociatedKey } from "./AssociatedKey";
-import { ProportionalCircleSettings } from "./ProportionalCircle";
+import { LegendHeader } from "./LegendHeader";
+import { ProportionalCircle } from "./ProportionalCircle";
 
 export function Legend() {
   return (
     <>
-      <AssociatedKey />
+      <LegendKey />
       <LegendSettings />
-      <ProportionalCircleSettings />
+      <ProportionalCircle />
       <Divider />
-      <LegendListHeader />
+      <LegendHeader />
       <ColorSwatchs />
       <LegendList />
     </>

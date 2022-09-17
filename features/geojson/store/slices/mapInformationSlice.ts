@@ -75,7 +75,7 @@ export const createMapInformationSlice: StateCreator<Store, [], [], MapInformati
 
   legendOptions: LegendOptionsInitialValue,
 
-  associatedKey: "",
+  legendKey: "",
 
   proportionalCircle: {
     min: 1000,
@@ -181,7 +181,7 @@ export const createMapInformationSlice: StateCreator<Store, [], [], MapInformati
     set({ legends: result })
   },
 
-  updateAssociatedKey: (key) => set({ associatedKey: key }),
+  updateLegendKey: (key) => set({ legendKey: key }),
 
   updateLegendTitle: (title) => set({ legendTitle: title }),
 

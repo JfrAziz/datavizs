@@ -64,7 +64,7 @@ export interface DataFunction {
 
   deletePropertiesKeys: (keys: string[]) => void;
 
-  syncFeatureWithLegend: (key: string, legends: Legend[]) => void;
+  syncFeaturesWithLegend: () => void;
 
   updatePointCoordinate: (uuid: string, lat: number, lng: number) => void;
 
@@ -151,7 +151,7 @@ export interface MapInformationState {
 
   legendOptions: LegendOptions;
 
-  associatedKey: string
+  legendKey: string
 
   proportionalCircle: ProportionalCircle
 }
@@ -179,7 +179,7 @@ export interface MapInformationFunction {
 
   generateQuantileLegends: (key: string, quantile: number[]) => void;
 
-  updateAssociatedKey: (key: string) => void
+  updateLegendKey: (key: string) => void
 
   updateLegendTitle: (title: string) => void
 

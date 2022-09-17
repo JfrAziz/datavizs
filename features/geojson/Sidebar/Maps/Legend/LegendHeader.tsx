@@ -46,55 +46,54 @@ const showNoKeyWarning = () => showNotification({
  * 
  * @returns JSX
  */
-export const LegendListHeader = () => {
+export const LegendHeader = () => {
   const { classes, theme } = useStyles()
 
   const legends = useStore(state => state.legends)
 
-  const selectedKey = useStore(state => state.associatedKey)
-
   const addLegends = useStore.getState().addLegends
-
+  
   const sortLegend = useStore.getState().sortLegend
-
+  
+  const legendKey = useStore(state => state.legendKey)
+  
   const resetLegends = useStore.getState().resetLegends
 
   const generateGradient = useStore.getState().generateGradient
 
   const generateQuantileLegends = useStore.getState().generateQuantileLegends
 
-  const syncFeatureWithLegend = useDebounce(useStore.getState().syncFeatureWithLegend, 300)
+  const syncFeatureWithLegend = useDebounce(useStore.getState().syncFeaturesWithLegend, 300)
 
+  // sync all features color whenever legends and legendKey updated 
   useEffect(() => {
-    if (!selectedKey || !legends.length) return;
-
-    syncFeatureWithLegend(selectedKey, legends)
-  }, [legends, selectedKey, syncFeatureWithLegend])
+    syncFeatureWithLegend()
+  }, [legends, legendKey, syncFeatureWithLegend])
 
 
   const generateUniqueLegends = () => {
 
-    if (!selectedKey) return showNoKeyWarning();
+    if (!legendKey) return showNoKeyWarning();
 
-    return useStore.getState().generateUniqueLegends(selectedKey)
+    return useStore.getState().generateUniqueLegends(legendKey)
   }
 
   const quantileLegends = () => {
-    if (!selectedKey) return showNoKeyWarning();
+    if (!legendKey) return showNoKeyWarning();
 
-    return generateQuantileLegends(selectedKey, [0, 0.25, 0.5, 0.75, 1])
+    return generateQuantileLegends(legendKey, [0, 0.25, 0.5, 0.75, 1])
   }
 
   const quintileLegends = () => {
-    if (!selectedKey) return showNoKeyWarning();
+    if (!legendKey) return showNoKeyWarning();
 
-    return generateQuantileLegends(selectedKey, [0, 0.2, 0.4, 0.6, 0.8, 1])
+    return generateQuantileLegends(legendKey, [0, 0.2, 0.4, 0.6, 0.8, 1])
   }
 
   const decileLegends = () => {
-    if (!selectedKey) return showNoKeyWarning();
+    if (!legendKey) return showNoKeyWarning();
 
-    return generateQuantileLegends(selectedKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
+    return generateQuantileLegends(legendKey, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
   }
 
   return (
