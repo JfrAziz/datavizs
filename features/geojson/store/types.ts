@@ -30,7 +30,9 @@ export interface FeatureExtended extends Feature<Geometry, FeatureProperties> {
      * radius (meters) = min + percentOfRadius * (max - min)
      */
     radius: number 
-  }
+  },
+
+  area: number
 }
 
 export interface GeoJSONExtended extends FeatureCollection {
