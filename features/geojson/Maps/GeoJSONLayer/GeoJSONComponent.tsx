@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useStore } from '@geojson/store';
 import { GeoJSONPopup } from './GeoJSONPopup';
-import { PathOptions, LatLng } from "leaflet";
-import { Popup, GeoJSON } from "react-leaflet";
+import { PathOptions, LatLng, latLng as getLatLng } from "leaflet";
+import { Popup, GeoJSON, SVGOverlay } from "react-leaflet";
 import { FeatureExtended, GeoJSONSettings } from '@geojson/store/types';
 
 
@@ -24,11 +23,15 @@ export const GeoJSONComponent = ({ feature, settings }: GeoJSONProps) => {
     fillOpacity: settings.opacity,
   })
 
+
   return (
     <GeoJSON
       data={feature}
       onEachFeature={(f, l) => l.on("click", (e) => setLatLng(e.latlng))}
       style={createStyles({ ...settings, color: feature.properties.color, })} >
+      <SVGOverlay bounds={[[feature.bbox[1], feature.bbox[0]], [feature.bbox[3], feature.bbox[2]]]}>
+        <text x="50%" y="50%" fill="red">Hallo</text>
+      </SVGOverlay>
       <Popup minWidth={100} closeButton={false}>
         <GeoJSONPopup latLng={latLng} feature={feature} />
       </Popup>

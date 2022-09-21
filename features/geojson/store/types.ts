@@ -1,4 +1,5 @@
 import { RefObject } from "react";
+import { BBox } from "@turf/helpers";
 import { BaseMap } from "@config/leaflet";
 import { FeatureGroup, Map } from "leaflet";
 import { Feature, FeatureCollection, Geometry } from "geojson";
@@ -31,6 +32,8 @@ export interface FeatureExtended extends Feature<Geometry, FeatureProperties> {
      */
     radius: number 
   },
+
+  bbox: BBox
 
   area: number
 }

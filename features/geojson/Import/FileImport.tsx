@@ -57,7 +57,7 @@ export function FileImport({ callback }: { callback: () => void }) {
   const processFile = async (files: File[]) => {
     try {
       importGeoJSON(await files[0].text())
-      callback()
+      return callback()
     } catch (error) {
       showErrorNotifications()
     }
