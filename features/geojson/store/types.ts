@@ -147,6 +147,16 @@ export interface ProportionalCircle {
   borderColor: string
 }
 
+export interface LabelSettings {
+  show: boolean
+
+  key: string
+
+  color: string
+
+  size: number
+}
+
 export interface MapInformationState {
   legends: Legend[];
 
@@ -157,6 +167,8 @@ export interface MapInformationState {
   legendKey: string
 
   proportionalCircle: ProportionalCircle
+
+  labelSettings: LabelSettings
 }
 
 export interface MapInformationFunction {
@@ -187,6 +199,8 @@ export interface MapInformationFunction {
   updateLegendTitle: (title: string) => void
 
   updateProportionalCircle: (settings: Partial<ProportionalCircle>) => void
+
+  updateLabelSettings: (settings: Partial<LabelSettings>) => void
 }
 
 export type MapInformationStore = MapInformationState & MapInformationFunction

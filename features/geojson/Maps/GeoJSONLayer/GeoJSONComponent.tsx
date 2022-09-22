@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { GeoJSONPopup } from './GeoJSONPopup';
-import { PathOptions, LatLng, latLng as getLatLng } from "leaflet";
-import { Popup, GeoJSON, SVGOverlay, Tooltip } from "react-leaflet";
+import { PathOptions, LatLng } from "leaflet";
+import { Popup, GeoJSON, Tooltip } from "react-leaflet";
 import { FeatureExtended, GeoJSONSettings } from '@geojson/store/types';
+import { useStore } from '@geojson/store';
 
 
 interface GeoJSONProps {
@@ -23,18 +24,21 @@ export const GeoJSONComponent = ({ feature, settings }: GeoJSONProps) => {
     fillOpacity: settings.opacity,
   })
 
+  const labelSettings = useStore(state => state.labelSettings)
+
 
   return (
     <GeoJSON
       data={feature}
       onEachFeature={(f, l) => l.on("click", (e) => setLatLng(e.latlng))}
       style={createStyles({ ...settings, color: feature.properties.color, })} >
-      {/* <SVGOverlay bounds={[[feature.bbox[1], feature.bbox[0]], [feature.bbox[3], feature.bbox[2]]]}>
-        <text x="50%" y="50%" fill="red">Hallo</text>
-      </SVGOverlay> */}
-      <Tooltip direction='center' position={feature.point} permanent>
-        Hallo
-      </Tooltip>
+      {labelSettings.show && (
+        <Tooltip direction='center' position={feature.point} permanent>
+          <div style={{ color: labelSettings.color, fontSize: labelSettings.size }}>
+            {feature.properties[labelSettings.key]}
+          </div>
+        </Tooltip>
+      )}
       <Popup minWidth={100} closeButton={false}>
         <GeoJSONPopup latLng={latLng} feature={feature} />
       </Popup>

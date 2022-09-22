@@ -6,7 +6,7 @@ import { Divider } from "@components/Divider";
 import { LegendHeader } from "./LegendHeader";
 import { ProportionalCircle } from "./ProportionalCircle";
 
-export function Legend() {
+export function LegendControl() {
   return (
     <>
       <LegendKey />

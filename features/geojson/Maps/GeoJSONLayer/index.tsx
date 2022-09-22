@@ -14,6 +14,7 @@ export const GeoJSONLayer = () => {
   const geojsonRef = useStore(state => state.geoJSONRef)
 
   const circleSettings = useStore(state => state.proportionalCircle)
+
   const geoJSOnSettings = useStore(state => state.geoJSONSettings)
 
   const setGeoJSONRef = useStore.getState().setGeoJSONRef

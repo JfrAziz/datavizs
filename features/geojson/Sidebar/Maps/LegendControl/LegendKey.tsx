@@ -15,7 +15,7 @@ export const LegendKey = () => {
   const setSelectedKey = useStore.getState().updateLegendKey
 
   return (
-    <Settings title="Associated Key" description="Select key where the legend value will be applied">
+    <Settings title="Legend Key" description="Select column where the legend value will be applied">
       <Select
         size="xs"
         searchable

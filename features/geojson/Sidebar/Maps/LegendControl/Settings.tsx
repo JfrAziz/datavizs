@@ -1,5 +1,6 @@
 import { useStore } from "@geojson/store"
 import { InputText } from "@components/Input"
+import { Divider } from "@components/Divider"
 import { useDebounce } from "@lib/utils/debounce"
 import { QuestionMark } from "tabler-icons-react"
 import { LegendOptions } from "@geojson/store/types"
@@ -17,7 +18,6 @@ import {
   ColorInput,
   createStyles,
 } from "@mantine/core"
-import { Divider } from "@components/Divider"
 
 
 const useStyles = createStyles(theme => ({

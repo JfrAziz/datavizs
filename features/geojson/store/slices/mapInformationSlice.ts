@@ -3,7 +3,7 @@ import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
-import { Store, Legend, LegendOptions, MapInformationStore } from "@geojson/store/types";
+import { Store, Legend, LegendOptions, MapInformationStore, LabelSettings } from "@geojson/store/types";
 import { DEFAULT_CIRCLE_BORDER_COLOR, DEFAULT_CIRCLE_FILL_COLOR } from "@config/leaflet";
 
 
@@ -68,6 +68,16 @@ const LegendOptionsInitialValue: LegendOptions = {
   symbolSize: 25
 }
 
+const LabelSettingsInitialValue: LabelSettings = {
+  show: false,
+
+  color: "#3A3A3A",
+
+  key: "",
+
+  size: 12
+}
+
 export const createMapInformationSlice: StateCreator<Store, [], [], MapInformationStore> = (set, get) => ({
   legends: [],
 
@@ -88,6 +98,8 @@ export const createMapInformationSlice: StateCreator<Store, [], [], MapInformati
 
     borderColor: DEFAULT_CIRCLE_BORDER_COLOR
   },
+  
+  labelSettings: LabelSettingsInitialValue,
 
   addLegends: () => set(state => ({
     legends: [...state.legends, createSingleLegend()]
@@ -185,5 +197,7 @@ export const createMapInformationSlice: StateCreator<Store, [], [], MapInformati
 
   updateLegendTitle: (title) => set({ legendTitle: title }),
 
-  updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } }))
+  updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } })),
+
+  updateLabelSettings: (settings) => set(state => ({ labelSettings: { ...state.labelSettings, ...settings } }))
 })
