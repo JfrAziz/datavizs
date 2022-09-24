@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { useStore } from '@geojson/store';
 import { GeoJSONPopup } from './GeoJSONPopup';
 import { PathOptions, LatLng } from "leaflet";
 import { Popup, GeoJSON, Tooltip } from "react-leaflet";
 import { FeatureExtended, GeoJSONSettings } from '@geojson/store/types';
-import { useStore } from '@geojson/store';
 
 
 interface GeoJSONProps {
@@ -25,7 +25,6 @@ export const GeoJSONComponent = ({ feature, settings }: GeoJSONProps) => {
   })
 
   const labelSettings = useStore(state => state.labelSettings)
-
 
   return (
     <GeoJSON

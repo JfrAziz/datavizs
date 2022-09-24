@@ -1,8 +1,6 @@
 import { v4 } from "uuid";
-import area from "@turf/area"
-import bbox from "@turf/bbox";
+import { AllGeoJSON } from "@turf/helpers";
 import pointOnFeature from "@turf/point-on-feature";
-import { AllGeoJSON, Geometry } from "@turf/helpers";
 import { DEFAULT_FEATURE_COLOR } from "@config/leaflet";
 import { GeoJSONExtended, Legend } from "@geojson/store/types";
 
@@ -51,20 +49,12 @@ export const configureFCProperties = (json: GeoJSONExtended): { json: GeoJSONExt
     // get point on features
     const point = pointOnFeature(item as AllGeoJSON)
 
-    const featureArea = area(item.geometry as Geometry);
-
-    const bboxFeature = bbox(item.geometry)
-
-    console.log(bboxFeature)
-
     Object.assign(json.features[idx], {
       point: {
         lat: point.geometry.coordinates[1],
         lng: point.geometry.coordinates[0],
         radius: 0, // percent of max and min
-      },
-      area: featureArea,
-      bbox: bboxFeature
+      }
     })
   });
 
