@@ -55,10 +55,10 @@ export const LegendHeader = () => {
   
   const sortLegend = useStore.getState().sortLegend
   
-  const legendKey = useStore(state => state.legendKey)
-  
   const resetLegends = useStore.getState().resetLegends
-
+  
+  const legendKey = useStore(state => state.legendSettings).key
+  
   const generateGradient = useStore.getState().generateGradient
 
   const generateQuantileLegends = useStore.getState().generateQuantileLegends

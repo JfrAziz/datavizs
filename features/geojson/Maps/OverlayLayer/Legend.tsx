@@ -40,9 +40,9 @@ const useStyles = createStyles(theme => ({
 const LegendTitle = () => {
   const { classes } = useStyles()
 
-  const title = useStore(state => state.legendTitle)
+  const title = useStore(state => state.legendSettings).title
 
-  const options = useStore(state => state.legendOptions)
+  const options = useStore(state => state.legendSettings)
 
   if (!title) return null;
 
@@ -83,7 +83,7 @@ const LegendItem = () => {
 
   const legends = useStore(state => state.legends)
 
-  const options = useStore(state => state.legendOptions)
+  const options = useStore(state => state.legendSettings)
 
   const getLabelLegend = (item: LegendTypes): string | null => {
     if (item.label) return item.label
@@ -126,9 +126,9 @@ const LegendItem = () => {
 export const Legend = () => {
   const { classes } = useStyles()
 
-  const options = useStore(state => state.legendOptions)
+  const options = useStore(state => state.legendSettings)
 
-  const updateOptions = useStore.getState().updateLegendOptions
+  const updateOptions = useStore.getState().updateLegendSettings
 
   const updatePositions: DraggableEventHandler = (e, data) => {
     updateOptions({ position: { x: data.x, y: data.y } })

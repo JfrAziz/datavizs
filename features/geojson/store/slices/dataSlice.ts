@@ -22,8 +22,6 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get
 
     set(({
       legends: [],
-      legendKey: "",
-      legendTitle: "",
       geoJSONKey: v4(),
       features: json.features,
       propertiesKeys: propertiesKeys,
@@ -42,7 +40,7 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get
     features: state.features.map((item) => {
       if (item.uuid !== uuid) return item;
 
-      const key = get().legendKey
+      const key = get().legendSettings.key
       
       // update color properties and radius for proportional circle
       // if legend key is exist and the current value is different 
@@ -76,7 +74,7 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get
   },
 
   syncFeaturesWithLegend: () => set((state) => {
-    const key = get().legendKey
+    const key = get().legendSettings.key
     
     const propertiesKey = get().propertiesKeys
 

@@ -8,18 +8,18 @@ import { Settings } from "@components/Settings"
  * @returns 
  */
 export const LegendKey = () => {
-  const selectedKey = useStore(state => state.legendKey)
+  const settings = useStore(state => state.legendSettings)
 
   const keys = useStore(state => state.propertiesKeys)
 
-  const setSelectedKey = useStore.getState().updateLegendKey
+  const setSelectedKey = (key: string) => useStore.getState().updateLegendSettings({ key: key })
 
   return (
     <Settings title="Legend Key" description="Select column where the legend value will be applied">
       <Select
         size="xs"
         searchable
-        value={selectedKey}
+        value={settings.key}
         onChange={setSelectedKey}
         disabled={keys.length === 0}
         data={keys.filter(key => key !== "color")}

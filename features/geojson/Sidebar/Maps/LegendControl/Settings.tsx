@@ -1,10 +1,9 @@
 import { useStore } from "@geojson/store"
 import { InputText } from "@components/Input"
 import { Divider } from "@components/Divider"
-import { useDebounce } from "@lib/utils/debounce"
 import { QuestionMark } from "tabler-icons-react"
-import { LegendOptions } from "@geojson/store/types"
 import { Settings, SettingsWrapper } from "@components/Settings"
+import { LegendSettings as LegendSettingsType } from "@geojson/store/types"
 import {
   Text,
   Input,
@@ -48,9 +47,9 @@ const useStyles = createStyles(theme => ({
 
 
 interface LegendSettingsProps {
-  options: LegendOptions;
+  settings: LegendSettingsType;
 
-  updateOptions: (legend: Partial<LegendOptions>) => void
+  updateSettings: (legend: Partial<LegendSettingsType>) => void
 }
 
 
@@ -60,7 +59,7 @@ interface LegendSettingsProps {
  * @param props LegendSettingsProps
  * @returns 
  */
-const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) => {
+const SpacingAndDirection = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
   const updateSpacing = (value: number) => updateOptions({ spacing: value })
@@ -96,7 +95,7 @@ const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) =>
  * @param props LegendSettingsProps
  * @returns 
  */
-const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
+const FontOptions = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
   const changeFontColor = (value: string) => updateOptions({ fontColor: value })
@@ -132,7 +131,7 @@ const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
  * @param props LegendSettingsProps 
  * @returns 
  */
-const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) => {
+const BackgroundAndSymbol = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
   const changeBackgroudColor = (value: string) => updateOptions({ backgroundColor: value })
@@ -167,14 +166,12 @@ const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) =>
  * 
  * @returns 
  */
-const TitleAndOthers = () => {
+const TitleAndOthers = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const legendTitle = useStore(state => state.legendTitle)
+  const resetOptions = useStore.getState().resetLegendSettings
 
-  const resetOptions = useStore.getState().resetLegendOptions
-
-  const updateTitle = useDebounce(useStore.getState().updateLegendTitle, 500)
+  const updateTitle = (key: string) => updateOptions({ title: key })
 
   return (
     <SettingsWrapper className={classes.section} grow align="flex-end">
@@ -194,7 +191,7 @@ const TitleAndOthers = () => {
         </Text>
       </Group>
       <Input.Wrapper label="Title" placeholder="Legend Title" size="xs" className={classes.item}>
-        <InputText value={legendTitle} onChange={value => updateTitle(value)} />
+        <InputText value={options.title} onChange={value => updateTitle(value)} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -207,23 +204,27 @@ const TitleAndOthers = () => {
  * @returns 
  */
 export const LegendSettings = () => {
-  const options = useStore(state => state.legendOptions)
+  const settings = useStore(state => state.legendSettings)
 
-  const updateOptions = useStore.getState().updateLegendOptions
+  const updateSettings = useStore.getState().updateLegendSettings
 
-  const toggleShowLegend = () => updateOptions({ show: !options.show })
+  const toggleShowLegend = () => updateSettings({ show: !settings.show })
 
   return (
     <>
       <Settings title="Legend" description="Show legend & additional information on the maps">
-        <Switch checked={options.show} onChange={toggleShowLegend} />
+        <Switch checked={settings.show} onChange={toggleShowLegend} />
       </Settings>
-      {options.show && (
+      {settings.show && (
         <>
-          <SpacingAndDirection options={options} updateOptions={updateOptions} />
-          <FontOptions options={options} updateOptions={updateOptions} />
-          <BackgroundAndSymbol options={options} updateOptions={updateOptions} />
-          <TitleAndOthers />
+          <SpacingAndDirection settings={settings} updateSettings={updateSettings} />
+          
+          <FontOptions settings={settings} updateSettings={updateSettings} />
+          
+          <BackgroundAndSymbol settings={settings} updateSettings={updateSettings} />
+          
+          <TitleAndOthers settings={settings} updateSettings={updateSettings}  />
+          
           <Divider />
         </>
       )}

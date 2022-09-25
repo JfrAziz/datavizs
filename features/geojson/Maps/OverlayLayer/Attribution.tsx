@@ -23,7 +23,7 @@ export const Attribution = () => {
   const { classes } = useStyles()
 
   const baseMap = useStore(state => state.baseMap)
-  const legendOptions = useStore(state => state.legendOptions)
+  const legendOptions = useStore(state => state.legendSettings)
 
   if (!baseMap) return null;
 

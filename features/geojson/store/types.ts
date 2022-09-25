@@ -76,8 +76,12 @@ export type DataStore = DataState & DataFunction
  * proportional circle, and and label
  * 
  */
-export type LegendOptions = {
+export type LegendSettings = {
   show: boolean
+
+  key: string
+
+  title: string
 
   // 
   position: {
@@ -155,11 +159,7 @@ export interface LabelSettings {
 export interface MapInformationState {
   legends: Legend[];
 
-  legendTitle: string;
-
-  legendOptions: LegendOptions;
-
-  legendKey: string
+  legendSettings: LegendSettings;
 
   proportionalCircle: ProportionalCircle
 
@@ -179,19 +179,15 @@ export interface MapInformationFunction {
 
   sortLegend: (by: "label" | "value", order: "asc" | "desc") => void
 
-  resetLegendOptions: () => void;
+  resetLegendSettings: () => void;
 
-  updateLegendOptions: (legend: Partial<LegendOptions>) => void;
+  updateLegendSettings: (legend: Partial<LegendSettings>) => void;
 
   generateGradient: () => void;
 
   generateUniqueLegends: (key: string) => void;
 
   generateQuantileLegends: (key: string, quantile: number[]) => void;
-
-  updateLegendKey: (key: string) => void
-
-  updateLegendTitle: (title: string) => void
 
   updateProportionalCircle: (settings: Partial<ProportionalCircle>) => void
 

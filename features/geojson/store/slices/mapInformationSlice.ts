@@ -3,8 +3,8 @@ import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
-import { Store, Legend, LegendOptions, MapInformationStore, LabelSettings } from "@geojson/store/types";
 import { DEFAULT_CIRCLE_BORDER_COLOR, DEFAULT_CIRCLE_FILL_COLOR } from "@config/leaflet";
+import { Store, Legend, LegendSettings, MapInformationStore, LabelSettings } from "@geojson/store/types";
 
 
 /**
@@ -40,8 +40,12 @@ const createRangeLegend = (min: number, max: number): Legend => ({
 /**
  * initial value for legend options
  */
-const LegendOptionsInitialValue: LegendOptions = {
+const LegendSettingsInitialValue: LegendSettings = {
   show: false,
+
+  key: "",
+
+  title: "",
 
   position: {
     x: 0,
@@ -81,11 +85,7 @@ const LabelSettingsInitialValue: LabelSettings = {
 export const createMapInformationSlice: StateCreator<Store, [], [], MapInformationStore> = (set, get) => ({
   legends: [],
 
-  legendTitle: "",
-
-  legendOptions: LegendOptionsInitialValue,
-
-  legendKey: "",
+  legendSettings: LegendSettingsInitialValue,
 
   proportionalCircle: {
     min: 1000,
@@ -147,12 +147,12 @@ export const createMapInformationSlice: StateCreator<Store, [], [], MapInformati
     return set({ legends: legends })
   },
 
-  resetLegendOptions: () => set({
-    legendOptions: { ...LegendOptionsInitialValue, show: true }
+  resetLegendSettings: () => set({
+    legendSettings: { ...LegendSettingsInitialValue, show: true }
   }),
 
-  updateLegendOptions: (legend) => set(state => ({
-    legendOptions: { ...state.legendOptions, ...legend }
+  updateLegendSettings: (legend) => set(state => ({
+    legendSettings: { ...state.legendSettings, ...legend }
   })),
 
   generateGradient: () => set(state => {
@@ -192,10 +192,6 @@ export const createMapInformationSlice: StateCreator<Store, [], [], MapInformati
 
     set({ legends: result })
   },
-
-  updateLegendKey: (key) => set({ legendKey: key }),
-
-  updateLegendTitle: (title) => set({ legendTitle: title }),
 
   updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } })),
 
