@@ -38,7 +38,7 @@ const createRangeLegend = (min: number, max: number): Legend => ({
 
 
 /**
- * initial value for legend options
+ * initial value for legend
  */
 const LegendSettingsInitialValue: LegendSettings = {
   show: false,

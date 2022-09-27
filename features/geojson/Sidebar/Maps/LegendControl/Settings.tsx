@@ -59,18 +59,18 @@ interface LegendSettingsProps {
  * @param props LegendSettingsProps
  * @returns 
  */
-const SpacingAndDirection = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
+const SpacingAndDirection = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const updateSpacing = (value: number) => updateOptions({ spacing: value })
+  const updateSpacing = (value: number) => updateSettings({ spacing: value })
 
-  const changeDirection = (value: "column" | "row") => updateOptions({ direction: value })
+  const changeDirection = (value: "column" | "row") => updateSettings({ direction: value })
 
   return (
     <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Spacing" size="xs" className={classes.item} >
         <Slider
-          value={options.spacing}
+          value={settings.spacing}
           onChange={updateSpacing}
           labelTransition="skew-down"
           labelTransitionDuration={150}
@@ -82,7 +82,7 @@ const SpacingAndDirection = ({ settings: options, updateSettings: updateOptions 
           ]} />
       </Input.Wrapper>
       <Input.Wrapper label="Direction" size="xs" className={classes.item}>
-        <Select defaultValue="column" data={["column", "row"]} value={options.direction} onChange={changeDirection} />
+        <Select defaultValue="column" data={["column", "row"]} value={settings.direction} onChange={changeDirection} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -95,18 +95,18 @@ const SpacingAndDirection = ({ settings: options, updateSettings: updateOptions 
  * @param props LegendSettingsProps
  * @returns 
  */
-const FontOptions = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
+const FontSettings = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const changeFontColor = (value: string) => updateOptions({ fontColor: value })
+  const changeFontColor = (value: string) => updateSettings({ fontColor: value })
 
-  const updateFontSize = (value: number | undefined) => updateOptions({ fontSize: value ?? 12 })
+  const updateFontSize = (value: number | undefined) => updateSettings({ fontSize: value ?? 12 })
 
   return (
     <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Font Size" size="xs" className={classes.item}>
         <Slider
-          value={options.fontSize}
+          value={settings.fontSize}
           onChange={updateFontSize}
           labelTransition="skew-down"
           labelTransitionDuration={150}
@@ -118,7 +118,7 @@ const FontOptions = ({ settings: options, updateSettings: updateOptions }: Legen
           ]} />
       </Input.Wrapper>
       <Input.Wrapper label="Font Color" size="xs" className={classes.item}>
-        <ColorInput value={options.fontColor} onChange={changeFontColor} />
+        <ColorInput value={settings.fontColor} onChange={changeFontColor} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -131,18 +131,18 @@ const FontOptions = ({ settings: options, updateSettings: updateOptions }: Legen
  * @param props LegendSettingsProps 
  * @returns 
  */
-const BackgroundAndSymbol = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
+const BackgroundAndSymbol = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const changeBackgroudColor = (value: string) => updateOptions({ backgroundColor: value })
+  const changeBackgroudColor = (value: string) => updateSettings({ backgroundColor: value })
 
-  const updateSymbolSize = (value: number | undefined) => updateOptions({ symbolSize: value ?? 25 })
+  const updateSymbolSize = (value: number | undefined) => updateSettings({ symbolSize: value ?? 25 })
 
   return (
     <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Symbol Size" size="xs" className={classes.item}>
         <Slider
-          value={options.symbolSize}
+          value={settings.symbolSize}
           onChange={updateSymbolSize}
           labelTransition="skew-down"
           labelTransitionDuration={150}
@@ -154,7 +154,7 @@ const BackgroundAndSymbol = ({ settings: options, updateSettings: updateOptions 
           ]} />
       </Input.Wrapper>
       <Input.Wrapper label="Background Color" size="xs" className={classes.item}>
-        <ColorInput format="rgba" onChange={changeBackgroudColor} value={options.backgroundColor} />
+        <ColorInput format="rgba" onChange={changeBackgroudColor} value={settings.backgroundColor} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -166,18 +166,18 @@ const BackgroundAndSymbol = ({ settings: options, updateSettings: updateOptions 
  * 
  * @returns 
  */
-const TitleAndOthers = ({ settings: options, updateSettings: updateOptions }: LegendSettingsProps) => {
+const TitleAndOthers = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const resetOptions = useStore.getState().resetLegendSettings
+  const resetSettings = useStore.getState().resetLegendSettings
 
-  const updateTitle = (key: string) => updateOptions({ title: key })
+  const updateTitle = (key: string) => updateSettings({ title: key })
 
   return (
     <SettingsWrapper className={classes.section} grow align="flex-end">
       <Group className={classes.item}>
         <Tooltip label="Reset legend to initial settings">
-          <Button size="xs" variant="light" color="red" onClick={resetOptions}>
+          <Button size="xs" variant="light" color="red" onClick={resetSettings}>
             Reset
           </Button>
         </Tooltip>
@@ -191,7 +191,7 @@ const TitleAndOthers = ({ settings: options, updateSettings: updateOptions }: Le
         </Text>
       </Group>
       <Input.Wrapper label="Title" placeholder="Legend Title" size="xs" className={classes.item}>
-        <InputText value={options.title} onChange={value => updateTitle(value)} />
+        <InputText value={settings.title} onChange={value => updateTitle(value)} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -219,7 +219,7 @@ export const LegendSettings = () => {
         <>
           <SpacingAndDirection settings={settings} updateSettings={updateSettings} />
           
-          <FontOptions settings={settings} updateSettings={updateSettings} />
+          <FontSettings settings={settings} updateSettings={updateSettings} />
           
           <BackgroundAndSymbol settings={settings} updateSettings={updateSettings} />
           

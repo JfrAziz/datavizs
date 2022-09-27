@@ -22,11 +22,11 @@ const useStyles = createStyles(theme => ({
 export const ProportionalCircle = () => {
   const { classes } = useStyles()
 
-  const options = useStore(state => state.proportionalCircle)
+  const settings = useStore(state => state.proportionalCircle)
 
   const update = useStore.getState().updateProportionalCircle
 
-  const toggleProportionalCircle = () => update({ show: !options.show })
+  const toggleProportionalCircle = () => update({ show: !settings.show })
 
   const updateCircleColor = (color: string) => update({ color: color })
 
@@ -35,21 +35,21 @@ export const ProportionalCircle = () => {
   return (
     <>
       <Settings title="Proportional Circle" description="Show circle on each features with proportional size based on legend value">
-        <Switch checked={options.show} onChange={toggleProportionalCircle} />
+        <Switch checked={settings.show} onChange={toggleProportionalCircle} />
       </Settings>
-      {options.show && (
+      {settings.show && (
         <Stack mt={20}>
           <Input.Wrapper label="Min Max Radius (meters)" size="xs">
             <Group>
-              <InputMinMax value={options} onChange={(value) => update({ min: value.min, max: value.max })} />
+              <InputMinMax value={settings} onChange={(value) => update({ min: value.min, max: value.max })} />
             </Group>
           </Input.Wrapper>
           <Group grow>
             <Input.Wrapper label="Fill Color" size="xs" className={classes.item}>
-              <ColorInput value={options.color} onChange={updateCircleColor} format="rgba" />
+              <ColorInput value={settings.color} onChange={updateCircleColor} format="rgba" />
             </Input.Wrapper>
             <Input.Wrapper label="Border Color" size="xs" className={classes.item}>
-              <ColorInput value={options.borderColor} onChange={updateBorderColor} format="rgba" />
+              <ColorInput value={settings.borderColor} onChange={updateBorderColor} format="rgba" />
             </Input.Wrapper>
           </Group>
           <Group>

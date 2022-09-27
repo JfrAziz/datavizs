@@ -19,7 +19,7 @@ export const SettingsWrapper = ({ children, ...others }: PropsWithChildren & Gro
 }
 
 
-interface OptionsProps extends React.PropsWithChildren {
+interface SettingsProps extends React.PropsWithChildren {
   title: string;
   description?: string;
 }
@@ -31,7 +31,7 @@ interface OptionsProps extends React.PropsWithChildren {
  * @param props 
  * @returns 
  */
-export const Settings = ({ title, description, children }: OptionsProps) => (
+export const Settings = ({ title, description, children }: SettingsProps) => (
   <SettingsWrapper>
     <div>
       <Text>{title}</Text>
