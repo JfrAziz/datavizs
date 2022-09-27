@@ -40,13 +40,11 @@ const useStyles = createStyles(theme => ({
 const LegendTitle = () => {
   const { classes } = useStyles()
 
-  const title = useStore(state => state.legendTitle)
+  const settings = useStore(state => state.legendSettings)
 
-  const options = useStore(state => state.legendOptions)
+  if (!settings.title) return null;
 
-  if (!title) return null;
-
-  return <Text className={classes.title} style={{ color: options.fontColor, fontSize: options.fontSize }}>{title}</Text>
+  return <Text className={classes.title} style={{ color: settings.fontColor, fontSize: settings.fontSize }}>{settings.title}</Text>
 }
 
 
@@ -83,7 +81,7 @@ const LegendItem = () => {
 
   const legends = useStore(state => state.legends)
 
-  const options = useStore(state => state.legendOptions)
+  const settings = useStore(state => state.legendSettings)
 
   const getLabelLegend = (item: LegendTypes): string | null => {
     if (item.label) return item.label
@@ -94,20 +92,20 @@ const LegendItem = () => {
   }
 
   return (
-    <LegendWrapper spacing={options.spacing} direction={options.direction}>
+    <LegendWrapper spacing={settings.spacing} direction={settings.direction}>
       {legends.filter(item => !item.hidden).map(item => (
         <Group noWrap key={item.uuid}>
           <ColorSwatch
             radius={0}
             color={item.color}
-            size={options.symbolSize}
+            size={settings.symbolSize}
             classNames={{ shadowOverlay: classes.colorSwatch }} />
           <Text
             size="sm"
             style={{
               flex: 1,
-              color: options.fontColor,
-              fontSize: options.fontSize
+              color: settings.fontColor,
+              fontSize: settings.fontSize
             }} >
             {getLabelLegend(item)}
           </Text>
@@ -126,42 +124,42 @@ const LegendItem = () => {
 export const Legend = () => {
   const { classes } = useStyles()
 
-  const options = useStore(state => state.legendOptions)
+  const settings = useStore(state => state.legendSettings)
 
-  const updateOptions = useStore.getState().updateLegendOptions
+  const updateSettings = useStore.getState().updateLegendSettings
 
   const updatePositions: DraggableEventHandler = (e, data) => {
-    updateOptions({ position: { x: data.x, y: data.y } })
+    updateSettings({ position: { x: data.x, y: data.y } })
   }
 
   const updateSize: RndResizeCallback = (e, direction, ref) => {
     switch (direction) {
       case "bottomRight":
-        updateOptions({ size: { width: ref.offsetWidth, height: ref.offsetHeight } })
+        updateSettings({ size: { width: ref.offsetWidth, height: ref.offsetHeight } })
         break
       case "right":
-        updateOptions({ size: { width: ref.offsetWidth, height: options.size.height } })
+        updateSettings({ size: { width: ref.offsetWidth, height: settings.size.height } })
         break
       default:
-        updateOptions({ size: { width: options.size.width, height: ref.offsetHeight } })
+        updateSettings({ size: { width: settings.size.width, height: ref.offsetHeight } })
         break;
     }
   }
 
-  if (!options.show) return null;
+  if (!settings.show) return null;
 
   return (
     <Rnd
       bounds="parent"
       onResize={updateSize}
-      position={options.position}
+      position={settings.position}
       onDragStop={updatePositions}
       className={classes.container}
-      default={{ ...options.position, ...options.size }}
-      style={{ backgroundColor: options.backgroundColor }}
+      default={{ ...settings.position, ...settings.size }}
+      style={{ backgroundColor: settings.backgroundColor }}
       size={{
-        width: options.size.width,
-        height: options.size.height
+        width: settings.size.width,
+        height: settings.size.height
       }}
       enableResizing={{
         bottom: true,

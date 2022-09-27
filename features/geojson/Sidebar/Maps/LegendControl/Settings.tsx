@@ -1,9 +1,9 @@
 import { useStore } from "@geojson/store"
 import { InputText } from "@components/Input"
-import { useDebounce } from "@lib/utils/debounce"
+import { Divider } from "@components/Divider"
 import { QuestionMark } from "tabler-icons-react"
-import { LegendOptions } from "@geojson/store/types"
 import { Settings, SettingsWrapper } from "@components/Settings"
+import { LegendSettings as LegendSettingsType } from "@geojson/store/types"
 import {
   Text,
   Input,
@@ -17,7 +17,6 @@ import {
   ColorInput,
   createStyles,
 } from "@mantine/core"
-import { Divider } from "@components/Divider"
 
 
 const useStyles = createStyles(theme => ({
@@ -48,9 +47,9 @@ const useStyles = createStyles(theme => ({
 
 
 interface LegendSettingsProps {
-  options: LegendOptions;
+  settings: LegendSettingsType;
 
-  updateOptions: (legend: Partial<LegendOptions>) => void
+  updateSettings: (legend: Partial<LegendSettingsType>) => void
 }
 
 
@@ -60,18 +59,18 @@ interface LegendSettingsProps {
  * @param props LegendSettingsProps
  * @returns 
  */
-const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) => {
+const SpacingAndDirection = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const updateSpacing = (value: number) => updateOptions({ spacing: value })
+  const updateSpacing = (value: number) => updateSettings({ spacing: value })
 
-  const changeDirection = (value: "column" | "row") => updateOptions({ direction: value })
+  const changeDirection = (value: "column" | "row") => updateSettings({ direction: value })
 
   return (
     <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Spacing" size="xs" className={classes.item} >
         <Slider
-          value={options.spacing}
+          value={settings.spacing}
           onChange={updateSpacing}
           labelTransition="skew-down"
           labelTransitionDuration={150}
@@ -83,7 +82,7 @@ const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) =>
           ]} />
       </Input.Wrapper>
       <Input.Wrapper label="Direction" size="xs" className={classes.item}>
-        <Select defaultValue="column" data={["column", "row"]} value={options.direction} onChange={changeDirection} />
+        <Select defaultValue="column" data={["column", "row"]} value={settings.direction} onChange={changeDirection} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -96,18 +95,18 @@ const SpacingAndDirection = ({ options, updateOptions }: LegendSettingsProps) =>
  * @param props LegendSettingsProps
  * @returns 
  */
-const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
+const FontSettings = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const changeFontColor = (value: string) => updateOptions({ fontColor: value })
+  const changeFontColor = (value: string) => updateSettings({ fontColor: value })
 
-  const updateFontSize = (value: number | undefined) => updateOptions({ fontSize: value ?? 12 })
+  const updateFontSize = (value: number | undefined) => updateSettings({ fontSize: value ?? 12 })
 
   return (
     <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Font Size" size="xs" className={classes.item}>
         <Slider
-          value={options.fontSize}
+          value={settings.fontSize}
           onChange={updateFontSize}
           labelTransition="skew-down"
           labelTransitionDuration={150}
@@ -119,7 +118,7 @@ const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
           ]} />
       </Input.Wrapper>
       <Input.Wrapper label="Font Color" size="xs" className={classes.item}>
-        <ColorInput value={options.fontColor} onChange={changeFontColor} />
+        <ColorInput value={settings.fontColor} onChange={changeFontColor} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -132,18 +131,18 @@ const FontOptions = ({ options, updateOptions }: LegendSettingsProps) => {
  * @param props LegendSettingsProps 
  * @returns 
  */
-const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) => {
+const BackgroundAndSymbol = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const changeBackgroudColor = (value: string) => updateOptions({ backgroundColor: value })
+  const changeBackgroudColor = (value: string) => updateSettings({ backgroundColor: value })
 
-  const updateSymbolSize = (value: number | undefined) => updateOptions({ symbolSize: value ?? 25 })
+  const updateSymbolSize = (value: number | undefined) => updateSettings({ symbolSize: value ?? 25 })
 
   return (
     <SettingsWrapper grow className={classes.section}>
       <Input.Wrapper label="Symbol Size" size="xs" className={classes.item}>
         <Slider
-          value={options.symbolSize}
+          value={settings.symbolSize}
           onChange={updateSymbolSize}
           labelTransition="skew-down"
           labelTransitionDuration={150}
@@ -155,7 +154,7 @@ const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) =>
           ]} />
       </Input.Wrapper>
       <Input.Wrapper label="Background Color" size="xs" className={classes.item}>
-        <ColorInput format="rgba" onChange={changeBackgroudColor} value={options.backgroundColor} />
+        <ColorInput format="rgba" onChange={changeBackgroudColor} value={settings.backgroundColor} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -167,20 +166,18 @@ const BackgroundAndSymbol = ({ options, updateOptions }: LegendSettingsProps) =>
  * 
  * @returns 
  */
-const TitleAndOthers = () => {
+const TitleAndOthers = ({ settings, updateSettings }: LegendSettingsProps) => {
   const { classes } = useStyles()
 
-  const legendTitle = useStore(state => state.legendTitle)
+  const resetSettings = useStore.getState().resetLegendSettings
 
-  const resetOptions = useStore.getState().resetLegendOptions
-
-  const updateTitle = useDebounce(useStore.getState().updateLegendTitle, 500)
+  const updateTitle = (key: string) => updateSettings({ title: key })
 
   return (
     <SettingsWrapper className={classes.section} grow align="flex-end">
       <Group className={classes.item}>
         <Tooltip label="Reset legend to initial settings">
-          <Button size="xs" variant="light" color="red" onClick={resetOptions}>
+          <Button size="xs" variant="light" color="red" onClick={resetSettings}>
             Reset
           </Button>
         </Tooltip>
@@ -194,7 +191,7 @@ const TitleAndOthers = () => {
         </Text>
       </Group>
       <Input.Wrapper label="Title" placeholder="Legend Title" size="xs" className={classes.item}>
-        <InputText value={legendTitle} onChange={value => updateTitle(value)} />
+        <InputText value={settings.title} onChange={value => updateTitle(value)} />
       </Input.Wrapper>
     </SettingsWrapper>
   )
@@ -207,23 +204,27 @@ const TitleAndOthers = () => {
  * @returns 
  */
 export const LegendSettings = () => {
-  const options = useStore(state => state.legendOptions)
+  const settings = useStore(state => state.legendSettings)
 
-  const updateOptions = useStore.getState().updateLegendOptions
+  const updateSettings = useStore.getState().updateLegendSettings
 
-  const toggleShowLegend = () => updateOptions({ show: !options.show })
+  const toggleShowLegend = () => updateSettings({ show: !settings.show })
 
   return (
     <>
       <Settings title="Legend" description="Show legend & additional information on the maps">
-        <Switch checked={options.show} onChange={toggleShowLegend} />
+        <Switch checked={settings.show} onChange={toggleShowLegend} />
       </Settings>
-      {options.show && (
+      {settings.show && (
         <>
-          <SpacingAndDirection options={options} updateOptions={updateOptions} />
-          <FontOptions options={options} updateOptions={updateOptions} />
-          <BackgroundAndSymbol options={options} updateOptions={updateOptions} />
-          <TitleAndOthers />
+          <SpacingAndDirection settings={settings} updateSettings={updateSettings} />
+          
+          <FontSettings settings={settings} updateSettings={updateSettings} />
+          
+          <BackgroundAndSymbol settings={settings} updateSettings={updateSettings} />
+          
+          <TitleAndOthers settings={settings} updateSettings={updateSettings}  />
+          
           <Divider />
         </>
       )}

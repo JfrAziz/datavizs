@@ -1,9 +1,9 @@
-import { InputMinMax } from "./Common";
 import { useStore } from "@geojson/store";
 import { Divider } from "@components/Divider";
 import { useDebounce } from "@lib/utils/debounce";
 import { InputColor, InputText } from "@components/Input";
 import { Legend, minMaxValue } from "@geojson/store/types";
+import { InputMinMax } from "@components/Input/InputMinMax";
 import { Eye, Trash, EyeOff, ArrowNarrowUp, ArrowNarrowDown, } from "tabler-icons-react";
 import { Group, Stack, Tooltip, ActionIcon, SegmentedControl, MediaQuery, } from "@mantine/core";
 

@@ -24,8 +24,6 @@ const initialValue: SettingsState = {
 
     opacity: 1
   },
-
-  showMapControls: true,
 }
 
 export const createSettingsSlice: StateCreator<Store, [], [], SettingsStore> = (set, get) => ({
@@ -75,8 +73,6 @@ export const createSettingsSlice: StateCreator<Store, [], [], SettingsStore> = (
     donwloadButton.href = dataUrl
     donwloadButton.click()
   },
-
-  toggleMapControls: () => set((state) => ({ showMapControls: !state.showMapControls })),
 
   updateGeoJSONSettings: (settings) => set(state => ({ geoJSONSettings: { ...state.geoJSONSettings, ...settings } }))
 })

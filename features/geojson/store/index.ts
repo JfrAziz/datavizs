@@ -1,8 +1,8 @@
 import create from "zustand";
 import { Store } from "./types";
 import { createDataSlice } from "./slices/dataSlice";
-import { createLegendSlice } from "./slices/legendSlice";
 import { createSettingsSlice } from "./slices/settingsSlice";
+import { createMapInformationSlice } from "./slices/mapInformationSlice";
 
 /**
  * global state management for maps page, it include any data 
@@ -10,6 +10,6 @@ import { createSettingsSlice } from "./slices/settingsSlice";
  */
 export const useStore = create<Store>()((...a) => ({
   ...createDataSlice(...a),
-  ...createLegendSlice(...a),
-  ...createSettingsSlice(...a)
+  ...createSettingsSlice(...a),
+  ...createMapInformationSlice(...a),
 }))

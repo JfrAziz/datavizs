@@ -39,7 +39,7 @@ export interface GeoJSONExtended extends FeatureCollection {
 
 
 /**
- * GeoJSON state and function for handle features collection data
+ * Data state and function for handle features collection data
  * 
  */
 export interface DataState extends Omit<GeoJSONExtended, "type"> {
@@ -62,7 +62,7 @@ export interface DataFunction {
 
   deletePropertiesKeys: (keys: string[]) => void;
 
-  syncFeatureWithLegend: (key: string, legends: Legend[]) => void;
+  syncFeaturesWithLegend: () => void;
 
   updatePointCoordinate: (uuid: string, lat: number, lng: number) => void;
 
@@ -72,12 +72,16 @@ export interface DataFunction {
 export type DataStore = DataState & DataFunction
 
 /**
- * Legend state and function for handle legend data and 
- * color generator. 
+ * Maps Information state and function for handle legend and color,
+ * proportional circle, and and label
  * 
  */
-export type LegendOptions = {
+export type LegendSettings = {
   show: boolean
+
+  key: string
+
+  title: string
 
   // 
   position: {
@@ -142,19 +146,27 @@ export interface ProportionalCircle {
   borderColor: string
 }
 
-export interface LegendState {
-  legends: Legend[];
+export interface LabelSettings {
+  show: boolean
 
-  legendTitle: string;
+  key: string
 
-  legendOptions: LegendOptions;
+  color: string
 
-  associatedKey: string
-
-  proportionalCircle: ProportionalCircle
+  size: number
 }
 
-export interface LegendFunction {
+export interface MapInformationState {
+  legends: Legend[];
+
+  legendSettings: LegendSettings;
+
+  proportionalCircle: ProportionalCircle
+
+  labelSettings: LabelSettings
+}
+
+export interface MapInformationFunction {
   addLegends: () => void;
 
   updateLegend: (uuid: string, legend: Legend) => void;
@@ -167,9 +179,9 @@ export interface LegendFunction {
 
   sortLegend: (by: "label" | "value", order: "asc" | "desc") => void
 
-  resetLegendOptions: () => void;
+  resetLegendSettings: () => void;
 
-  updateLegendOptions: (legend: Partial<LegendOptions>) => void;
+  updateLegendSettings: (legend: Partial<LegendSettings>) => void;
 
   generateGradient: () => void;
 
@@ -177,14 +189,12 @@ export interface LegendFunction {
 
   generateQuantileLegends: (key: string, quantile: number[]) => void;
 
-  updateAssociatedKey: (key: string) => void
-
-  updateLegendTitle: (title: string) => void
-
   updateProportionalCircle: (settings: Partial<ProportionalCircle>) => void
+
+  updateLabelSettings: (settings: Partial<LabelSettings>) => void
 }
 
-export type LegendStore = LegendState & LegendFunction
+export type MapInformationStore = MapInformationState & MapInformationFunction
 
 
 /**
@@ -223,8 +233,6 @@ export interface SettingsState {
 
   baseMap: BaseMap | null;
 
-  showMapControls: boolean;
-
   geoJSONSettings: GeoJSONSettings
 
 }
@@ -242,8 +250,6 @@ export interface SettingsFunction {
 
   downloadMap: (format?: "png" | "jpeg" | "svg") => void
 
-  toggleMapControls: () => void;
-
   updateGeoJSONSettings: (settings: Partial<GeoJSONSettings>) => void;
 }
 
@@ -254,4 +260,4 @@ export type SettingsStore = SettingsState & SettingsFunction
  * All combined state
  * 
  */
-export type Store = DataStore & LegendStore & SettingsStore
+export type Store = DataStore & MapInformationStore & SettingsStore

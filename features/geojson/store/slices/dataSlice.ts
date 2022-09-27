@@ -22,11 +22,9 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get
 
     set(({
       legends: [],
-      legendTitle: "",
       geoJSONKey: v4(),
       features: json.features,
       propertiesKeys: propertiesKeys,
-      associatedKey: ""
     }))
   },
 
@@ -39,7 +37,26 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get
   }),
 
   updateFeatureProperties: (uuid, properties) => set((state) => ({
-    features: state.features.map((item) => item.uuid !== uuid ? item : { ...item, properties: properties })
+    features: state.features.map((item) => {
+      if (item.uuid !== uuid) return item;
+
+      const key = get().legendSettings.key
+      
+      // update color properties and radius for proportional circle
+      // if legend key is exist and the current value is different 
+      // from updated value.
+      if (key && properties[key] !== item.properties[key]) {
+        const { color, percentRadius } = getAssociatedValue(properties[key], get().legends)
+        
+        return { 
+          ...item,
+          point: { ...item.point, radius: percentRadius },
+          properties: { ...properties, color: color }
+        }
+      }
+
+      return { ...item, properties: properties }
+    })
   })),
 
   addPropertiesKey: (key) => set((state) => ({
@@ -56,16 +73,25 @@ export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get
     }))
   },
 
-  syncFeatureWithLegend: (key, legends) => set((state) => ({
-    features: state.features.map((item) => {
-      const { color, percentRadius } = getAssociatedValue(item.properties[key], legends)
-      return {
-        ...item,
-        point: { ...item.point, radius: percentRadius },
-        properties: { ...item.properties, color: color }
-      }
-    }),
-  })),
+  syncFeaturesWithLegend: () => set((state) => {
+    const key = get().legendSettings.key
+    
+    const propertiesKey = get().propertiesKeys
+
+    // do not update if legend key does not exist
+    if (!key || !propertiesKey.includes(key)) return { }
+
+    return {
+      features: state.features.map((item) => {
+        const { color, percentRadius } = getAssociatedValue(item.properties[key], get().legends)
+        return {
+          ...item,
+          point: { ...item.point, radius: percentRadius },
+          properties: { ...item.properties, color: color }
+        }
+      }),
+    }
+  }),
 
   updatePointCoordinate: (uuid, lat, lng) => set(state => ({
     features: state.features.map(item => item.uuid !== uuid ? item : { ...item, point: { ...item.point, lat: lat, lng: lng } })

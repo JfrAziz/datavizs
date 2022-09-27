@@ -23,7 +23,7 @@ export const Attribution = () => {
   const { classes } = useStyles()
 
   const baseMap = useStore(state => state.baseMap)
-  const legendOptions = useStore(state => state.legendOptions)
+  const settings = useStore(state => state.legendSettings)
 
   if (!baseMap) return null;
 
@@ -31,8 +31,8 @@ export const Attribution = () => {
     <div
       className={classes.container}
       style={{
-        backgroundColor: legendOptions.backgroundColor,
-        color: legendOptions.fontColor
+        backgroundColor: settings.backgroundColor,
+        color: settings.fontColor
       }}>
       <div dangerouslySetInnerHTML={{ __html: `Leaflet | ${baseMap.attribution}` }} />
     </div>

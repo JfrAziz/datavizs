@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
 import { AllGeoJSON } from "@turf/helpers";
 import pointOnFeature from "@turf/point-on-feature";
-import { GeoJSONExtended, Legend } from "@geojson/store/types";
 import { DEFAULT_FEATURE_COLOR } from "@config/leaflet";
+import { GeoJSONExtended, Legend } from "@geojson/store/types";
 
 
 /**

@@ -1,10 +1,10 @@
 import { createStyles } from "@mantine/core";
 
 export const useStyles = createStyles((theme) => ({
-  options: {
+  settings: {
     '& + &': {
-      paddingTop: theme.spacing.xl,
-      marginTop: theme.spacing.xl,
+      paddingTop: theme.spacing.md,
+      marginTop: theme.spacing.md,
       borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
         }`,
     },

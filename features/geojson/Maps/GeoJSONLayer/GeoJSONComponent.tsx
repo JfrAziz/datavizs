@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useStore } from '@geojson/store';
 import { GeoJSONPopup } from './GeoJSONPopup';
 import { PathOptions, LatLng } from "leaflet";
-import { Popup, GeoJSON } from "react-leaflet";
+import { Popup, GeoJSON, Tooltip } from "react-leaflet";
 import { FeatureExtended, GeoJSONSettings } from '@geojson/store/types';
 
 
@@ -24,11 +24,20 @@ export const GeoJSONComponent = ({ feature, settings }: GeoJSONProps) => {
     fillOpacity: settings.opacity,
   })
 
+  const labelSettings = useStore(state => state.labelSettings)
+
   return (
     <GeoJSON
       data={feature}
       onEachFeature={(f, l) => l.on("click", (e) => setLatLng(e.latlng))}
       style={createStyles({ ...settings, color: feature.properties.color, })} >
+      {labelSettings.show && (
+        <Tooltip direction='center' position={feature.point} permanent>
+          <div style={{ color: labelSettings.color, fontSize: labelSettings.size }}>
+            {feature.properties[labelSettings.key]}
+          </div>
+        </Tooltip>
+      )}
       <Popup minWidth={100} closeButton={false}>
         <GeoJSONPopup latLng={latLng} feature={feature} />
       </Popup>

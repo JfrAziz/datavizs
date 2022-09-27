@@ -12,14 +12,14 @@ import { Group, GroupProps, Text } from '@mantine/core';
 export const SettingsWrapper = ({ children, ...others }: PropsWithChildren & GroupProps) => {
   const { classes } = useStyles();
   return (
-    <Group position="apart" className={classes.options} noWrap spacing="xl" {...others}>
+    <Group position="apart" className={classes.settings} noWrap spacing="xl" {...others}>
       {children}
     </Group>
   );
 }
 
 
-interface OptionsProps extends React.PropsWithChildren {
+interface SettingsProps extends React.PropsWithChildren {
   title: string;
   description?: string;
 }
@@ -31,7 +31,7 @@ interface OptionsProps extends React.PropsWithChildren {
  * @param props 
  * @returns 
  */
-export const Settings = ({ title, description, children }: OptionsProps) => (
+export const Settings = ({ title, description, children }: SettingsProps) => (
   <SettingsWrapper>
     <div>
       <Text>{title}</Text>

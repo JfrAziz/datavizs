@@ -13,6 +13,12 @@
   margin: 0px !important;
 }
 
+.leaflet-tooltip {
+  background-color: unset !important;
+  box-shadow: unset !important;
+  border: unset !important;
+}
+
 /* datatable custom scrollbar for Safari & Chromium */
 .dvn-scroller {
   scrollbar-color: var(--datatable-scrollbar-tumb-bg) var(--datatable-scrollbar-bg);

@@ -1,10 +1,10 @@
-import { Settings, SettingsWrapper } from "@components/Settings";
 import { useStore } from "@geojson/store";
 import { useDebounce } from "@lib/utils/debounce";
-import { ColorInput, Group, Input, Slider, Stack } from "@mantine/core";
+import { SettingsWrapper } from "@components/Settings";
+import { ColorInput, Group, Input, Slider } from "@mantine/core";
 
 export const GeoJSONSettings = () => {
-  const options = useStore(state => state.geoJSONSettings)
+  const settings = useStore(state => state.geoJSONSettings)
 
   const update = useStore.getState().updateGeoJSONSettings
 
@@ -18,7 +18,7 @@ export const GeoJSONSettings = () => {
             min={0}
             max={1}
             step={0.01}
-            value={options.opacity}
+            value={settings.opacity}
             labelTransition="skew-down"
             labelTransitionDuration={150}
             label={(value) => value.toFixed(2)}
@@ -33,7 +33,7 @@ export const GeoJSONSettings = () => {
             min={0}
             max={10}
             step={0.01}
-            value={options.borderWidth}
+            value={settings.borderWidth}
             labelTransition="skew-down"
             labelTransitionDuration={150}
             label={(value) => value.toFixed(2)}
@@ -47,7 +47,7 @@ export const GeoJSONSettings = () => {
         </Input.Wrapper>
         <Input.Wrapper label="Border Color" size="xs">
           <ColorInput
-            value={options.borderColor}
+            value={settings.borderColor}
             onChange={(color) => updateWithBounce({ borderColor: color })} />
         </Input.Wrapper>
       </Group>

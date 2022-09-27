@@ -3,8 +3,8 @@ import chroma from "chroma-js";
 import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
-import { Store, Legend, LegendOptions, LegendStore } from "@geojson/store/types";
-import { DEFAULT_BASEMAP_COLOR, DEFAULT_CIRCLE_COLOR } from "@config/leaflet";
+import { DEFAULT_CIRCLE_BORDER_COLOR, DEFAULT_CIRCLE_FILL_COLOR } from "@config/leaflet";
+import { Store, Legend, LegendSettings, MapInformationStore, LabelSettings } from "@geojson/store/types";
 
 
 /**
@@ -38,10 +38,14 @@ const createRangeLegend = (min: number, max: number): Legend => ({
 
 
 /**
- * initial value for legend options
+ * initial value for legend
  */
-const LegendOptionsInitialValue: LegendOptions = {
+const LegendSettingsInitialValue: LegendSettings = {
   show: false,
+
+  key: "",
+
+  title: "",
 
   position: {
     x: 0,
@@ -68,26 +72,34 @@ const LegendOptionsInitialValue: LegendOptions = {
   symbolSize: 25
 }
 
-export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set, get) => ({
+const LabelSettingsInitialValue: LabelSettings = {
+  show: false,
+
+  color: "#3A3A3A",
+
+  key: "",
+
+  size: 12
+}
+
+export const createMapInformationSlice: StateCreator<Store, [], [], MapInformationStore> = (set, get) => ({
   legends: [],
 
-  legendTitle: "",
-
-  legendOptions: LegendOptionsInitialValue,
-
-  associatedKey: "",
+  legendSettings: LegendSettingsInitialValue,
 
   proportionalCircle: {
     min: 1000,
 
-    max: 1000,
+    max: 10000,
     
     show: false,
     
-    color: DEFAULT_CIRCLE_COLOR,
+    color: DEFAULT_CIRCLE_FILL_COLOR,
 
-    borderColor: DEFAULT_CIRCLE_COLOR
+    borderColor: DEFAULT_CIRCLE_BORDER_COLOR
   },
+  
+  labelSettings: LabelSettingsInitialValue,
 
   addLegends: () => set(state => ({
     legends: [...state.legends, createSingleLegend()]
@@ -135,12 +147,12 @@ export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set,
     return set({ legends: legends })
   },
 
-  resetLegendOptions: () => set({
-    legendOptions: { ...LegendOptionsInitialValue, show: true }
+  resetLegendSettings: () => set({
+    legendSettings: { ...LegendSettingsInitialValue, show: true }
   }),
 
-  updateLegendOptions: (legend) => set(state => ({
-    legendOptions: { ...state.legendOptions, ...legend }
+  updateLegendSettings: (legend) => set(state => ({
+    legendSettings: { ...state.legendSettings, ...legend }
   })),
 
   generateGradient: () => set(state => {
@@ -181,9 +193,7 @@ export const createLegendSlice: StateCreator<Store, [], [], LegendStore> = (set,
     set({ legends: result })
   },
 
-  updateAssociatedKey: (key) => set({ associatedKey: key }),
+  updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } })),
 
-  updateLegendTitle: (title) => set({ legendTitle: title }),
-
-  updateProportionalCircle: (settings) => set(state => ({ proportionalCircle: { ...state.proportionalCircle, ...settings } }))
+  updateLabelSettings: (settings) => set(state => ({ labelSettings: { ...state.labelSettings, ...settings } }))
 })
