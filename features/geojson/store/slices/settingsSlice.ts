@@ -26,7 +26,7 @@ const initialValue: SettingsState = {
   },
 }
 
-export const createSettingsSlice: StateCreator<Store, [], [], SettingsStore> = (set, get) => ({
+export const createSettingsSlice: StateCreator<Store, [["zustand/persist", unknown]], [], SettingsStore> = (set, get) => ({
   ...initialValue,
 
   setMapRef: (map) => set({ mapRef: map }),

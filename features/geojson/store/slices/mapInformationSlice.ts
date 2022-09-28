@@ -82,7 +82,7 @@ const LabelSettingsInitialValue: LabelSettings = {
   size: 12
 }
 
-export const createMapInformationSlice: StateCreator<Store, [], [], MapInformationStore> = (set, get) => ({
+export const createMapInformationSlice: StateCreator<Store, [["zustand/persist", unknown]], [], MapInformationStore> = (set, get) => ({
   legends: [],
 
   legendSettings: LegendSettingsInitialValue,
