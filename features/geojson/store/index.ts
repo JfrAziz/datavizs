@@ -20,6 +20,6 @@ export const useStore = create<Store>()(persist((...a) => ({
   partialize: (state) => ({
     features: state.features,
     geoJSONKey: state.geoJSONKey,
-    propertiesKeys: state.propertiesKeys
+    propertiesKeys: state.propertiesKeys,
   })
 }))

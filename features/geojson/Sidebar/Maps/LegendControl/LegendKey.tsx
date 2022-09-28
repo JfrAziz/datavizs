@@ -21,7 +21,6 @@ export const LegendKey = () => {
         searchable
         value={settings.key}
         onChange={setSelectedKey}
-        disabled={keys.length === 0}
         data={keys.filter(key => key !== "color")}
       />
     </Settings>
