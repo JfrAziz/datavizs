@@ -16,10 +16,20 @@ export const useStore = create<Store>()(persist((...a) => ({
   ...createMapInformationSlice(...a),
 }), {
   name: 'store',
-  getStorage: () => localStorage,
   partialize: (state) => ({
     features: state.features,
+
     geoJSONKey: state.geoJSONKey,
+
     propertiesKeys: state.propertiesKeys,
-  })
+
+    legends: state.legends,
+
+    legendSettings: state.legendSettings,
+
+    proportionalCircle: state.proportionalCircle,
+
+    labelSettings: state.labelSettings
+  }),
+  getStorage: () => localStorage,
 }))

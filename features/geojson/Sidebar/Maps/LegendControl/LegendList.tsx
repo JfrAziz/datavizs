@@ -1,9 +1,9 @@
 import { useStore } from "@geojson/store";
+import { Legend } from "@geojson/store/types";
 import { Divider } from "@components/Divider";
 import { useDebounce } from "@lib/utils/debounce";
 import { InputColor, InputText } from "@components/Input";
-import { Legend, minMaxValue } from "@geojson/store/types";
-import { InputMinMax } from "@components/Input/InputMinMax";
+import { InputMinMax, minMaxValue } from "@components/Input/InputMinMax";
 import { Eye, Trash, EyeOff, ArrowNarrowUp, ArrowNarrowDown, } from "tabler-icons-react";
 import { Group, Stack, Tooltip, ActionIcon, SegmentedControl, MediaQuery, } from "@mantine/core";
 
@@ -58,7 +58,7 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd, onMove }: LegendIte
             <InputText label="Label" placeholder="label on legend" value={item.label} onChange={updateLabel} />
             <InputColor label="Color" color={item.color} onChange={updateColor} format="rgba" />
           </Group>
-          <Group noWrap>
+          <Group noWrap grow>
             <Tooltip label="set value type to compare with the data">
               <SegmentedControl
                 size="xs"
@@ -68,8 +68,10 @@ const LegendItem = ({ item, onDelete, onUpdate, onUpdateEnd, onMove }: LegendIte
                 data={[{ value: 'single', label: "Single", }, { value: 'range', label: "Range", },]}
               />
             </Tooltip>
-            {item.type === "single" && <InputText value={item.value} onChange={updateValueText} placeholder="value" />}
-            {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
+            <Group grow>
+              {item.type === "single" && <InputText value={item.value} onChange={updateValueText} placeholder="value" />}
+              {item.type === "range" && <InputMinMax value={item.value} onChange={updateValueRange} />}
+            </Group>
           </Group>
         </Stack>
         <Divider style={{ marginBottom: 0 }} orientation="vertical" />

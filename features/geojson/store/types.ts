@@ -112,12 +112,6 @@ export type LegendSettings = {
   symbolSize: number
 }
 
-export type minMaxValue = {
-  min: number | undefined
-
-  max: number | undefined
-}
-
 interface LegendCreator<T extends "single" | "range"> {
   uuid: string;
 
@@ -129,7 +123,11 @@ interface LegendCreator<T extends "single" | "range"> {
 
   type: T;
 
-  value: T extends "single" ? string : minMaxValue
+  value: T extends "single" ? string : {
+    min: number | undefined
+  
+    max: number | undefined
+  }
 }
 
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">

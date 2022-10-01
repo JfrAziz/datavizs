@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import { useStore } from "@geojson/store";
-import { useEffect, useState } from "react";
 import { ImportModal } from "./ImportModal";
 import { WelcomeAlert } from "./WelcomeAlert";
 import { Divider } from "@components/Divider";
+import { ZustandHydration } from "@components/ZustandHydration";
+import { StoreWithPersistMiddleware } from "@lib/hooks/hydration";
 
 const GeoJSONData = dynamic(() => import("./GeoJSONData"), { ssr: false })
 
@@ -14,23 +15,13 @@ export function Data() {
 
   const columns = useStore(state => state.propertiesKeys)
 
-  const [hydrated, setHydrated] = useState(false)
-
-  useEffect(() => {
-    const unsubFinishHydration = useStore.persist.onFinishHydration(() => setHydrated(true))
-
-    setHydrated(useStore.persist.hasHydrated())
-
-    return unsubFinishHydration()
-  }, [])
-
   return (
-    <>
+    <ZustandHydration store={useStore as StoreWithPersistMiddleware}>
       <ImportModal />
       <Divider />
-      {hydrated && features.length !== 0
+      {features.length !== 0
         ? <GeoJSONData key={geoJSONKey} features={features} columns={columns} />
         : <WelcomeAlert />}
-    </>
+    </ZustandHydration>
   );
 }
