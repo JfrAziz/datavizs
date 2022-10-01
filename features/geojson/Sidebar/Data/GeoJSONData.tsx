@@ -1,5 +1,6 @@
 import { useStore } from "@geojson/store";
 import { useCallback, useState } from "react";
+import { FeatureExtended } from "@geojson/store/types";
 import { showNotification } from "@mantine/notifications";
 import { DataTable, useDataTable } from "@components/DataTable";
 import { DeviceFloppy, Plus, Search, Trash } from "tabler-icons-react";
@@ -20,15 +21,17 @@ const useStyles = createStyles({
   }
 })
 
+interface GeoJSONDataProps {
+  features: FeatureExtended[]
 
-const GeoJSONData = () => {
+  columns: string[]
+}
+
+
+const GeoJSONData = ({ features, columns: columnNames }: GeoJSONDataProps) => {
   const { classes } = useStyles()
 
   const [newKey, setNewKey] = useState<string>("")
-
-  const features = useStore(state => state.features)
-
-  const columnNames = useStore(state => state.propertiesKeys)
 
   const {
     rows,

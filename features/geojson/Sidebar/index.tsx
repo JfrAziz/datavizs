@@ -36,7 +36,7 @@ const Sidebar = () => {
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="data" className={classes.tab_panel}>
+      <Tabs.Panel value="data" className={classes.tab_panel} sx={{  position: "relative"  }}>
         <Data />
       </Tabs.Panel>
 

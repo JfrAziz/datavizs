@@ -13,7 +13,7 @@ const dataStateInitialValue: DataState = {
 
 }
 
-export const createDataSlice: StateCreator<Store, [], [], DataStore> = (set, get) => ({
+export const createDataSlice: StateCreator<Store, [["zustand/persist", unknown]], [], DataStore> = (set, get) => ({
   ...dataStateInitialValue,
 
 

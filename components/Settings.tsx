@@ -1,7 +1,18 @@
-import { useStyles } from './styles';
+import { createStyles } from "@mantine/core";
 import React, { PropsWithChildren } from 'react';
 import { Group, GroupProps, Text } from '@mantine/core';
 
+
+const useStyles = createStyles((theme) => ({
+  settings: {
+    '& + &': {
+      paddingTop: theme.spacing.md,
+      marginTop: theme.spacing.md,
+      borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+        }`,
+    },
+  },
+}))
 
 /**
  * Wrapper Component for any settings

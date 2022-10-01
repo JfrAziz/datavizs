@@ -112,12 +112,6 @@ export type LegendSettings = {
   symbolSize: number
 }
 
-export type minMaxValue = {
-  min: number | undefined
-
-  max: number | undefined
-}
-
 interface LegendCreator<T extends "single" | "range"> {
   uuid: string;
 
@@ -129,7 +123,11 @@ interface LegendCreator<T extends "single" | "range"> {
 
   type: T;
 
-  value: T extends "single" ? string : minMaxValue
+  value: T extends "single" ? string : {
+    min: number | undefined
+  
+    max: number | undefined
+  }
 }
 
 export type Legend = LegendCreator<"single"> | LegendCreator<"range">
@@ -233,8 +231,7 @@ export interface SettingsState {
 
   baseMap: BaseMap | null;
 
-  geoJSONSettings: GeoJSONSettings
-
+  geoJSONSettings: GeoJSONSettings;
 }
 
 export interface SettingsFunction {
@@ -251,6 +248,8 @@ export interface SettingsFunction {
   downloadMap: (format?: "png" | "jpeg" | "svg") => void
 
   updateGeoJSONSettings: (settings: Partial<GeoJSONSettings>) => void;
+
+  resetState: () => void
 }
 
 export type SettingsStore = SettingsState & SettingsFunction

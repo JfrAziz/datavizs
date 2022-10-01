@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { InputNumber } from "@components/Input";
-import { minMaxValue } from "@geojson/store/types";
+
+export type minMaxValue = {
+  min: number | undefined
+
+  max: number | undefined
+}
 
 interface InputMinMaxProps {
   value: minMaxValue
