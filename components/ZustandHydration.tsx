@@ -17,6 +17,12 @@ interface ZustandHydrationProps extends PropsWithChildren {
   store: StoreWithPersistMiddleware
 }
 
+/**
+ * Custom loader to wait state from hydration
+ * 
+ * @param param 
+ * @returns 
+ */
 export const ZustandHydration = ({ store, children }: ZustandHydrationProps) => {
   const hydrated = useHydration(store)
 

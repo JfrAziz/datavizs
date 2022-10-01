@@ -1,5 +1,5 @@
 import { useStore } from "@geojson/store";
-import { useDebounce } from "@lib/utils/debounce";
+import { useDebounce } from "@lib/hooks/debounce";
 import { SettingsWrapper } from "@components/Settings";
 import { ColorInput, Group, Input, Slider } from "@mantine/core";
 

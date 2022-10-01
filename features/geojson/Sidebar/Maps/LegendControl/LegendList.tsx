@@ -1,7 +1,7 @@
 import { useStore } from "@geojson/store";
 import { Legend } from "@geojson/store/types";
 import { Divider } from "@components/Divider";
-import { useDebounce } from "@lib/utils/debounce";
+import { useDebounce } from "@lib/hooks/debounce";
 import { InputColor, InputText } from "@components/Input";
 import { InputMinMax, minMaxValue } from "@components/Input/InputMinMax";
 import { Eye, Trash, EyeOff, ArrowNarrowUp, ArrowNarrowDown, } from "tabler-icons-react";
