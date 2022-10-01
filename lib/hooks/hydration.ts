@@ -12,7 +12,7 @@ export const useHydration = (store: StoreWithPersistMiddleware) => {
     setHydrated(store.persist.hasHydrated())
 
     return unsubFinishHydration
-  }, [])
+  }, [store.persist])
 
   return hydrated
 }

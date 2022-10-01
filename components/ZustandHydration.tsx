@@ -1,6 +1,17 @@
 import { PropsWithChildren } from "react";
-import { Group, Loader } from "@mantine/core";
+import { createStyles, Group, Loader } from "@mantine/core";
 import { StoreWithPersistMiddleware, useHydration } from "@lib/hooks/hydration";
+
+const useStyles = createStyles({
+  wrapper: {
+    position: "absolute",
+    zIndex: 100,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
+  }
+});
+
 
 interface ZustandHydrationProps extends PropsWithChildren {
   store: StoreWithPersistMiddleware
@@ -9,7 +20,13 @@ interface ZustandHydrationProps extends PropsWithChildren {
 export const ZustandHydration = ({ store, children }: ZustandHydrationProps) => {
   const hydrated = useHydration(store)
 
-  if(!hydrated) return <Group position="center"><Loader variant="bars" /></Group>;
+  const { classes } = useStyles()
+
+  if (!hydrated) return (
+    <Group position="center" className={classes.wrapper}>
+      <Loader variant="bars" />
+    </Group>
+  );
 
   return <>{children}</>
 }
