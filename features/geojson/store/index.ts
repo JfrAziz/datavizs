@@ -1,7 +1,8 @@
 import create from "zustand";
 import { Store } from "./types";
-import { persist } from 'zustand/middleware'
+import { get, set, del } from 'idb-keyval';
 import { createDataSlice } from "./slices/dataSlice";
+import { persist, StateStorage } from 'zustand/middleware'
 import { createSettingsSlice } from "./slices/settingsSlice";
 import { createMapInformationSlice } from "./slices/mapInformationSlice";
 
@@ -29,7 +30,21 @@ export const useStore = create<Store>()(persist((...a) => ({
 
     proportionalCircle: state.proportionalCircle,
 
-    labelSettings: state.labelSettings
+    labelSettings: state.labelSettings,
+
+    baseMap: state.baseMap,
+
+    geoJSONSettings: state.geoJSONSettings
   }),
-  getStorage: () => localStorage,
+  getStorage: (): StateStorage => ({
+    getItem: async (name: string): Promise<string | null> => {
+      return (await get(name)) || null;
+    },
+    setItem: async (name: string, value: string): Promise<void> => {
+      await set(name, value);
+    },
+    removeItem: async (name: string): Promise<void> => {
+      await del(name);
+    },
+  })
 }))
