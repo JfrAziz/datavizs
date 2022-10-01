@@ -3,6 +3,11 @@ import { StateCreator } from "zustand";
 import { baseMaps } from "@config/leaflet";
 import { toPng, toSvg, toJpeg } from 'html-to-image';
 import { Store, SettingsState, SettingsStore } from "@geojson/store/types";
+import {
+  labelSettingsInitialValue,
+  legendSettingsInitialValue,
+  proportionalCircleInitialValue
+} from "./mapInformationSlice";
 
 const initialValue: SettingsState = {
   mapRef: null,
@@ -74,5 +79,28 @@ export const createSettingsSlice: StateCreator<Store, [["zustand/persist", unkno
     donwloadButton.click()
   },
 
-  updateGeoJSONSettings: (settings) => set(state => ({ geoJSONSettings: { ...state.geoJSONSettings, ...settings } }))
+  updateGeoJSONSettings: (settings) => set(state => ({ geoJSONSettings: { ...state.geoJSONSettings, ...settings } })),
+
+  resetState: () => set({
+    geoJSONKey: null,
+
+    features: [],
+
+    propertiesKeys: [],
+
+    legends: [],
+
+    legendSettings: legendSettingsInitialValue,
+
+    labelSettings: labelSettingsInitialValue,
+
+    proportionalCircle: proportionalCircleInitialValue,
+
+    geoJSONRef: initialValue.geoJSONRef,
+
+    baseMap: initialValue.baseMap,
+
+    geoJSONSettings: initialValue.geoJSONSettings
+
+  })
 })

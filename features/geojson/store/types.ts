@@ -231,8 +231,7 @@ export interface SettingsState {
 
   baseMap: BaseMap | null;
 
-  geoJSONSettings: GeoJSONSettings
-
+  geoJSONSettings: GeoJSONSettings;
 }
 
 export interface SettingsFunction {
@@ -249,6 +248,8 @@ export interface SettingsFunction {
   downloadMap: (format?: "png" | "jpeg" | "svg") => void
 
   updateGeoJSONSettings: (settings: Partial<GeoJSONSettings>) => void;
+
+  resetState: () => void
 }
 
 export type SettingsStore = SettingsState & SettingsFunction

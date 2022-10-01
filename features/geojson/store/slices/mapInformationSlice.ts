@@ -4,7 +4,14 @@ import { StateCreator } from "zustand";
 import { quantile } from "@lib/misc/stats";
 import { randomColor } from "@lib/misc/colors";
 import { DEFAULT_CIRCLE_BORDER_COLOR, DEFAULT_CIRCLE_FILL_COLOR } from "@config/leaflet";
-import { Store, Legend, LegendSettings, MapInformationStore, LabelSettings } from "@geojson/store/types";
+import {
+  Store,
+  Legend,
+  LegendSettings,
+  MapInformationStore,
+  LabelSettings,
+  ProportionalCircle
+} from "@geojson/store/types";
 
 
 /**
@@ -40,7 +47,7 @@ const createRangeLegend = (min: number, max: number): Legend => ({
 /**
  * initial value for legend
  */
-const LegendSettingsInitialValue: LegendSettings = {
+export const legendSettingsInitialValue: LegendSettings = {
   show: false,
 
   key: "",
@@ -72,7 +79,7 @@ const LegendSettingsInitialValue: LegendSettings = {
   symbolSize: 25
 }
 
-const LabelSettingsInitialValue: LabelSettings = {
+export const labelSettingsInitialValue: LabelSettings = {
   show: false,
 
   color: "#3A3A3A",
@@ -82,24 +89,26 @@ const LabelSettingsInitialValue: LabelSettings = {
   size: 12
 }
 
+export const proportionalCircleInitialValue: ProportionalCircle = {
+  min: 1000,
+
+  max: 10000,
+
+  show: false,
+
+  color: DEFAULT_CIRCLE_FILL_COLOR,
+
+  borderColor: DEFAULT_CIRCLE_BORDER_COLOR
+}
+
 export const createMapInformationSlice: StateCreator<Store, [["zustand/persist", unknown]], [], MapInformationStore> = (set, get) => ({
   legends: [],
 
-  legendSettings: LegendSettingsInitialValue,
+  legendSettings: legendSettingsInitialValue,
 
-  proportionalCircle: {
-    min: 1000,
+  proportionalCircle: proportionalCircleInitialValue,
 
-    max: 10000,
-    
-    show: false,
-    
-    color: DEFAULT_CIRCLE_FILL_COLOR,
-
-    borderColor: DEFAULT_CIRCLE_BORDER_COLOR
-  },
-  
-  labelSettings: LabelSettingsInitialValue,
+  labelSettings: labelSettingsInitialValue,
 
   addLegends: () => set(state => ({
     legends: [...state.legends, createSingleLegend()]
@@ -148,7 +157,7 @@ export const createMapInformationSlice: StateCreator<Store, [["zustand/persist",
   },
 
   resetLegendSettings: () => set({
-    legendSettings: { ...LegendSettingsInitialValue, show: true }
+    legendSettings: { ...legendSettingsInitialValue, show: true }
   }),
 
   updateLegendSettings: (legend) => set(state => ({
