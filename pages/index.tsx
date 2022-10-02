@@ -43,8 +43,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>GeoJSON Editor | Datavizs</title>
-        <meta name="description" content="Simple and Powerful GeoJSON Editor" />
+        <title>Maps (GeoJSON) Editor | Datavizs</title>
+        <meta name="description" content="Datavizs is open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <MantineProvider>
