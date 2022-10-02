@@ -43,9 +43,23 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Maps (GeoJSON) Editor | Datavizs</title>
-        <meta name="description" content="Datavizs is open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
+        <title>Maps Editor | Datavizs</title>
+        <meta name="description" content="Open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Datavizs" />
+        <meta property="og:title" content="Maps Editor | Datavizs" />
+        <meta property="og:url" content="https://datavizs.vercel.app" />
+        <meta property="og:image" content="https://datavizs.vercel.app/og-image.png" />
+        <meta property="og:description" content="Open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
+
+        <meta name="twitter:site" content="@jfrAziz" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Maps Editor | Datavizs" />
+        <meta name="twitter:image" content="https://datavizs.vercel.app/og-image.png" />
+        <meta name="twitter:description" content="Open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
+
       </Head>
       <MantineProvider>
         <div className={classes.container}>
