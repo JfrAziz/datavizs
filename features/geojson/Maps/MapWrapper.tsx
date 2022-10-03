@@ -1,4 +1,4 @@
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { PropsWithChildren } from "react"
 import { ExternalControl } from "./ExternalControl";
 import { createStyles, Paper, ScrollArea } from "@mantine/core"

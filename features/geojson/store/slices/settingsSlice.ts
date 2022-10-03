@@ -2,7 +2,7 @@ import { createRef } from "react";
 import { StateCreator } from "zustand";
 import { baseMaps } from "@config/leaflet";
 import { toPng, toSvg, toJpeg } from 'html-to-image';
-import { Store, SettingsState, SettingsStore } from "@geojson/store/types";
+import { Store, SettingsState, SettingsStore } from "@maps/store/types";
 import {
   labelSettingsInitialValue,
   legendSettingsInitialValue,

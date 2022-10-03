@@ -1,4 +1,4 @@
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { Group, NumberInput, Select } from "@mantine/core";
 import { Settings, SettingsWrapper } from "@components/Settings";
 import { DEFAULT_MAPS_HEIGHT, DEFAULT_MAPS_WIDTH, MAPS_MAX_HEIGHT, MAPS_MAX_WIDTH } from "@config/leaflet";

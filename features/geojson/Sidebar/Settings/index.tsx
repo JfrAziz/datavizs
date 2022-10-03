@@ -1,5 +1,5 @@
 import { MapSettings } from "./Map";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { GeoJSONSettings } from "./GeoJSON";
 import { Divider } from "@components/Divider";
 import { ZustandHydration } from "@components/ZustandHydration";

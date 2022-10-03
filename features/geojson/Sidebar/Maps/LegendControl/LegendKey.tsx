@@ -1,5 +1,5 @@
 import { Select } from "@mantine/core"
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { Settings } from "@components/Settings"
 
 /**

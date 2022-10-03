@@ -1,6 +1,6 @@
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { useCallback, useState } from "react";
-import { FeatureExtended } from "@geojson/store/types";
+import { FeatureExtended } from "@maps/store/types";
 import { showNotification } from "@mantine/notifications";
 import { DataTable, useDataTable } from "@components/DataTable";
 import { DeviceFloppy, Plus, Search, Trash } from "tabler-icons-react";

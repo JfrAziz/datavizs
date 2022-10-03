@@ -1,4 +1,4 @@
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { ActionIcon, Button, createStyles, Group, Menu, Tooltip } from "@mantine/core"
 import { ChevronDown, FocusCentered, Photo, ZoomIn, ZoomOut } from "tabler-icons-react"
 

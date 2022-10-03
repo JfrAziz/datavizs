@@ -1,4 +1,4 @@
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { Divider } from "@components/Divider";
 import { LabelControl } from "./LabelControl";
 import { LegendControl } from "./LegendControl";

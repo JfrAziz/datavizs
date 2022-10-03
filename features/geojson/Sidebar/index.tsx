@@ -1,8 +1,8 @@
-import { Data } from '@geojson/Sidebar/Data';
-import { AppsSettings } from '@geojson/Sidebar/Apps';
-import { Maps } from '@geojson/Sidebar/Maps';
+import { Data } from '@maps/Sidebar/Data';
+import { AppsSettings } from '@maps/Sidebar/Apps';
+import { Maps } from '@maps/Sidebar/Maps';
 import { createStyles, ScrollArea, Tabs } from '@mantine/core';
-import { Settings as SettingsMenu } from '@geojson/Sidebar/Settings';
+import { Settings as SettingsMenu } from '@maps/Sidebar/Settings';
 import { Adjustments, Map, Settings, Table } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => {

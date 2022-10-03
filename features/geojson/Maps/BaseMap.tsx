@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useId } from "@mantine/hooks";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { TileLayer } from "react-leaflet";
 
 export const BaseMap = () => {

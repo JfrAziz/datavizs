@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
 import { omit } from "@lib/utils/omit";
 import { StateCreator } from "zustand";
-import { Store, DataState, DataStore, GeoJSONExtended } from "@geojson/store/types";
-import { configureFCProperties, getAssociatedValue, validateFC } from "@geojson/utils/featureCollection";
+import { Store, DataState, DataStore, GeoJSONExtended } from "@maps/store/types";
+import { configureFCProperties, getAssociatedValue, validateFC } from "@maps/utils/featureCollection";
 
 const dataStateInitialValue: DataState = {
   geoJSONKey: null,

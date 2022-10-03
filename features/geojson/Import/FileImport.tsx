@@ -1,4 +1,4 @@
-import { useStore } from '@geojson/store';
+import { useStore } from '@maps/store';
 import { Dropzone } from '@mantine/dropzone';
 import { CloudUpload } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';

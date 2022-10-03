@@ -1,4 +1,4 @@
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { Settings } from "@components/Settings"
 import { QuestionMark } from "tabler-icons-react"
 import { InputMinMax } from "@components/Input/InputMinMax"

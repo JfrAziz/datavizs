@@ -1,8 +1,8 @@
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { PropsWithChildren } from "react";
 import { Rnd, RndResizeCallback } from "react-rnd"
 import { DraggableEventHandler } from "react-draggable";
-import type { Legend as LegendTypes } from "@geojson/store/types"
+import type { Legend as LegendTypes } from "@maps/store/types"
 import { ColorSwatch, createStyles, Group, Stack, Text } from "@mantine/core"
 
 

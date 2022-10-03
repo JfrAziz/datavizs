@@ -11,7 +11,7 @@ import {
   MapInformationStore,
   LabelSettings,
   ProportionalCircle
-} from "@geojson/store/types";
+} from "@maps/store/types";
 
 
 /**

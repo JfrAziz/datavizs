@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { useMap, FeatureGroup } from "react-leaflet";
 import { GeoJSONComponent } from "./GeoJSONComponent";
 import { ProportionalCircle } from "./ProportionalCircle";

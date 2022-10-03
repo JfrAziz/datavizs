@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { useDebounce } from "@lib/hooks/debounce";
 import { showNotification } from "@mantine/notifications";
 import { Plus, Eraser, Palette, ArrowsSort, ChevronDown } from "tabler-icons-react";

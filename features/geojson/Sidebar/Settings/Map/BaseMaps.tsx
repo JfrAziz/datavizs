@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { Settings } from "@components/Settings";
 import { ColorInput, Group, Select, Text } from "@mantine/core";
 import { DEFAULT_BASEMAP_COLOR, LEAFLET_CUSTOM_COLOR_VAR, baseMaps } from "@config/leaflet";

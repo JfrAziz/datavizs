@@ -1,6 +1,6 @@
 import { Circle } from "react-leaflet"
 import { handleNaN } from "@lib/utils/NaN"
-import { FeatureExtended, ProportionalCircle as SettingsType } from "@geojson/store/types"
+import { FeatureExtended, ProportionalCircle as SettingsType } from "@maps/store/types"
 
 interface ProportionalCircleProps {
   settings: SettingsType

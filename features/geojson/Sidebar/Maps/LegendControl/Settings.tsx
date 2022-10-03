@@ -1,9 +1,9 @@
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { InputText } from "@components/Input"
 import { Divider } from "@components/Divider"
 import { QuestionMark } from "tabler-icons-react"
 import { Settings, SettingsWrapper } from "@components/Settings"
-import { LegendSettings as LegendSettingsType } from "@geojson/store/types"
+import { LegendSettings as LegendSettingsType } from "@maps/store/types"
 import {
   Text,
   Input,

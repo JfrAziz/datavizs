@@ -1,10 +1,10 @@
 import { LatLng } from 'leaflet';
-import { useStore } from '@geojson/store';
+import { useStore } from '@maps/store';
 import { Focus2 } from 'tabler-icons-react';
 import { Divider } from '@components/Divider';
 import { FC, useEffect, useState } from 'react';
 import { useDebounce } from '@lib/hooks/debounce';
-import { FeatureExtended } from '@geojson/store/types';
+import { FeatureExtended } from '@maps/store/types';
 import { Text, Paper, Group, ScrollArea, ColorPicker, ActionIcon } from '@mantine/core';
 
 interface GeoJSONPopupProps {

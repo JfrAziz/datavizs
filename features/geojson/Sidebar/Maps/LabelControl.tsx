@@ -1,5 +1,5 @@
-import { useStore } from "@geojson/store"
-import { LabelSettings } from "@geojson/store/types"
+import { useStore } from "@maps/store"
+import { LabelSettings } from "@maps/store/types"
 import { Settings, SettingsWrapper } from "@components/Settings"
 import { ColorInput, createStyles, Input, Select, Slider, Switch } from "@mantine/core"
 

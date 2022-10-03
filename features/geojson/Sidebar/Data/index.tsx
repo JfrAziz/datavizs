@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { ImportModal } from "./ImportModal";
 import { WelcomeAlert } from "./WelcomeAlert";
 import { Divider } from "@components/Divider";

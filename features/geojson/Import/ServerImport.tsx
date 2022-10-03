@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useState } from "react";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { GEOJSON_REPOSITORY } from "@config/app";
 import { showNotification } from "@mantine/notifications";
 import { AlertTriangle, Folder, Map } from "tabler-icons-react"

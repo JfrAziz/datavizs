@@ -1,10 +1,10 @@
-import { useStore } from '@geojson/store';
+import { useStore } from '@maps/store';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
 import { Divider } from '@components/Divider';
 import { Settings } from '@components/Settings';
-import { FileImport } from '@geojson/Import/FileImport';
-import { ServerImport } from '@geojson/Import/ServerImport';
+import { FileImport } from '@maps/Import/FileImport';
+import { ServerImport } from '@maps/Import/ServerImport';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
 
 interface ImportModalBodyProps {

@@ -1,4 +1,4 @@
-import { useStore } from "@geojson/store"
+import { useStore } from "@maps/store"
 import { ColorSwatch, Group } from "@mantine/core"
 
 /**

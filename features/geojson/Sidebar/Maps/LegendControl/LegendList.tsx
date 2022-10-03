@@ -1,5 +1,5 @@
-import { useStore } from "@geojson/store";
-import { Legend } from "@geojson/store/types";
+import { useStore } from "@maps/store";
+import { Legend } from "@maps/store/types";
 import { Divider } from "@components/Divider";
 import { useDebounce } from "@lib/hooks/debounce";
 import { InputColor, InputText } from "@components/Input";

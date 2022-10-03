@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import { useStore } from "@geojson/store";
+import { useStore } from "@maps/store";
 import { Trash } from "tabler-icons-react";
 import { Settings } from "@components/Settings";
 import { showNotification } from "@mantine/notifications";
