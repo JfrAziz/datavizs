@@ -20,7 +20,7 @@
       "@styles/*": ["styles/*"],
       "@config/*": ["config/*"],
       "@components/*": ["components/*"],
-      "@geojson/*": ["features/geojson/*"],
+      "@maps/*": ["features/maps/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

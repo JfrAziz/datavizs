@@ -20,7 +20,7 @@ Datavizs was made with typescript using these tools:
 - [React-Leaflet](https://react-leaflet.js.org/)
 
 
-And thanks to OpenStreetMap contributors [OpenStreetMap]([https://](https://www.openstreetmap.org/copyright)) and [Carto](https://carto.com/attribution/)
+And thanks to OpenStreetMap contributors [OpenStreetMap](https://www.openstreetmap.org/copyright) and [Carto](https://carto.com/attribution/)
 
 ### Linked Project
 
