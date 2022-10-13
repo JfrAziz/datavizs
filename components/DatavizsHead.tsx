@@ -11,7 +11,7 @@ interface DatavizsHeadProps {
 export const DatavizsHead = ({ pageTitle, description, ogImage }: DatavizsHeadProps) => {
   return (
     <Head>
-      <title>{pageTitle} | Datavizs</title>
+      <title>{`${pageTitle} | Datavizs`}</title>
       <meta name="description" content={description} />
 
       {/* Open Graph Meta Tags */}
