@@ -1,8 +1,8 @@
-import Head from 'next/head';
 import type { NextPage } from 'next'
 import { createStyles } from '@mantine/core';
 import Maps from 'features/maps/components/Maps';
 import Sidebar from 'features/maps/components/Sidebar';
+import { DatavizsHead } from '@components/DatavizsHead';
 import { MantineProvider } from '@components/MantineProvider';
 
 
@@ -42,25 +42,11 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Maps Editor | Datavizs</title>
-        <meta name="description" content="Open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Datavizs" />
-        <meta property="og:title" content="Maps Editor | Datavizs" />
-        <meta property="og:url" content="https://datavizs.vercel.app" />
-        <meta property="og:image" content="https://datavizs.vercel.app/og-image.png" />
-        <meta property="og:description" content="Open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
-
-        <meta name="twitter:site" content="@jfrAziz" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Maps Editor | Datavizs" />
-        <meta name="twitter:image" content="https://datavizs.vercel.app/og-image.png" />
-        <meta name="twitter:description" content="Open source tools to create data visualizations with simple UI, and let you create beautiful choropleth maps with your own data" />
-
-      </Head>
+      <DatavizsHead
+        pageTitle="Maps Visz"
+        ogImage="https://datavizs.vercel.app/og-image.png"
+        description="Open source tools to create beautiful data visualizations with simple UI"
+      />
       <MantineProvider>
         <div className={classes.container}>
           <div className={classes.map_container}>
