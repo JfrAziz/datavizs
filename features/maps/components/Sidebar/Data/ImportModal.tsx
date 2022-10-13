@@ -1,11 +1,11 @@
-import { useStore } from 'features/maps/store';
 import { useModals } from '@mantine/modals';
 import { Button, Text } from '@mantine/core';
 import { Divider } from '@components/Divider';
+import { useStore } from 'features/maps/store';
 import { Settings } from '@components/Settings';
-import { FileImport } from 'features/maps/Import/FileImport';
-import { ServerImport } from 'features/maps/Import/ServerImport';
 import { ModalsContextProps } from '@mantine/modals/lib/context';
+import { FileImport } from 'features/maps/components/Import/FileImport';
+import { ServerImport } from 'features/maps/components/Import/ServerImport';
 
 interface ImportModalBodyProps {
   modals: ModalsContextProps

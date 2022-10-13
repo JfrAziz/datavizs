@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import type { NextPage } from 'next'
-import Maps from 'features/maps/Maps';
-import Sidebar from 'features/maps/Sidebar';
 import { createStyles } from '@mantine/core';
+import Maps from 'features/maps/components/Maps';
+import Sidebar from 'features/maps/components/Sidebar';
 import { MantineProvider } from '@components/MantineProvider';
 
 
