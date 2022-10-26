@@ -51,8 +51,10 @@ export interface DataState extends Omit<GeoJSONExtended, "type"> {
 }
 
 export interface DataFunction {
+  
+  importData: (jsonString: string) => void;
 
-  importGeoJSON: (jsonString: string) => void;
+  importDataAndReset: (jsonString: string) => void;
 
   updateFeatureProperties: (uuid: string, properties: FeatureProperties) => void;
 

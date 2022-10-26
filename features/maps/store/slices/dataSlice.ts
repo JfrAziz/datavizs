@@ -17,7 +17,7 @@ export const createDataSlice: StateCreator<Store, [["zustand/persist", unknown]]
   ...dataStateInitialValue,
 
 
-  importGeoJSON: (jsonString) => {
+  importDataAndReset: (jsonString) => {
     const { json, propertiesKeys } = configureFCProperties(validateFC(JSON.parse(jsonString) as unknown as GeoJSONExtended))
 
     set(({
@@ -26,6 +26,18 @@ export const createDataSlice: StateCreator<Store, [["zustand/persist", unknown]]
       features: json.features,
       propertiesKeys: propertiesKeys,
     }))
+  },
+
+  importData: (jsonString) => {
+    const { json, propertiesKeys } = configureFCProperties(validateFC(JSON.parse(jsonString) as unknown as GeoJSONExtended))
+
+    const properties = new Set([...propertiesKeys, ...get().propertiesKeys])
+
+    set({
+      features: [...get().features, ...json.features],
+      propertiesKeys: [...properties]
+    })
+
   },
 
   deleteFeaturebyUUIDs: (uuids) => set((state) => {
@@ -41,14 +53,14 @@ export const createDataSlice: StateCreator<Store, [["zustand/persist", unknown]]
       if (item.uuid !== uuid) return item;
 
       const key = get().legendSettings.key
-      
+
       // update color properties and radius for proportional circle
       // if legend key is exist and the current value is different 
       // from updated value.
       if (key && properties[key] !== item.properties[key]) {
         const { color, percentRadius } = getAssociatedValue(properties[key], get().legends)
-        
-        return { 
+
+        return {
           ...item,
           point: { ...item.point, radius: percentRadius },
           properties: { ...properties, color: color }
@@ -75,11 +87,11 @@ export const createDataSlice: StateCreator<Store, [["zustand/persist", unknown]]
 
   syncFeaturesWithLegend: () => set((state) => {
     const key = get().legendSettings.key
-    
+
     const propertiesKey = get().propertiesKeys
 
     // do not update if legend key does not exist
-    if (!key || !propertiesKey.includes(key)) return { }
+    if (!key || !propertiesKey.includes(key)) return {}
 
     return {
       features: state.features.map((item) => {

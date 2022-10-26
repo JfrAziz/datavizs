@@ -120,10 +120,8 @@ const MapItem = ({ item, onClick }: { item: GeoJSONResponse, onClick: () => void
   )
 }
 
-export const ServerImport = ({ callback }: { callback: () => void }) => {
+export const ServerImport = ({ callback }: { callback: (jsonText: string) => void }) => {
   const { classes } = useStyles()
-
-  const importGeoJSON = useStore.getState().importGeoJSON
 
   const [endpoint, setEndpoint] = useState<string>(getUrl())
 
@@ -155,7 +153,7 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
   const removeFolder = (idx: number) => {
     if (idx + 1 === folders.length) return;
 
-    const newFolders = folders.filter((item, index) => index <= idx )
+    const newFolders = folders.filter((item, index) => index <= idx)
 
     setFolders(newFolders)
 
@@ -173,9 +171,7 @@ export const ServerImport = ({ callback }: { callback: () => void }) => {
       // set loading
       setGeoJSONLoading(true)
 
-      importGeoJSON(await fetch(url).then(res => res.text()))
-
-      return callback()
+      callback(await fetch(url).then(res => res.text()))
 
     } catch (error) {
       showNotification({

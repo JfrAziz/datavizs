@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
-import { useStore } from "features/maps/store";
 import { ImportModal } from "./ImportModal";
 import { WelcomeAlert } from "./WelcomeAlert";
 import { Divider } from "@components/Divider";
+import { useStore } from "features/maps/store";
 import { ZustandHydration } from "@components/ZustandHydration";
 import { StoreWithPersistMiddleware } from "@lib/hooks/hydration";
 

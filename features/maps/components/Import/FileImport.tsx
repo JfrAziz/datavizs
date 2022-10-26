@@ -1,4 +1,3 @@
-import { useStore } from 'features/maps/store';
 import { Dropzone } from '@mantine/dropzone';
 import { CloudUpload } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
@@ -45,8 +44,7 @@ const DropzoneChildren = ({ type }: { type: "rejected" | "accepted" | "idle" }) 
   );
 }
 
-export function FileImport({ callback }: { callback: () => void }) {
-  const importGeoJSON = useStore.getState().importGeoJSON
+export function FileImport({ callback }: { callback: (text: string) => void }) {
 
   const showErrorNotifications = () => showNotification({
     title: "Import Error!",
@@ -56,8 +54,7 @@ export function FileImport({ callback }: { callback: () => void }) {
 
   const processFile = async (files: File[]) => {
     try {
-      importGeoJSON(await files[0].text())
-      return callback()
+      callback(await files[0].text())
     } catch (error) {
       showErrorNotifications()
     }
