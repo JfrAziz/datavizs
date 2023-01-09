@@ -168,11 +168,9 @@ export const ServerImport = ({ callback }: { callback: (jsonText: string) => voi
    */
   const importFromUrl = async (url: string) => {
     try {
-      // set loading
       setGeoJSONLoading(true)
 
       callback(await fetch(url).then(res => res.text()))
-
     } catch (error) {
       showNotification({
         title: "Import Error!",
@@ -208,9 +206,10 @@ export const ServerImport = ({ callback }: { callback: (jsonText: string) => voi
             <Text size="sm" >Failed to Load Data From Server</Text>
           </Stack>
         )}
+        
         <LoadingOverlay visible={geoJSONLoading} overlayBlur={2} />
 
-        <Skeleton visible={!data} width="100%">
+        <Skeleton visible={data?.length === 0} width="100%">
           <SimpleGrid
             cols={3}
             spacing={0}
