@@ -1,46 +1,32 @@
 {
-  "name": "next-template",
-  "version": "0.0.2",
-  "private": true,
+  "name": "datavizs",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "preview": "next build && next start",
-    "typecheck": "tsc --noEmit",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "app:dev": "vite --config vite-app.config.js",
+    "app:preview": "vite --config vite-app.config.js preview",
+    "app:build": "tsc && vite --config vite-app.config.js build "
   },
   "dependencies": {
-    "class-variance-authority": "^0.6.0",
-    "clsx": "^1.2.1",
-    "cmdk": "^0.2.0",
-    "lucide-react": "0.214.0",
-    "next": "^13.4.1",
-    "next-themes": "^0.2.1",
+    "@astrojs/react": "^2.2.1",
+    "@astrojs/tailwind": "^4.0.0",
+    "@mantine/core": "^7.0.0-alpha.14",
+    "@mantine/hooks": "^7.0.0-alpha.14",
+    "astro": "^2.6.6",
     "react": "^18.2.0",
-    "react-day-picker": "^8.7.1",
-    "react-dom": "^18.2.0",
-    "sharp": "^0.32.1",
-    "tailwind-merge": "^1.12.0",
-    "tailwindcss-animate": "^1.0.5"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.1.1",
-    "@types/react": "^18.2.6",
-    "@types/react-dom": "^18.2.4",
-    "@typescript-eslint/parser": "^5.59.5",
+    "@types/react": "^18.2.13",
+    "@types/react-dom": "^18.2.6",
+    "@vitejs/plugin-react-swc": "^3.0.0",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.40.0",
-    "eslint-config-next": "13.4.1",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-tailwindcss": "^3.11.0",
-    "postcss": "^8.4.23",
-    "prettier": "^2.8.8",
+    "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9"
   }
 }
