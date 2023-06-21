@@ -5,14 +5,14 @@
     "jsxImportSource": "react",
     "baseUrl": "src",
     "paths": {
-      "@app/*": ["app/*"],
-      "@lib/*": ["lib/*"],
-      "@assets": ["assets/"],
-      "@utils/*": ["utils/*"],
-      "@pages/*": ["pages/*"],
-      "@assets/*": ["assets/*"],
-      "@layouts/*": ["layouts/*"],
-      "@components/*": ["components/*"]
+      "@/app/*": ["app/*"],
+      "@/lib/*": ["lib/*"],
+      "@/assets": ["assets/"],
+      "@/utils/*": ["utils/*"],
+      "@/pages/*": ["pages/*"],
+      "@/assets/*": ["assets/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/components/*": ["components/*"]
     },
   }
 }

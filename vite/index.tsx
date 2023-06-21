@@ -1,7 +1,7 @@
-import "./tailwind.css"
+import "./index.css"
 import React from 'react'
+import Datavizs from "@/app/datavizs"
 import ReactDOM from 'react-dom/client'
-import Datavizs from "../app/datavizs"
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

@@ -6,9 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "app:dev": "vite --config vite-app.config.js",
-    "app:preview": "vite --config vite-app.config.js preview",
-    "app:build": "tsc && vite --config vite-app.config.js build "
+    "vite:dev": "vite --config ./vite/vite.config.js",
+    "vite:build": "tsc && vite --config ./vite/vite.config.js build ./vite"
   },
   "dependencies": {
     "@astrojs/react": "^2.2.1",
