@@ -1,6 +1,6 @@
-export type ColumnType = "text" | "number" | "id"
+export type ColumnType = "string" | "number" | "id"
 
 export interface Column {
-  title: string,
+  name: string,
   type: ColumnType
 }

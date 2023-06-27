@@ -117,11 +117,6 @@ export const useDTColumnHandler = (
   return { columns: cols, onColumnResize };
 };
 
-interface CreateData {
-  column: Column;
-  row: undefined;
-}
-
 /**
  * Config to handle write to the data
  */
@@ -146,16 +141,16 @@ export interface DataTablesWriteConfig {
 
   /**
    * function to create a new column
-   * 
-   * @param column 
-   * @returns 
+   *
+   * @param column
+   * @returns
    */
-  createColumn?: (column: Column) => void,
+  createColumn?: (column: Column) => void;
 
   /**
    * function to create a new row
-   * 
-   * @returns 
+   *
+   * @returns
    */
   createRow?: () => void;
   /**
@@ -212,9 +207,7 @@ export const useDTWriteHandler = (
 
       const key = columns[col];
 
-      const keyName = typeof key === "string" ? key : key.title;
-
-      return edit(rowId, { ...data[row], [keyName]: newValue.data });
+      return edit(rowId, { ...data[row], [key.name]: newValue.data });
     },
     [isEditable, data, _id, columns, edit]
   );
@@ -231,7 +224,7 @@ export const useDTWriteHandler = (
     if (selection.type === "column") {
       const selectedColumns = columns
         .filter((_, index) => selection.data.includes(index))
-        .map((item) => item.title);
+        .map((item) => item.name);
 
       remove("column", selectedColumns);
     }
@@ -248,21 +241,20 @@ export const useDTWriteHandler = (
   };
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   const onRowCreated = () => {
     if (!createRow) return;
 
-    return createRow()
-  }
+    return createRow();
+  };
 
   const onColumnCreated = (column: Column) => {
     if (!createColumn) return;
 
-    return createColumn(column)
-  }
-
+    return createColumn(column);
+  };
 
   return {
     selection,
@@ -306,7 +298,7 @@ export const useHeaderMenu = (
 
     const currentColumn = columns[menu.col];
 
-    sort(currentColumn.title, type);
+    sort(currentColumn.name, type);
 
     setMenu(undefined);
 
@@ -318,7 +310,7 @@ export const useHeaderMenu = (
 
     const currentColumn = columns[menu.col];
 
-    remove("column", [currentColumn.title]);
+    remove("column", [currentColumn.name]);
 
     setMenu(undefined);
 

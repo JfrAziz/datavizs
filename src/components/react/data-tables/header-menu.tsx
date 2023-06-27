@@ -126,7 +126,7 @@ export const AddColumnMenu: FC<AddColumnMenu> = ({ onColumnCreated }) => {
 
   const [columnName, setColumnName] = useState<string>();
 
-  const [columnType, setColumnType] = useState<"text" | "number">("text");
+  const [columnType, setColumnType] = useState<"string" | "number">("string");
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -135,8 +135,10 @@ export const AddColumnMenu: FC<AddColumnMenu> = ({ onColumnCreated }) => {
   const onCreate = () => {
     if (!columnName || !columnType) return;
 
+    console.log(columnType)
+
     onColumnCreated({
-      title: columnName,
+      name: columnName,
       type: columnType,
     });
 
@@ -163,9 +165,9 @@ export const AddColumnMenu: FC<AddColumnMenu> = ({ onColumnCreated }) => {
             <NativeSelect
               value={columnType}
               onChange={(event) =>
-                setColumnType(event.currentTarget.value as "text" | "number")
+                setColumnType(event.currentTarget.value as "string" | "number")
               }
-              data={["text", "number"]}
+              data={["string", "number"]}
             />
             <Button size="sm" onClick={onCreate}>
               <Text>Add Column</Text>

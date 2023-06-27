@@ -3,9 +3,9 @@ import { FC, useCallback } from "react";
 import { Button, Text } from "@mantine/core";
 import { useDataTableTheme } from "./themes";
 import { AddColumnMenu, HeaderMenu } from "./header-menu";
-import { createNumberCell, createTextCell } from "./utils";
 import { IconSearch, IconTrash } from "@tabler/icons-react";
 import DataEditor, { Item, GridCell } from "@glideapps/glide-data-grid";
+import { createNumberCell, createTextCell, createIdCell } from "./utils";
 import {
   useDTSearch,
   useHeaderMenu,
@@ -94,6 +94,7 @@ export const DataTable: FC<DataTableProps> = ({
 
   /**
    * get content component to get value for each cell
+   * do not remove optional chaining, idk this is strange
    */
   const getContent = useCallback(
     (cell: Item): GridCell => {
@@ -101,11 +102,13 @@ export const DataTable: FC<DataTableProps> = ({
 
       const colCell = columns[col];
 
-      const rowCell = data[row][colCell.title];
+      const colName = colCell?.name
 
-      if (colCell.type === "id") return createTextCell(rowCell);
+      const rowCell = data[row][colName];
 
-      if (colCell.type === "number") return createNumberCell(rowCell);
+      if (colCell?.type === "id") return createIdCell(rowCell);
+
+      if (colCell?.type === "number") return createNumberCell(rowCell);
 
       return createTextCell(rowCell);
     },
