@@ -1,0 +1,35 @@
+---
+import "@/assets/styles/global.css"
+import type { LayoutProps } from "types";
+
+export interface Props extends LayoutProps {}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@jfrAziz" />
+    <meta property="twitter:description" content={description} />
+
+    <slot name="headr"/> 
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

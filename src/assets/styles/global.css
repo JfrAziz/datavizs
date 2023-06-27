@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@supports (-moz-appearance: none) {
+  button p {
+    @apply !-mb-0.5;
+  }
+}

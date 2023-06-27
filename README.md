@@ -6,8 +6,6 @@ Datavizs is yet another open source tools to create data visualizations with sim
 
 ### Maps Editor
 
-![geojson-editor](./docs/maps-editor.png)
-
 This feature let you create beautiful choropleth maps with your own data. Maps editor has a lot customization including legend, data editor, label, color, base maps, proportional maps, etc. You can import your GeoJSON file or use from available example, and edit, delete, or add a new data to your GeoJSON file. With maps editor, you can colorize each features on the maps or use legend generator to generate beautiful color gradient based on your data. Maps editor provides basemaps (OpenStreetMap and CartoDB) to make your maps more beautiful.
 
 
