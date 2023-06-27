@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3001,
-    open: "./vite/index.html"
   },
   resolve: {
     alias: {

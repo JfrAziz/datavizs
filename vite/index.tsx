@@ -1,5 +1,5 @@
-import "./index.css"
 import React from 'react'
+import "@/assets/styles/global.css"
 import Datavizs from "@/app/datavizs"
 import ReactDOM from 'react-dom/client'
 
