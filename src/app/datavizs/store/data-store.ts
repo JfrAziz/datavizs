@@ -1,112 +1,117 @@
 import { create } from "zustand";
 import { omit } from "@/utils/omit";
 import { sort } from "@/utils/sort";
-import { faker } from "@faker-js/faker";
+import { immer } from "zustand/middleware/immer";
 import { generateId } from "@/utils/id-generator";
+import { createData, createMetadata } from "./dummy";
 
-type ColumnType = "string" | "number" | "id";
-
-interface Column {
-  name: string;
-  type: ColumnType;
-}
-
-interface DynamicObject2D {
-  _id: string;
-  [key: string]: any;
-}
-
-interface DataState {
-  columns: Column[];
-  data: DynamicObject2D[];
-}
-
-const dataStateInitialValue: DataState = {
-  columns: [
-    {
-      name: "_id",
-      type: "id",
-    },
-    {
-      name: "name",
-      type: "string",
-    },
-    {
-      name: "email",
-      type: "string",
-    },
-    {
-      name: "age",
-      type: "number",
-    },
-    {
-      name: "gender",
-      type: "string",
-    },
-  ],
-  data: faker.helpers.multiple(
-    () => ({
-      _id: faker.string.nanoid(10),
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      age: faker.number.int({ min: 10, max: 70 }),
-      gender: faker.person.sex(),
-    }),
-    { count: 100 }
-  ),
+const initialState: State = {
+  metadata: {},
+  dataStore: {},
 };
 
-interface ActionState {
-  getColumn: (name: string) => Column | undefined;
-
-  addColumn: (column: Column) => void;
-
-  deleteColumns: (names: string[]) => void;
-
-  sortColumn: (name: string, type: "asc" | "desc") => void;
-
-  addRow: () => void;
-
-  deleteRows: (id: string[]) => void;
-
-  updateRow: (id: string, data: DynamicObject2D) => void;
-}
-
-const useDataStore = create<DataState & ActionState>((set, get) => ({
-  ...dataStateInitialValue,
-  getColumn: (name) => get().columns.find((item) => item.name === name),
-  addColumn: (column) =>
-    set((state) => ({
-      columns: [...state.columns, column],
-      data: state.data.map((item) => ({
-        ...item,
-        [column.name]: item[column.name] ?? null,
-      })),
-    })),
-  deleteColumns: (names) =>
-    set((state) => ({
-      data: state.data.map((item) => omit(item, names)),
-      columns: state.columns.filter((col) => !names.includes(col.name)),
-    })),
-  sortColumn: (name, type) =>
-    set((state) => ({
-      data: state.data.sort((a, b) =>
-        sort(a[name], b[name], get().getColumn(name)?.type, type === "desc")
-      ),
-    })),
-  addRow: () =>
-    set((state) => ({
-      data: [...state.data, { _id: generateId() }],
-    })),
-  updateRow: (id, data) =>
-    set((state) => ({
-      data: state.data.map((item) => (item._id !== id ? item : { ...data })),
-    })),
-  deleteRows: (ids) =>
-    set((state) => {
-      const data = state.data.filter((item) => !ids.includes(item._id));
-      return !data.length ? dataStateInitialValue : { data: data };
+export const useStore = create(
+  immer<State & Action>((set, get) => ({
+    ...initialState,
+    /**
+     * get data from datastore
+     *
+     * @param dataId
+     * @returns
+     */
+    getData: (dataId) => get().dataStore[dataId],
+    /**
+     * create a dummy data
+     */
+    createData: () => {
+      const id = generateId();
+      set((state) => {
+        state.dataStore[id] = createData();
+        state.metadata[id] = createMetadata();
+      });
+    },
+    deleteData: (dataId) => set((state) => {
+      omit(state.metadata, dataId)
+      omit(state.dataStore, dataId)
     }),
-}));
-
-export { useDataStore };
+    /**
+     * add a column to data and metadata
+     *
+     * @param dataId
+     * @param column
+     */
+    addColumn: (dataId, column) => {
+      set((state) => {
+        state.metadata[dataId].columns.push(column);
+        state.dataStore[dataId].forEach((item) => {
+          item[column.name] = item[column.name] ?? null;
+        });
+      });
+    },
+    /**
+     *
+     * @param dataId
+     * @param names
+     * @returns
+     */
+    deleteColumns: (dataId, names) =>
+      set((state) => {
+        state.metadata[dataId].columns = state.metadata[dataId].columns.filter(
+          (item) => !names.includes(item.name)
+        );
+        state.dataStore[dataId] = state.dataStore[dataId].map((item) =>
+          omit(item, names)
+        );
+      }),
+    /**
+     *
+     * @param dataId
+     * @param name
+     * @param type
+     * @returns
+     */
+    sortColumn: (dataId, name, type) =>
+      set((state) => {
+        const column = state.metadata[dataId].columns.find(
+          (item) => item.name === name
+        );
+        state.dataStore[dataId].sort((a, b) =>
+          sort(a[name], b[name], column?.type, type === "desc")
+        );
+      }),
+    /**
+     *
+     * @param dataId
+     * @returns
+     */
+    addRow: (dataId) =>
+      set((state) => {
+        state.dataStore[dataId].push({ _id: generateId() });
+      }),
+    /**
+     *
+     * @param dataId
+     * @param _ids
+     * @returns
+     */
+    deleteRow: (dataId, _ids) =>
+      set((state) => {
+        state.dataStore[dataId] = state.dataStore[dataId].filter(
+          (item) => !_ids.includes(item._id)
+        );
+      }),
+    /**
+     *
+     * @param dataId
+     * @param _id
+     * @param data
+     * @returns
+     */
+    updateRow: (dataId, _id, data) =>
+      set((state) => {
+        state.dataStore[dataId] = state.dataStore[dataId].map((item) =>
+          item._id !== _id ? item : data
+        );
+      }),
+  }))
+);
