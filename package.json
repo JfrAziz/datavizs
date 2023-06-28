@@ -19,6 +19,7 @@
     "@tabler/icons-react": "^2.23.0",
     "astro": "^2.7.0",
     "clsx": "^1.2.1",
+    "immer": "^10.0.2",
     "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
