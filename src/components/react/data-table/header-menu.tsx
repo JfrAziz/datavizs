@@ -1,14 +1,14 @@
-import clsx from "clsx";
-import type { Column } from "./types";
-import { FC, ReactElement, forwardRef, useState } from "react";
-import { FloatingContext, FloatingFocusManager } from "@floating-ui/react";
-import type { PolymorphicComponentProps } from "@mantine/core/lib/core/factory/create-polymorphic-component";
+import clsx from "clsx"
+import type { Column } from "./types"
+import { FC, ReactElement, forwardRef, useState } from "react"
+import { FloatingContext, FloatingFocusManager } from "@floating-ui/react"
+import type { PolymorphicComponentProps } from "@mantine/core/lib/core/factory/create-polymorphic-component"
 import {
   IconPlus,
   IconTrash,
   IconSortAscending,
   IconSortDescending,
-} from "@tabler/icons-react";
+} from "@tabler/icons-react"
 import {
   Text,
   Input,
@@ -19,16 +19,16 @@ import {
   ButtonProps,
   useCombobox,
   NativeSelect,
-} from "@mantine/core";
+} from "@mantine/core"
 
 /**
  * custom menu item element for header menu
  */
 const MenuItem: FC<
   PolymorphicComponentProps<"button", ButtonProps> & {
-    label: string;
-    logo: ReactElement;
-    shortcut?: ReactElement;
+    label: string
+    logo: ReactElement
+    shortcut?: ReactElement
   }
 > = ({ className, children, logo, shortcut, label, ...props }) => {
   return (
@@ -48,8 +48,8 @@ const MenuItem: FC<
         <div>{shortcut}</div>
       </div>
     </Button>
-  );
-};
+  )
+}
 
 /**
  * interface for header menu components, such as open state
@@ -58,15 +58,15 @@ const MenuItem: FC<
  *
  */
 interface MenuProps {
-  open: boolean;
+  open: boolean
 
-  context: FloatingContext;
+  context: FloatingContext
 
-  onColumnDeleted?: () => void;
+  onColumnDeleted?: () => void
 
-  onColumnSorted?: (type: "asc" | "desc") => void;
+  onColumnSorted?: (type: "asc" | "desc") => void
 
-  [key: string]: any;
+  [key: string]: any
 }
 
 /**
@@ -74,7 +74,7 @@ interface MenuProps {
  */
 export const HeaderMenu = forwardRef<HTMLDivElement, MenuProps>(
   ({ context, open, onColumnSorted, onColumnDeleted, ...props }, ref) => {
-    if (!open || (!onColumnDeleted && !onColumnSorted)) return null;
+    if (!open || (!onColumnDeleted && !onColumnSorted)) return null
 
     return (
       <FloatingFocusManager context={context} modal={false}>
@@ -105,15 +105,15 @@ export const HeaderMenu = forwardRef<HTMLDivElement, MenuProps>(
           </Paper>
         </div>
       </FloatingFocusManager>
-    );
+    )
   }
-);
+)
 
 /**
  * AddColumnMenu props
  */
 interface AddColumnMenu {
-  onColumnCreated: (data: Column) => void;
+  onColumnCreated: (data: Column) => void
 }
 
 /**
@@ -122,30 +122,30 @@ interface AddColumnMenu {
  * @returns
  */
 export const AddColumnMenu: FC<AddColumnMenu> = ({ onColumnCreated }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const [columnName, setColumnName] = useState<string>();
+  const [columnName, setColumnName] = useState<string>()
 
-  const [columnType, setColumnType] = useState<"string" | "number">("string");
+  const [columnType, setColumnType] = useState<"string" | "number">("string")
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
-  });
+  })
 
   const onCreate = () => {
-    if (!columnName || !columnType) return;
+    if (!columnName || !columnType) return
 
     console.log(columnType)
 
     onColumnCreated({
       name: columnName,
       type: columnType,
-    });
+    })
 
-    setColumnName("");
+    setColumnName("")
 
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   return (
     <div className="flex h-full w-16 flex-col ">
       <Popover opened={open}>
@@ -176,5 +176,5 @@ export const AddColumnMenu: FC<AddColumnMenu> = ({ onColumnCreated }) => {
         </Popover.Dropdown>
       </Popover>
     </div>
-  );
-};
+  )
+}

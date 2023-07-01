@@ -1,4 +1,4 @@
 export interface LayoutProps {
-  title?: string;
-  description?: string;
+  title?: string
+  description?: string
 }

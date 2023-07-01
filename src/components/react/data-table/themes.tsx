@@ -1,11 +1,11 @@
-import { useMemo } from "react";
-import "@glideapps/glide-data-grid/dist/index.css";
-import type { Theme } from "@glideapps/glide-data-grid";
-import { useMantineColorScheme, useMantineTheme } from "@mantine/core";
+import { useMemo } from "react"
+import "@glideapps/glide-data-grid/dist/index.css"
+import type { Theme } from "@glideapps/glide-data-grid"
+import { useMantineColorScheme, useMantineTheme } from "@mantine/core"
 
 export const useDataTableTheme = () => {
-  const theme = useMantineTheme();
-  const { colorScheme } = useMantineColorScheme();
+  const theme = useMantineTheme()
+  const { colorScheme } = useMantineColorScheme()
 
   const dataTableTheme = useMemo<Partial<Theme>>(() => {
     return colorScheme === "dark"
@@ -32,8 +32,8 @@ export const useDataTableTheme = () => {
           accentFg: theme.colors[theme.primaryColor][6],
           accentLight: theme.colors.gray[3],
           bgSearchResult: theme.colors[theme.primaryColor][1],
-        };
-  }, [colorScheme, theme]);
+        }
+  }, [colorScheme, theme])
 
-  return { theme: dataTableTheme };
-};
+  return { theme: dataTableTheme }
+}

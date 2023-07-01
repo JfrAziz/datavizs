@@ -1,16 +1,16 @@
-import type { Column, ColumnType } from "./types";
+import type { Column, ColumnType } from "./types"
 import {
   GridCell,
   GridColumn,
   GridCellKind,
   GridColumnIcon,
-} from "@glideapps/glide-data-grid";
+} from "@glideapps/glide-data-grid"
 
 const gridCellIcon: Record<ColumnType, any> = {
   id: GridColumnIcon.HeaderRowID,
   string: GridColumnIcon.HeaderString,
   number: GridColumnIcon.HeaderNumber,
-};
+}
 
 export const createColumn = (
   column: Column,
@@ -21,7 +21,7 @@ export const createColumn = (
   hasMenu: menu,
   icon: gridCellIcon[column.type],
   width: 120,
-});
+})
 
 export const createTextCell = (data: string): GridCell => ({
   kind: GridCellKind.Text,
@@ -29,7 +29,7 @@ export const createTextCell = (data: string): GridCell => ({
   readonly: false,
   displayData: (data ?? "").toString(),
   data: data,
-});
+})
 
 export const createNumberCell = (data: number): GridCell => ({
   kind: GridCellKind.Number,
@@ -37,11 +37,11 @@ export const createNumberCell = (data: number): GridCell => ({
   readonly: false,
   displayData: (data ?? "").toString(),
   data: data,
-});
+})
 
 export const createIdCell = (data: string): GridCell => ({
   kind: GridCellKind.RowID,
   allowOverlay: true,
   readonly: true,
   data: data,
-});
+})

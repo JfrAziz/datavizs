@@ -1,3 +1,3 @@
-export { DataTable } from "./data-tables";
+export { DataTable } from "./data-table"
 
-export { MantineProvider } from "./providers/mantine-providers";
+export { MantineProvider } from "./providers/mantine-providers"

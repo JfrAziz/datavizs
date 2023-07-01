@@ -1,47 +1,48 @@
-type ColumnType = "string" | "number" | "id";
+type ColumnType = "string" | "number" | "id"
 
 interface Column {
-  name: string;
-  type: ColumnType;
+  name: string
+  type: ColumnType
 }
 
 interface FlatObject {
-  _id: string;
-  [key: string]: any;
+  _id: string
+  [key: string]: any
 }
 
 interface MetaData {
-  name: string;
-  createdAt: Date;
-  columns: Column[];
+  name: string
+  createdAt: Date
+  columns: Column[]
 }
 
-interface State {
+interface DataState {
   metadata: {
-    [id: string]: MetaData;
-  };
+    [id: string]: MetaData
+  }
   dataStore: {
-    [id: string]: FlatObject[];
-  };
+    [id: string]: FlatObject[]
+  }
 }
 
+interface DataAction {
+  createData: () => void
 
-interface Action {
-  createData: () => void;
+  getData: (dataId: string) => FlatObject[]
 
-  getData: (dataId: string) => FlatObject[];
+  deleteData: (dataId: string[]) => void
 
-  deleteData: (dataId: string[]) => void;
+  addData: (data: FlatObject[]) => void
 
-  addColumn: (dataId: string, column: Column) => void;
+  addColumn: (dataId: string, column: Column) => void
 
-  deleteColumns: (dataId: string, names: string[]) => void;
+  deleteColumns: (dataId: string, names: string[]) => void
 
-  sortColumn: (dataId: string, name: string, type: "asc" | "desc") => void;
+  sortColumn: (dataId: string, name: string, type: "asc" | "desc") => void
 
-  addRow: (dataId: string) => void;
+  addRow: (dataId: string) => void
 
-  deleteRow: (dataId: string, _ids: string[]) => void;
+  deleteRow: (dataId: string, _ids: string[]) => void
 
-  updateRow: (dataId: string, _id: string, data: FlatObject) => void;
+  updateRow: (dataId: string, _id: string, data: FlatObject) => void
 }
