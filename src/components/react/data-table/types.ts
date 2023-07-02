@@ -1,6 +1,6 @@
 export type ColumnType = "string" | "number" | "id"
 
 export interface Column {
-  name: string,
+  name: string
   type: ColumnType
 }

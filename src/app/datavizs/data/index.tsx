@@ -1,29 +1,30 @@
-import { DataTable } from "@/components/react";
-import type { FC } from "react";
-import { useStore } from "../store/data-store";
+import { DataList } from "./data-list"
+import { DataTable } from "./data-table"
+import { useState, type FC, Fragment } from "react"
+import { DataImportModalButton } from "./data-import"
+import { useDataStore } from "@/app/datavizs/store/data-store"
 
-export const Data: FC<{ dataId: string }> = ({ dataId }) => {
-  const data = useStore((state) => state.dataStore[dataId]);
+export const Data: FC = () => {
+  const [dataId, setDataId] = useState<string>("")
 
-  const metadata = useStore((state) => state.metadata[dataId]);
+  const metadata = useDataStore((state) => state.metadata)
 
-  if (data === undefined || metadata === undefined) return null;
+  if (Object.keys(metadata).length === 0)
+    return (
+      <div className="w-full flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <DataImportModalButton />
+        </div>
+      </div>
+    )
 
   return (
-    <DataTable
-      search
-      _id="_id"
-      data={data}
-      title={metadata.name}
-      columns={metadata.columns}
-      createRow={() => useStore.getState().addRow(dataId)}
-      edit={(_id, data) => useStore.getState().updateRow(dataId, _id, data)}
-      createColumn={(column) => useStore.getState().addColumn(dataId, column)}
-      sort={(name, type) => useStore.getState().sortColumn(dataId, name, type)}
-      remove={(type, data) => {
-        if (type === "row") useStore.getState().deleteRow(dataId, data);
-        if (type === "column") useStore.getState().deleteColumns(dataId, data);
-      }}
-    />
-  );
-};
+    <Fragment>
+      <DataList
+        dataId={dataId}
+        onItemSelected={(dataId) => setDataId(dataId)}
+      />
+      <DataTable dataId={dataId} />
+    </Fragment>
+  )
+}

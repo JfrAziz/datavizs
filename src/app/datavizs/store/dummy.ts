@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker"
 
 export const createMetadata = (): MetaData => ({
   name: faker.finance.accountName(),
@@ -25,7 +25,7 @@ export const createMetadata = (): MetaData => ({
       type: "string",
     },
   ],
-});
+})
 
 export const createData = () =>
   faker.helpers.multiple(
@@ -37,4 +37,4 @@ export const createData = () =>
       gender: faker.person.sex(),
     }),
     { count: 1000 }
-  );
+  )

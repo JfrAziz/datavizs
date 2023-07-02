@@ -1,33 +1,33 @@
-import type { Column } from "./types";
-import { FC, useCallback } from "react";
-import { Button, Text } from "@mantine/core";
-import { useDataTableTheme } from "./themes";
-import { AddColumnMenu, HeaderMenu } from "./header-menu";
-import { IconSearch, IconTrash } from "@tabler/icons-react";
-import DataEditor, { Item, GridCell } from "@glideapps/glide-data-grid";
-import { createNumberCell, createTextCell, createIdCell } from "./utils";
+import type { Column } from "./types"
+import { FC, useCallback } from "react"
+import { Button, Text } from "@mantine/core"
+import { useDataTableTheme } from "./themes"
+import { AddColumnMenu, HeaderMenu } from "./header-menu"
+import { IconSearch, IconTrash } from "@tabler/icons-react"
+import DataEditor, { Item, GridCell } from "@glideapps/glide-data-grid"
+import { createNumberCell, createTextCell, createIdCell } from "./utils"
 import {
   useDTSearch,
   useHeaderMenu,
   useDTWriteHandler,
   useDTColumnHandler,
   DataTablesWriteConfig,
-} from "./hooks";
+} from "./hooks"
 
 interface DataTableBaseProps {
-  _id: string;
-  data: any[];
-  title?: string;
-  columns: Column[];
+  _id: string
+  data: any[]
+  title?: string
+  columns: Column[]
 }
 
 interface DataTableAdditionalProps {
-  search?: true;
+  search?: true
 }
 
 type DataTableProps = DataTableBaseProps &
   DataTableAdditionalProps &
-  DataTablesWriteConfig;
+  DataTablesWriteConfig
 
 /**
  * Custom Datatable from DataGrid with mantine theme
@@ -50,7 +50,7 @@ export const DataTable: FC<DataTableProps> = ({
   /**
    * search hooks to handle search menu
    */
-  const { showSearch, toggleSearch } = useDTSearch();
+  const { showSearch, toggleSearch } = useDTSearch()
 
   /**
    * data write and deletion handlers
@@ -71,7 +71,7 @@ export const DataTable: FC<DataTableProps> = ({
     remove,
     createRow,
     createColumn,
-  });
+  })
 
   /**
    * column hooks to handle column transofrmation and resizing
@@ -79,7 +79,7 @@ export const DataTable: FC<DataTableProps> = ({
   const { columns: dtColumns, onColumnResize } = useDTColumnHandler(
     columns,
     onSelectionDeleted !== undefined || sort !== undefined
-  );
+  )
 
   /**
    * props to handle header menu components (just sort and delete menu)
@@ -90,7 +90,7 @@ export const DataTable: FC<DataTableProps> = ({
     onColumnSorted,
     onColumnDeleted,
     headerMenuProps,
-  } = useHeaderMenu(columns, { remove, sort });
+  } = useHeaderMenu(columns, { remove, sort })
 
   /**
    * get content component to get value for each cell
@@ -98,30 +98,30 @@ export const DataTable: FC<DataTableProps> = ({
    */
   const getContent = useCallback(
     (cell: Item): GridCell => {
-      const [col, row] = cell;
+      const [col, row] = cell
 
-      const colCell = columns[col];
+      const colCell = columns[col]
 
       const colName = colCell?.name
 
-      const rowCell = data[row][colName];
+      const rowCell = data[row][colName]
 
-      if (colCell?.type === "id") return createIdCell(rowCell);
+      if (colCell?.type === "id") return createIdCell(rowCell)
 
-      if (colCell?.type === "number") return createNumberCell(rowCell);
+      if (colCell?.type === "number") return createNumberCell(rowCell)
 
-      return createTextCell(rowCell);
+      return createTextCell(rowCell)
     },
     [columns, data]
-  );
+  )
 
-  const { theme } = useDataTableTheme();
+  const { theme } = useDataTableTheme()
 
   return (
     <div className="flex w-full flex-col p-1" title={title}>
       {(onSelectionDeleted || search || title) && (
         <div className="flex flex-row items-center justify-between">
-          <div className="font-semibold text-primary">{title}</div>
+          <div className="font-semibold">{title}</div>
           <div className="space-x-2">
             {onSelectionDeleted !== undefined && selection && (
               <Button
@@ -132,7 +132,7 @@ export const DataTable: FC<DataTableProps> = ({
                 title="Delete Selected Row/Column"
                 leftSection={<IconTrash className="h-4 w-4" />}
               >
-                <Text size="sm">Delete Selected</Text>
+                <Text size="xs">Delete Selected</Text>
               </Button>
             )}
             {search && (
@@ -143,7 +143,7 @@ export const DataTable: FC<DataTableProps> = ({
                 title="Open Search Menu"
                 leftSection={<IconSearch className="h-4 w-4" />}
               >
-                <Text size="sm">Search</Text>
+                <Text size="xs">Search</Text>
               </Button>
             )}
           </div>
@@ -207,5 +207,5 @@ export const DataTable: FC<DataTableProps> = ({
       />
       <div id="portal" className="fixed inset-x-0 top-0 z-[999]" />
     </div>
-  );
-};
+  )
+}

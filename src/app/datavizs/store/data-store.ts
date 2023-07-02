@@ -1,39 +1,69 @@
-import { create } from "zustand";
-import { omit } from "@/utils/omit";
-import { sort } from "@/utils/sort";
-import { immer } from "zustand/middleware/immer";
-import { generateId } from "@/utils/id-generator";
-import { createData, createMetadata } from "./dummy";
+import { create } from "zustand"
+import { omit } from "@/utils/omit"
+import { sort } from "@/utils/sort"
+import { immer } from "zustand/middleware/immer"
+import { generateId } from "@/utils/id-generator"
+import { createData, createMetadata } from "./dummy"
 
-const initialState: State = {
+/**
+ * default column identifier on each object, this value will be generated
+ * using nanoid(10)
+ */
+export const COLUMN_ID = "_id"
+
+/**
+ * initial value for DataStore
+ */
+const initialState: DataState = {
   metadata: {},
   dataStore: {},
-};
+}
 
-export const useStore = create(
-  immer<State & Action>((set, get) => ({
+/**
+ * Zustand Data Store with immer middleware
+ */
+export const useDataStore = create(
+  immer<DataState & DataAction>((set, get) => ({
     ...initialState,
-    /**
-     * get data from datastore
-     *
-     * @param dataId
-     * @returns
-     */
-    getData: (dataId) => get().dataStore[dataId],
     /**
      * create a dummy data
      */
     createData: () => {
-      const id = generateId();
+      const id = generateId()
       set((state) => {
-        state.dataStore[id] = createData();
-        state.metadata[id] = createMetadata();
-      });
+        state.dataStore[id] = createData()
+        state.metadata[id] = createMetadata()
+      })
     },
-    deleteData: (dataId) => set((state) => {
-      omit(state.metadata, dataId)
-      omit(state.dataStore, dataId)
-    }),
+    /**
+     * add data to datastore and metadata
+     *
+     * @param data
+     */
+    addData: (metadata, data) => {
+      console.log("addData", data)
+      if (!data || data.length === 0) return
+
+      const dataId = generateId()
+
+      data.forEach((item) => (item._id = generateId()))
+
+      return set((state) => {
+        state.dataStore[dataId] = data
+        state.metadata[dataId] = metadata
+      })
+    },
+    /**
+     * delete data from datastore and it's metadata by it's id
+     *
+     * @param dataId
+     * @returns
+     */
+    deleteData: (dataId) =>
+      set((state) => {
+        state.metadata = omit(state.metadata, dataId)
+        state.dataStore = omit(state.dataStore, dataId)
+      }),
     /**
      * add a column to data and metadata
      *
@@ -42,11 +72,11 @@ export const useStore = create(
      */
     addColumn: (dataId, column) => {
       set((state) => {
-        state.metadata[dataId].columns.push(column);
+        state.metadata[dataId].columns.push(column)
         state.dataStore[dataId].forEach((item) => {
-          item[column.name] = item[column.name] ?? null;
-        });
-      });
+          item[column.name] = item[column.name] ?? null
+        })
+      })
     },
     /**
      *
@@ -58,10 +88,10 @@ export const useStore = create(
       set((state) => {
         state.metadata[dataId].columns = state.metadata[dataId].columns.filter(
           (item) => !names.includes(item.name)
-        );
+        )
         state.dataStore[dataId] = state.dataStore[dataId].map((item) =>
           omit(item, names)
-        );
+        )
       }),
     /**
      *
@@ -74,10 +104,10 @@ export const useStore = create(
       set((state) => {
         const column = state.metadata[dataId].columns.find(
           (item) => item.name === name
-        );
+        )
         state.dataStore[dataId].sort((a, b) =>
           sort(a[name], b[name], column?.type, type === "desc")
-        );
+        )
       }),
     /**
      *
@@ -86,7 +116,7 @@ export const useStore = create(
      */
     addRow: (dataId) =>
       set((state) => {
-        state.dataStore[dataId].push({ _id: generateId() });
+        state.dataStore[dataId].push({ [COLUMN_ID]: generateId() })
       }),
     /**
      *
@@ -98,7 +128,7 @@ export const useStore = create(
       set((state) => {
         state.dataStore[dataId] = state.dataStore[dataId].filter(
           (item) => !_ids.includes(item._id)
-        );
+        )
       }),
     /**
      *
@@ -111,7 +141,7 @@ export const useStore = create(
       set((state) => {
         state.dataStore[dataId] = state.dataStore[dataId].map((item) =>
           item._id !== _id ? item : data
-        );
+        )
       }),
   }))
-);
+)

@@ -4,11 +4,11 @@ export const sort = (
   type?: "string" | "number" | any,
   reverse: boolean = false
 ) => {
-  console.log("sort fn called");
-  const firstItem = (reverse ? b : a) ?? "";
-  const secondItem = (reverse ? a : b) ?? "";
+  console.log("sort fn called")
+  const firstItem = (reverse ? b : a) ?? ""
+  const secondItem = (reverse ? a : b) ?? ""
 
-  if (type === "number") return Number(firstItem) - Number(secondItem);
+  if (type === "number") return Number(firstItem) - Number(secondItem)
 
-  return firstItem.localeCompare(secondItem);
-};
+  return firstItem.localeCompare(secondItem)
+}

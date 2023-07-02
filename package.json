@@ -7,33 +7,39 @@
     "build": "astro build",
     "preview": "astro preview",
     "vite:dev": "vite --config ./vite/vite.config.js ./vite",
-    "vite:build": "tsc && vite --config ./vite/vite.config.js build ./vite"
+    "vite:build": "tsc && vite --config ./vite/vite.config.js build ./vite",
+    "typecheck": "tsc --noEmit",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
     "@astrojs/react": "^2.2.1",
     "@astrojs/tailwind": "^4.0.0",
     "@floating-ui/react": "^0.24.3",
     "@glideapps/glide-data-grid": "^5.2.1",
-    "@mantine/core": "^7.0.0-alpha.14",
-    "@mantine/hooks": "^7.0.0-alpha.14",
+    "@mantine/core": "^7.0.0-alpha.15",
+    "@mantine/hooks": "^7.0.0-alpha.15",
     "@tabler/icons-react": "^2.23.0",
-    "astro": "^2.7.0",
+    "astro": "^2.7.2",
     "clsx": "^1.2.1",
     "immer": "^10.0.2",
     "nanoid": "^4.0.2",
+    "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "@types/papaparse": "^5.3.7",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.1.3",
+    "typescript": "^5.1.6",
     "vite": "^4.3.9"
   }
 }
