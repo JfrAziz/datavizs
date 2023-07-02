@@ -1,8 +1,7 @@
-import { Sidebar } from "./sidebar"
+import { DataList } from "./data-list"
 import { DataTable } from "./data-table"
-import { Button, Text } from "@mantine/core"
 import { useState, type FC, Fragment } from "react"
-import { IconAppsFilled } from "@tabler/icons-react"
+import { DataImportModalButton } from "./data-import"
 import { useDataStore } from "@/app/datavizs/store/data-store"
 
 export const Data: FC = () => {
@@ -14,16 +13,17 @@ export const Data: FC = () => {
     return (
       <div className="w-full flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
-          <Button variant="outline" leftSection={<IconAppsFilled size={20} />}>
-            <Text>Import Data</Text>
-          </Button>
+          <DataImportModalButton />
         </div>
       </div>
     )
 
   return (
     <Fragment>
-      <Sidebar dataId={dataId} onItemSelected={(dataId) => setDataId(dataId)} />
+      <DataList
+        dataId={dataId}
+        onItemSelected={(dataId) => setDataId(dataId)}
+      />
       <DataTable dataId={dataId} />
     </Fragment>
   )

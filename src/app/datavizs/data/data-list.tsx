@@ -10,12 +10,12 @@ import {
   useMantineTheme,
 } from "@mantine/core"
 
-interface Sidebar {
+interface DataList {
   dataId: string
   onItemSelected: (dataId: string) => void
 }
 
-export const Sidebar: FC<Sidebar> = ({ dataId, onItemSelected }) => {
+export const DataList: FC<DataList> = ({ dataId, onItemSelected }) => {
   const theme = useMantineTheme()
 
   const metadata = useStore((state) => state.metadata)

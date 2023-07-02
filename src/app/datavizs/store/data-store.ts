@@ -26,13 +26,6 @@ export const useDataStore = create(
   immer<DataState & DataAction>((set, get) => ({
     ...initialState,
     /**
-     * get data from datastore
-     *
-     * @param dataId
-     * @returns
-     */
-    getData: (dataId) => get().dataStore[dataId],
-    /**
      * create a dummy data
      */
     createData: () => {
@@ -42,9 +35,30 @@ export const useDataStore = create(
         state.metadata[id] = createMetadata()
       })
     },
-    addData: (data) => {
-      console.log("Not Implemented")
+    /**
+     * add data to datastore and metadata
+     *
+     * @param data
+     */
+    addData: (metadata, data) => {
+      console.log("addData", data)
+      if (!data || data.length === 0) return
+
+      const dataId = generateId()
+
+      data.forEach((item) => (item._id = generateId()))
+
+      return set((state) => {
+        state.dataStore[dataId] = data
+        state.metadata[dataId] = metadata
+      })
     },
+    /**
+     * delete data from datastore and it's metadata by it's id
+     *
+     * @param dataId
+     * @returns
+     */
     deleteData: (dataId) =>
       set((state) => {
         state.metadata = omit(state.metadata, dataId)

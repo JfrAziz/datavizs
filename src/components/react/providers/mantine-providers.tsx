@@ -3,12 +3,21 @@ import type { FC, PropsWithChildren } from "react"
 import {
   createTheme,
   ColorSchemeScript,
-  MantineProvider as Provider,
   CSSVariablesResolver,
+  MantineProvider as Provider,
 } from "@mantine/core"
 
+/**
+ * default theme for mantine providers
+ */
 const theme = createTheme({ primaryColor: "teal" })
 
+/**
+ * additional css variables to used in tailwind
+ * 
+ * @param theme 
+ * @returns 
+ */
 const resolver: CSSVariablesResolver = (theme) => ({
   variables: {},
   light: {

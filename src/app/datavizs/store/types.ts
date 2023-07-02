@@ -28,11 +28,9 @@ interface DataState {
 interface DataAction {
   createData: () => void
 
-  getData: (dataId: string) => FlatObject[]
-
   deleteData: (dataId: string[]) => void
 
-  addData: (data: FlatObject[]) => void
+  addData: (metadata: MetaData, data: FlatObject[]) => void
 
   addColumn: (dataId: string, column: Column) => void
 

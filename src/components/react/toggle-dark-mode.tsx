@@ -1,7 +1,7 @@
 import { IconMoon, IconSun } from "@tabler/icons-react"
 import { ActionIcon, Tooltip, useMantineColorScheme } from "@mantine/core"
 
-export const MantineDarkMode = () => {
+export const ToggleDarkModeButton = () => {
   const { setColorScheme, colorScheme } = useMantineColorScheme()
   const isDark = colorScheme === "dark"
   return (
