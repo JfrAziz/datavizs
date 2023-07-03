@@ -26,8 +26,10 @@ export const DataList: FC<DataList> = ({ dataId, onItemSelected }) => {
   useEffect(() => {
     if (metadata === undefined) return
 
-    if (Object.keys(metadata).length === 1) {
-      onItemSelected(Object.keys(metadata)[0])
+    const metadataLength = Object.keys(metadata).length
+
+    if (metadataLength >= 1) {
+      onItemSelected(Object.keys(metadata)[metadataLength - 1])
     }
   }, [metadata])
 
@@ -67,7 +69,7 @@ export const DataList: FC<DataList> = ({ dataId, onItemSelected }) => {
                   {metadata[item].name}
                 </Text>
                 <Text size="xs" className="line-clamp-1 break-all">
-                  {metadata[item].createdAt.toISOString()}
+                  {metadata[item].createdAt.toLocaleTimeString('en-US')}
                 </Text>
               </div>
               <Text className="hidden group-hover:flex space-x-2 items-center">

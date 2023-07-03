@@ -1,6 +1,6 @@
 import Papa from "papaparse"
 
-interface DataFile {
+export interface RawData {
   data: any[]
   columns: string[]
 }
@@ -11,7 +11,7 @@ interface DataFile {
  * @param file
  * @returns
  */
-export const CSVProcessor = async (file: File): Promise<DataFile> =>
+export const CSVProcessor = async (file: File): Promise<RawData> =>
   new Promise((resolve, reject) =>
     Papa.parse(file, {
       header: true,
@@ -26,20 +26,27 @@ export const CSVProcessor = async (file: File): Promise<DataFile> =>
     })
   )
 
-// /**
-//  * parsing JSON
-//  *
-//  * @param file
-//  * @returns
-//  */
-// export const JSONProcessor = async (file: File): Promise<DataFile> => {
-//   try {
-//     const text = JSON.parse(await file.text())
-//     return Promise.resolve({
-//       columns: [],
-//       data: [],
-//     })
-//   } catch (error) {
-//     return Promise.reject(error)
-//   }
-// }
+/**
+ * parsing JSON
+ *
+ * @param file
+ * @returns
+ */
+export const JSONProcessor = async (file: File): Promise<RawData> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const jsonText = await JSON.parse(await file.text())
+
+      if (!Array.isArray(jsonText) || jsonText.length === 0)
+        throw Error("not valid JSON file")
+
+      const columns = Object.keys(jsonText[0])
+
+      resolve({
+        columns: columns,
+        data: jsonText,
+      })
+    } catch (error: any) {
+      reject(error.toString())
+    }
+  })

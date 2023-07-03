@@ -3,7 +3,6 @@ import { omit } from "@/utils/omit"
 import { sort } from "@/utils/sort"
 import { immer } from "zustand/middleware/immer"
 import { generateId } from "@/utils/id-generator"
-import { createData, createMetadata } from "./dummy"
 
 /**
  * default column identifier on each object, this value will be generated
@@ -26,27 +25,18 @@ export const useDataStore = create(
   immer<DataState & DataAction>((set, get) => ({
     ...initialState,
     /**
-     * create a dummy data
-     */
-    createData: () => {
-      const id = generateId()
-      set((state) => {
-        state.dataStore[id] = createData()
-        state.metadata[id] = createMetadata()
-      })
-    },
-    /**
      * add data to datastore and metadata
      *
      * @param data
      */
     addData: (metadata, data) => {
-      console.log("addData", data)
       if (!data || data.length === 0) return
 
       const dataId = generateId()
 
-      data.forEach((item) => (item._id = generateId()))
+      data.forEach((item) => {
+        item[COLUMN_ID] = generateId()
+      })
 
       return set((state) => {
         state.dataStore[dataId] = data
