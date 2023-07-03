@@ -15,8 +15,8 @@ import {
 } from "./hooks"
 
 interface DataTableBaseProps {
-  _id: string
   data: any[]
+  _id?: string
   title?: string
   columns: Column[]
 }
@@ -104,7 +104,7 @@ export const DataTable: FC<DataTableProps> = ({
 
       const colName = colCell?.name
 
-      const rowCell = data[row][colName]
+      const rowCell = data[row]?.[colName]
 
       if (colCell?.type === "id") return createIdCell(rowCell)
 

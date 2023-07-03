@@ -37,6 +37,7 @@ export const createNumberCell = (data: number): GridCell => ({
   readonly: false,
   displayData: (data ?? "").toString(),
   data: data,
+  contentAlign: "right"
 })
 
 export const createIdCell = (data: string): GridCell => ({

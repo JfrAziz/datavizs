@@ -123,9 +123,8 @@ export const useDTColumnHandler = (
 export interface DataTablesWriteConfig {
   /**
    * what column name to identify any row.
-   * must be unique column
    */
-  _id: string
+  _id?: string
   /**
    * list all column from the data
    */
@@ -199,7 +198,7 @@ export const useDTWriteHandler = (
    */
   const onCellEdited = useCallback(
     (cell: Item, newValue: EditableGridCell) => {
-      if (!isEditable) return
+      if (!isEditable || !_id) return
 
       const [col, row] = cell
 
@@ -219,7 +218,7 @@ export const useDTWriteHandler = (
    */
 
   const onSelectionDeleted = () => {
-    if (!selection || !isDeletable) return
+    if (!selection || !isDeletable || !_id) return
 
     if (selection.type === "column") {
       const selectedColumns = columns
@@ -260,10 +259,10 @@ export const useDTWriteHandler = (
     selection,
     gridSelection,
     setGridSelection,
-    onCellEdited: isEditable ? onCellEdited : undefined,
     onRowCreated: isRowCreatable ? onRowCreated : undefined,
+    onCellEdited: isEditable && _id ? onCellEdited : undefined,
     onColumnCreated: isColumnCreatable ? onColumnCreated : undefined,
-    onSelectionDeleted: isDeletable ? onSelectionDeleted : undefined,
+    onSelectionDeleted: isDeletable && _id ? onSelectionDeleted : undefined,
   }
 }
 
