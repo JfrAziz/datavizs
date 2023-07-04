@@ -1,5 +1,5 @@
-import { Paper, Text, Transition } from "@mantine/core";
-import type { FC } from "react";
+import type { FC } from "react"
+import { Paper, Text, Transition } from "@mantine/core"
 
 /**
  * just for showing error

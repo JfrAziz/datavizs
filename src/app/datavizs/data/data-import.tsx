@@ -11,10 +11,10 @@ import {
   Text,
   Modal,
   Button,
-  ActionIcon,
-  ButtonProps,
-  ScrollArea,
   TextInput,
+  ActionIcon,
+  ScrollArea,
+  ButtonProps,
   NativeSelect,
 } from "@mantine/core"
 
@@ -175,7 +175,7 @@ const DataPreviewer: FC<{
  * @param props
  * @returns
  */
-export const DataImport: FC<{
+const DataImport: FC<{
   callback?: () => void
 }> = ({ callback }) => {
   const [data, setData] = useState<RawDataExtended | undefined>()
@@ -208,9 +208,9 @@ export const DataImport: FC<{
 
 /**
  * just DataImport in modal
- * 
+ *
  * @param props
- * @returns 
+ * @returns
  */
 export const DataImportModalButton: FC<
   Pick<ButtonProps, "variant" | "size">

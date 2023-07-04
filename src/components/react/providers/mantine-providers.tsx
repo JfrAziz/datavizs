@@ -14,9 +14,9 @@ const theme = createTheme({ primaryColor: "teal" })
 
 /**
  * additional css variables to used in tailwind
- * 
- * @param theme 
- * @returns 
+ *
+ * @param theme
+ * @returns
  */
 const resolver: CSSVariablesResolver = (theme) => ({
   variables: {},
