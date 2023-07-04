@@ -4,7 +4,6 @@ export const sort = (
   type?: "string" | "number" | any,
   reverse: boolean = false
 ) => {
-  console.log("sort fn called")
   const firstItem = (reverse ? b : a) ?? ""
   const secondItem = (reverse ? a : b) ?? ""
 
