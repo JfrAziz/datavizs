@@ -69,7 +69,7 @@ export const DataList: FC<DataList> = ({ dataId, onItemSelected }) => {
                   {metadata[key].name}
                 </Text>
                 <Text size="xs" className="line-clamp-1 break-all">
-                  {metadata[key].createdAt.toLocaleTimeString("en-US")}
+                  {metadata[key].createdAt.toString()}
                 </Text>
               </div>
               <Text className="hidden group-hover:flex space-x-2 items-center">

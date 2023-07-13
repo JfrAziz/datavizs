@@ -1,14 +1,4 @@
-type ColumnType = "string" | "number" | "id"
-
-interface Column {
-  name: string
-  type: ColumnType
-}
-
-interface FlatObject {
-  _id: string
-  [key: string]: any
-}
+import type { Column, FlatObject } from "@/app/datavizs/types"
 
 interface MetaData {
   name: string
@@ -16,7 +6,7 @@ interface MetaData {
   columns: Column[]
 }
 
-interface DataState {
+export interface DataState {
   metadata: {
     [id: string]: MetaData
   }
@@ -25,7 +15,7 @@ interface DataState {
   }
 }
 
-interface DataAction {
+export interface DataAction {
   deleteData: (dataId: string[]) => void
 
   addData: (metadata: MetaData, data: FlatObject[]) => void
@@ -42,3 +32,18 @@ interface DataAction {
 
   updateRow: (dataId: string, _id: string, data: FlatObject) => void
 }
+
+interface Vizs {
+  name: string
+  data: any
+  settings: any
+}
+
+export interface VizsState {
+  layouts: string[]
+  visz: {
+    [id: string]: Vizs
+  }
+}
+
+export interface VizsAction {}
