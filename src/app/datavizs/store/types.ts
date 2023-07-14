@@ -1,10 +1,9 @@
-import type { Column, FlatObject } from "@/app/datavizs/types"
-
-interface MetaData {
-  name: string
-  createdAt: Date
-  columns: Column[]
-}
+import type { Column, FlatObject, MetaData } from "@/app/datavizs/types"
+import type {
+  ChartType,
+  ChartComponentProps,
+  ChartDimensionValue,
+} from "@/app/datavizs/components/charts"
 
 export interface DataState {
   metadata: {
@@ -34,9 +33,10 @@ export interface DataAction {
 }
 
 interface Vizs {
-  name: string
-  data: any
-  settings: any
+  type: ChartType
+  source: string
+  config: ChartComponentProps<Vizs["type"]>
+  dimension: ChartDimensionValue<Vizs["type"]>
 }
 
 export interface VizsState {

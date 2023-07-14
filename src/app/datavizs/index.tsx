@@ -1,7 +1,7 @@
-import { Data } from "./data"
 import type { FC } from "react"
 import { Tabs } from "@mantine/core"
-import { DataImportModalButton } from "./data/data-import"
+import { Visualization } from "./visualizations"
+import { Data, DataImportModalButton } from "./data"
 import { MantineProvider, ToggleDarkModeButton } from "@/components/react"
 
 const Datavizs: FC = () => {
@@ -18,16 +18,16 @@ const Datavizs: FC = () => {
             <Tabs.Tab value="data">Data</Tabs.Tab>
             <Tabs.Tab value="visualization">Visualization</Tabs.Tab>
           </div>
-          <DataImportModalButton size="compact-sm" variant="filled" />
           <ToggleDarkModeButton />
+          <DataImportModalButton size="compact-sm" variant="filled" />
         </Tabs.List>
 
         <Tabs.Panel
           value="visualization"
           classNames={{ panel: "flex !flex-1" }}
-          className="flex overflow-hidden pt-2 border-t border-neutral-border mt-2"
+          className="flex overflow-hidden border-t border-neutral-border mt-2"
         >
-          <div>Visualization Tab</div>
+          <Visualization />
         </Tabs.Panel>
 
         <Tabs.Panel

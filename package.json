@@ -21,6 +21,7 @@
     "@mantine/hooks": "^7.0.0-alpha.17",
     "@nivo/bar": "^0.83.0",
     "@nivo/core": "^0.83.0",
+    "@nivo/pie": "^0.83.0",
     "@tabler/icons-react": "^2.25.0",
     "astro": "^2.8.1",
     "clsx": "^1.2.1",
