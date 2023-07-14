@@ -3,7 +3,7 @@ import type {
   ChartType,
   ChartComponentProps,
   ChartDimensionValue,
-} from "@/app/datavizs/components/charts"
+} from "@/components/react/charts"
 
 export interface DataState {
   metadata: {
@@ -33,6 +33,7 @@ export interface DataAction {
 }
 
 interface Vizs {
+  name: string
   type: ChartType
   source: string
   config: ChartComponentProps<Vizs["type"]>
@@ -46,4 +47,6 @@ export interface VizsState {
   }
 }
 
-export interface VizsAction {}
+export interface VizsAction {
+  updateConfig: (chartId:string, config: Partial<ChartComponentProps<Vizs["type"]>>) => void
+}

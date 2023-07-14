@@ -1,3 +1,5 @@
+export * from "./input"
+
 // component
 export { ErrorBar } from "./error-bar"
 export { DataTable } from "./data-table"

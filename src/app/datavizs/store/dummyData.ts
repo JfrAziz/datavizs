@@ -64,7 +64,7 @@ export const BarChartData = [
     burger: 134,
     sandwich: 191,
     kebab: 178,
-    fries: 0,
+    fries: 10,
     donut: 172,
   },
   {

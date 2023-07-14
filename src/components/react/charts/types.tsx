@@ -1,6 +1,6 @@
 import type { charts } from "."
-import type { ComponentProps, ComponentPropsWithoutRef, FunctionComponent } from "react"
 import type { ColumnType, FlatObject } from "@/app/datavizs/types"
+import type { ComponentPropsWithoutRef, FunctionComponent } from "react"
 
 /**
  * subset of column type
@@ -51,8 +51,10 @@ export interface Chart<P, D extends string> {
   Config: FunctionComponent<{
     config: P
 
-    setConfig: (config: P) => void
+    setConfig: (config: Partial<P>) => void
   }>
+
+  defaultConfig: Partial<P>
 }
 
 /**
@@ -65,6 +67,12 @@ export type ChartComponent<T extends ChartType> = (typeof charts)[T]["Component"
 
 // prettier-ignore
 export type ChartComponentProps<T extends ChartType> = ComponentPropsWithoutRef<ChartComponent<T>>
+
+// prettier-ignore
+export type ChartConfig<T extends ChartType> = (typeof charts)[T]["Config"]
+
+// prettier-ignore
+export type ChartConfigProps<T extends ChartType> = ComponentPropsWithoutRef<ChartConfig<T>>
 
 // prettier-ignore
 export type ChartTransfomer<T extends ChartType> = (typeof charts)[T]["transfomer"]

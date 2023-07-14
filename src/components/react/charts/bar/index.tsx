@@ -1,4 +1,4 @@
-import { BarConfig } from "./BarConfig"
+import { BarConfig } from "./bar-config"
 import type { Chart, Dimensions } from "../types"
 import { type BarSvgProps, Bar } from "@nivo/bar"
 import type { FlatObject } from "@/app/datavizs/types"
@@ -26,5 +26,13 @@ export const BarChart: Chart<BarSvgProps<FlatObject>, BarChartDimensions> = {
 
   dimensions: barChartDimimensions,
 
-  transfomer: (data, args) => data,
+  transfomer: (data, dimensions) => data,
+
+  defaultConfig: {
+    padding: 0.2,
+    enableGridY: true,
+    enableLabel: true,
+    layout: "vertical",
+    groupMode: "stacked",
+  }
 }

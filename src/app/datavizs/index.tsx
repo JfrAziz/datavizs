@@ -10,8 +10,8 @@ const Datavizs: FC = () => {
       <Tabs
         display="flex"
         variant="pills"
-        defaultValue="data"
-        classNames={{ root: "h-screen flex !flex-col p-1" }}
+        defaultValue="visualization"
+        classNames={{ root: "absolute h-full w-full flex !flex-col p-1" }}
       >
         <Tabs.List className="flex items-center">
           <div className="flex-1 flex items-center">

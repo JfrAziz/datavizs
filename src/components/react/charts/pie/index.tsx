@@ -1,4 +1,4 @@
-import { PieConfig } from "./PieConfig"
+import { PieConfig } from "./pie-config"
 import { Pie, type PieSvgProps } from "@nivo/pie"
 import type { Chart, Dimensions } from "../types"
 
@@ -27,4 +27,11 @@ export const PieChart: Chart<PieSvgProps<any>, PieChartDimensions> = {
   dimensions: pieChartDimensions,
 
   transfomer: (data, args) => data,
+
+  defaultConfig: {
+    innerRadius: 0.5,
+    padAngle: 0.7,
+    cornerRadius: 3,
+    activeOuterRadiusOffset: 8,
+  },
 }

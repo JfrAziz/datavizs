@@ -8,13 +8,14 @@ export const useVizsStore = create(
     layouts: [],
     visz: {
       "sample-charts": {
+        name: "sample-charts",
         type: "bar",
         config: {
           data: BarChartData,
           indexBy: "country",
           keys: ["hot dog", "burger", "sandwich", "kebab", "fries", "donut"],
           margin: { top: 40, right: 80, bottom: 80, left: 80 },
-          padding: 0.3,
+          labelTextColor: "#FFF",
           width: 640,
           height: 640,
         },
@@ -25,6 +26,7 @@ export const useVizsStore = create(
         },
       },
       pie_chart: {
+        name: "pie-charts",
         type: "pie",
         dimension: {
           values: [],
@@ -43,5 +45,12 @@ export const useVizsStore = create(
         },
       },
     },
+    updateConfig: (chartId, config) =>
+      set((state) => {
+        state.visz[chartId].config = {
+          ...state.visz[chartId].config,
+          ...(config as any),
+        }
+      }),
   }))
 )

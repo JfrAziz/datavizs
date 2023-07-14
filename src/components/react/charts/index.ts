@@ -5,7 +5,6 @@ import { PieChart } from "./pie"
 
 export const charts = {
   bar: BarChart,
-//^?
   pie: PieChart,
 }
 
