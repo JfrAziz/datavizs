@@ -1,14 +1,8 @@
 import type { FC } from "react"
 import { ConfigSection } from "../layouts"
 import type { ChartConfigProps } from "../types"
-import { ColorTextInput, switchHandler } from "@/components/react"
-import {
-  Input,
-  Slider,
-  Switch,
-  SegmentedControl,
-  Transition,
-} from "@mantine/core"
+import { switchHandler } from "@/components/react"
+import { Input, Slider, Switch, SegmentedControl } from "@mantine/core"
 
 export const BarConfig: FC<ChartConfigProps<"bar">> = ({
   config,
@@ -71,6 +65,7 @@ export const BarConfig: FC<ChartConfigProps<"bar">> = ({
               max={1}
               step={0.1}
               defaultValue={0.2}
+              className="flex-[2]"
               value={config.padding ?? 0.2}
               label={Number(config.padding).toFixed(1)}
               onChange={(val) => setConfig({ padding: val })}
@@ -94,34 +89,20 @@ export const BarConfig: FC<ChartConfigProps<"bar">> = ({
         </div>
       </ConfigSection>
       <ConfigSection label="Labels">
-        <div className="flex items-start space-x-2">
-          <Input.Wrapper
-            label="Show Label"
-            description="Enable/Disable label on chart"
-          >
-            <Switch
-              defaultChecked
-              checked={config.enableLabel}
-              onChange={(e) =>
-                setConfig({
-                  enableLabel: switchHandler(e, config.enableLabel),
-                })
-              }
-            />
-          </Input.Wrapper>
-          <Transition mounted={config.enableLabel ?? true} transition="fade">
-            {(styles) => (
-              <div style={styles}>
-                <ColorTextInput
-                  label="Color"
-                  description="Set the label color"
-                  value={config.labelTextColor?.toString() ?? "#000000"}
-                  onChange={(val) => setConfig({ labelTextColor: val })}
-                />
-              </div>
-            )}
-          </Transition>
-        </div>
+        <Input.Wrapper
+          label="Show Label"
+          description="Enable/Disable label on chart"
+        >
+          <Switch
+            defaultChecked
+            checked={config.enableLabel}
+            onChange={(e) =>
+              setConfig({
+                enableLabel: switchHandler(e, config.enableLabel),
+              })
+            }
+          />
+        </Input.Wrapper>
       </ConfigSection>
       <ConfigSection label="Grid & Axes">
         <div className="flex space-x-2">

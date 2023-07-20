@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { ConfigSection } from "../layouts"
 import type { ChartConfigProps } from "../types"
-import { ColorTextInput, switchHandler } from "@/components/react"
+import { switchHandler } from "@/components/react"
 import { Input, Slider, Switch, Transition } from "@mantine/core"
 
 export const PieConfig: FC<ChartConfigProps<"pie">> = ({
@@ -124,45 +124,37 @@ export const PieConfig: FC<ChartConfigProps<"pie">> = ({
       </Input.Wrapper>
       <Transition mounted={config.enableArcLabels ?? true} transition="fade">
         {(styles) => (
-          <div style={styles} className="space-y-2">
-            <div className="flex items-start space-x-2">
-              <Input.Wrapper
-                className="flex-1"
-                label="Label offset"
-                description="Offset from center"
-              >
-                <Slider
-                  min={0}
-                  max={1.2}
-                  step={0.01}
-                  defaultValue={0.5}
-                  value={config.arcLabelsRadiusOffset ?? 0.5}
-                  label={Number(config.arcLabelsRadiusOffset ?? 0.5).toFixed(1)}
-                  onChange={(val) => setConfig({ arcLabelsRadiusOffset: val })}
-                />
-              </Input.Wrapper>
-              <Input.Wrapper
-                className="flex-1"
-                label="Skip Labels"
-                description="Hide lable if angle degree is lower"
-              >
-                <Slider
-                  min={0}
-                  max={90}
-                  step={0.01}
-                  defaultValue={0}
-                  value={config.arcLabelsSkipAngle ?? 0}
-                  label={Number(config.arcLabelsSkipAngle ?? 0).toFixed(1)}
-                  onChange={(val) => setConfig({ arcLabelsSkipAngle: val })}
-                />
-              </Input.Wrapper>
-            </div>
-            <ColorTextInput
-              label="Color"
-              description="Set the label color"
-              value={config.arcLabelsTextColor?.toString() ?? "#000000"}
-              onChange={(val) => setConfig({ arcLabelsTextColor: val })}
-            />
+          <div style={styles} className="flex items-start space-x-2">
+            <Input.Wrapper
+              className="flex-1"
+              label="Label offset"
+              description="Offset from center"
+            >
+              <Slider
+                min={0}
+                max={1.2}
+                step={0.01}
+                defaultValue={0.5}
+                value={config.arcLabelsRadiusOffset ?? 0.5}
+                label={Number(config.arcLabelsRadiusOffset ?? 0.5).toFixed(1)}
+                onChange={(val) => setConfig({ arcLabelsRadiusOffset: val })}
+              />
+            </Input.Wrapper>
+            <Input.Wrapper
+              className="flex-1"
+              label="Skip Labels"
+              description="Hide lable if angle degree is lower"
+            >
+              <Slider
+                min={0}
+                max={90}
+                step={0.01}
+                defaultValue={0}
+                value={config.arcLabelsSkipAngle ?? 0}
+                label={Number(config.arcLabelsSkipAngle ?? 0).toFixed(1)}
+                onChange={(val) => setConfig({ arcLabelsSkipAngle: val })}
+              />
+            </Input.Wrapper>
           </div>
         )}
       </Transition>
@@ -185,46 +177,22 @@ export const PieConfig: FC<ChartConfigProps<"pie">> = ({
         mounted={config.enableArcLinkLabels ?? true}
       >
         {(styles) => (
-          <div style={styles} className="space-y-2">
-            <div className="flex items-start space-x-2">
-              <Input.Wrapper
-                className="flex-1"
-                label="Label offset"
-                description="Offset from edge of each pieces"
-              >
-                <Slider
-                  max={20}
-                  min={-20}
-                  step={0.01}
-                  defaultValue={0}
-                  value={config.arcLinkLabelsOffset ?? 0}
-                  label={Number(config.arcLinkLabelsOffset ?? 0).toFixed(1)}
-                  onChange={(val) => setConfig({ arcLinkLabelsOffset: val })}
-                />
-              </Input.Wrapper>
-              <Input.Wrapper
-                className="flex-1"
-                label="Skip Labels"
-                description="Hide lable if angle degree is lower"
-              >
-                <Slider
-                  min={0}
-                  max={90}
-                  step={0.01}
-                  defaultValue={0}
-                  value={config.arcLinkLabelsSkipAngle}
-                  label={Number(config.arcLinkLabelsSkipAngle ?? 0).toFixed(1)}
-                  onChange={(val) => setConfig({ arcLinkLabelsSkipAngle: val })}
-                />
-              </Input.Wrapper>
-            </div>
-            <ColorTextInput
-              label="Color"
-              description="Set the label color"
-              value={config.arcLinkLabelsColor?.toString() ?? "#000000"}
-              onChange={(val) => setConfig({ arcLinkLabelsColor: val })}
+          <Input.Wrapper
+            style={styles}
+            className="flex-1"
+            label="Skip Labels"
+            description="Hide lable if angle degree is lower"
+          >
+            <Slider
+              min={0}
+              max={360}
+              step={0.01}
+              defaultValue={0}
+              value={config.arcLinkLabelsSkipAngle}
+              label={Number(config.arcLinkLabelsSkipAngle ?? 0).toFixed(1)}
+              onChange={(val) => setConfig({ arcLinkLabelsSkipAngle: val })}
             />
-          </div>
+          </Input.Wrapper>
         )}
       </Transition>
     </ConfigSection>

@@ -86,3 +86,36 @@ export const BarChartData = [
     donut: 130,
   },
 ]
+
+export const RadarChartData = [
+  {
+    taste: "fruity",
+    chardonay: 28,
+    carmenere: 76,
+    syrah: 34,
+  },
+  {
+    taste: "bitter",
+    chardonay: 87,
+    carmenere: 95,
+    syrah: 22,
+  },
+  {
+    taste: "heavy",
+    chardonay: 42,
+    carmenere: 98,
+    syrah: 74,
+  },
+  {
+    taste: "strong",
+    chardonay: 34,
+    carmenere: 85,
+    syrah: 42,
+  },
+  {
+    taste: "sunny",
+    chardonay: 21,
+    carmenere: 32,
+    syrah: 40,
+  },
+]

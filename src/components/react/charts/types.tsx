@@ -1,5 +1,5 @@
 import type { charts } from "."
-import type { ColumnType, FlatObject } from "@/app/datavizs/types"
+import type { ColumnType } from "@/app/datavizs/types"
 import type { ComponentPropsWithoutRef, FunctionComponent } from "react"
 
 /**
@@ -37,7 +37,7 @@ export interface Chart<P, D extends string> {
    * @param data
    * @returns
    */
-  transfomer: (data: FlatObject, args: Record<D, string[]>) => FlatObject
+  transfomer: (data: Record<string, any>, args: Record<D, string[]>) => any
 
   /**
    * React Chart component

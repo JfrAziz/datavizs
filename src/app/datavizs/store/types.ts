@@ -1,4 +1,4 @@
-import type { Column, FlatObject, MetaData } from "@/app/datavizs/types"
+import type { Column, MetaData, FlatObject } from "@/app/datavizs/types"
 import type {
   ChartType,
   ChartComponentProps,
@@ -48,5 +48,8 @@ export interface VizsState {
 }
 
 export interface VizsAction {
-  updateConfig: (chartId:string, config: Partial<ChartComponentProps<Vizs["type"]>>) => void
+  updateConfig: (
+    chartId: string,
+    config: Partial<ChartComponentProps<Vizs["type"]>>
+  ) => void
 }
