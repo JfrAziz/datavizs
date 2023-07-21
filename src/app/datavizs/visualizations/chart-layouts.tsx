@@ -9,20 +9,19 @@ export const ChartLayouts: FC = () => {
   return (
     <div className="flex-1 flex overflow-hidden">
       <ScrollArea className="flex w-full">
-        <div className="my-4">
-          <div className="flex flex-col justify-center items-center">
-            {Object.keys(viszs).map((item) => {
-              const Chart = charts[viszs[item].type]
+        <div className="flex justify-center items-center ">
+          <div className="border border-neutral-border bg-neutral-hover shadow-lg rounded-sm m-10">
+            <div className="grid grid-cols-2 gap-5 auto-cols-max auto-rows-max">
+              {Object.keys(viszs).map((item) => {
+                const Chart = charts[viszs[item].type]
 
-              return (
-                <div
-                  key={item}
-                  className="bg-neutral-hover border-x first:border-t last:border-b border-neutral-border shadow-lg rounded-sm"
-                >
-                  <Chart.Component {...(viszs[item].config as any)} />
-                </div>
-              )
-            })}
+                return (
+                  <div key={item} className="min-w-[640px] w-[640px] h-[640px]">
+                    <Chart.Component {...(viszs[item].config as any)} />
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </ScrollArea>

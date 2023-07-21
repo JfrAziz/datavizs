@@ -1,10 +1,10 @@
 ---
 import "@/assets/styles/global.css"
-import type { LayoutProps } from "types";
+import type { LayoutProps } from "types"
 
 export interface Props extends LayoutProps {}
 
-const { title, description } = Astro.props;
+const { title, description } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ const { title, description } = Astro.props;
     <meta name="twitter:site" content="@jfrAziz" />
     <meta property="twitter:description" content={description} />
 
-    <slot name="headr"/> 
+    <slot name="headr" />
   </head>
   <body>
     <slot />

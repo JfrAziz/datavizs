@@ -1,6 +1,6 @@
 import { RadarConfig } from "./radar-config"
 import type { Chart, Dimensions } from "../types"
-import { Radar, RadarSvgProps } from "@nivo/radar"
+import { Radar, RadarSvgProps, ResponsiveRadar } from "@nivo/radar"
 
 type RadarDimensions = "dimension" | "items"
 
@@ -19,10 +19,10 @@ const radarDimensions: Dimensions<RadarDimensions> = {
 }
 
 export const RadarChart: Chart<
-  RadarSvgProps<Record<string, any>>,
+  Omit<RadarSvgProps<Record<string, any>>, "height" | "width">,
   RadarDimensions
 > = {
-  Component: Radar,
+  Component: ResponsiveRadar,
 
   Config: RadarConfig,
 

@@ -1,6 +1,6 @@
 import { BarConfig } from "./bar-config"
 import type { Chart, Dimensions } from "../types"
-import { type BarSvgProps, Bar } from "@nivo/bar"
+import { type BarSvgProps, Bar, ResponsiveBar } from "@nivo/bar"
 
 type BarChartDimensions = "x" | "values"
 
@@ -19,10 +19,10 @@ const barChartDimimensions: Dimensions<BarChartDimensions> = {
 }
 
 export const BarChart: Chart<
-  BarSvgProps<Record<string, any>>,
+  Omit<BarSvgProps<Record<string, any>>, "width" | "height">,
   BarChartDimensions
 > = {
-  Component: Bar,
+  Component: ResponsiveBar,
 
   Config: BarConfig,
 

@@ -1,5 +1,5 @@
 import { PieConfig } from "./pie-config"
-import { Pie, type PieSvgProps } from "@nivo/pie"
+import { Pie, ResponsivePie, type PieSvgProps } from "@nivo/pie"
 import type { Chart, Dimensions } from "../types"
 
 type PieChartDimensions = "x" | "values"
@@ -19,8 +19,11 @@ const pieChartDimensions: Dimensions<PieChartDimensions> = {
   },
 }
 
-export const PieChart: Chart<PieSvgProps<any>, PieChartDimensions> = {
-  Component: Pie,
+export const PieChart: Chart<
+  Omit<PieSvgProps<any>, "width" | "height">,
+  PieChartDimensions
+> = {
+  Component: ResponsivePie,
 
   Config: PieConfig,
 

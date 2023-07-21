@@ -9,24 +9,26 @@
     "vite:dev": "vite --config ./vite/vite.config.js ./vite",
     "vite:build": "tsc && vite --config ./vite/vite.config.js build ./vite",
     "typecheck": "tsc --noEmit",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "format:write": "prettier --write \"**/*.{ts,tsx,astro,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,astro,mdx}\" --cache"
   },
   "dependencies": {
     "@astrojs/react": "^2.2.1",
     "@astrojs/tailwind": "^4.0.0",
-    "@floating-ui/react": "^0.24.7",
+    "@floating-ui/react": "^0.24.8",
     "@glideapps/glide-data-grid": "^5.2.1",
-    "@mantine/core": "^7.0.0-alpha.17",
-    "@mantine/hooks": "^7.0.0-alpha.17",
+    "@mantine/core": "^7.0.0-alpha.18",
+    "@mantine/hooks": "^7.0.0-alpha.18",
     "@nivo/bar": "^0.83.0",
+    "@nivo/bump": "^0.83.0",
     "@nivo/core": "^0.83.0",
+    "@nivo/line": "^0.83.0",
     "@nivo/pie": "^0.83.0",
     "@nivo/radar": "^0.83.0",
-    "@tabler/icons-react": "^2.25.0",
-    "astro": "^2.8.2",
-    "clsx": "^1.2.1",
-    "framer-motion": "^10.12.20",
+    "@tabler/icons-react": "^2.27.0",
+    "astro": "^2.9.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.13.0",
     "idb-keyval": "^6.2.1",
     "immer": "^10.0.2",
     "nanoid": "^4.0.2",
@@ -49,6 +51,6 @@
     "rollup-plugin-visualizer": "^5.9.2",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.1.6",
-    "vite": "^4.4.3"
+    "vite": "^4.4.5"
   }
 }
