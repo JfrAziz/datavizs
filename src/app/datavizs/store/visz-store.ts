@@ -5,16 +5,28 @@ import {
   AreaBumpChartData,
   BarChartData,
   BumpChartData,
+  HeatMapData,
   LineChartData,
   PieChartData,
   RadarChartData,
+  RadialBarData,
 } from "./dummyData"
 
 export const useVizsStore = create(
   immer<VizsState & VizsAction>((set, get) => ({
     layouts: [],
     visz: {
-      areaBump:{
+      radialBar: {
+        name: "Radial Bar",
+        source: "",
+        dimension: {},
+        type: "radialbar",
+        config: {
+          data: RadialBarData,
+          margin: { top: 10, right: 10, bottom: 50, left: 50 },
+        },
+      },
+      areaBump: {
         name: "Area Bump",
         source: "",
         dimension: {},
@@ -22,7 +34,7 @@ export const useVizsStore = create(
         config: {
           data: AreaBumpChartData,
           margin: { top: 10, right: 10, bottom: 50, left: 50 },
-        }
+        },
       },
       bump: {
         name: "Bump Chart",
@@ -32,7 +44,21 @@ export const useVizsStore = create(
         config: {
           data: BumpChartData,
           margin: { top: 10, right: 10, bottom: 50, left: 50 },
-        }
+        },
+      },
+      heatmap: {
+        name: "Heat Map",
+        source: "",
+        dimension: {},
+        type: "heatmap",
+        config: {
+          data: HeatMapData,
+          margin: { top: 10, right: 10, bottom: 50, left: 50 },
+          colors: {
+            scheme: "red_yellow_blue",
+            type: "sequential",
+          },
+        },
       },
       line: {
         name: "Line Chart",

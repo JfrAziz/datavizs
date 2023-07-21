@@ -1,4 +1,4 @@
-import { AreaBumpConfig } from "./area-bump-config"
+import { AreaBumpConfig } from "./areabump-config"
 import type { Chart, Dimensions } from "../types"
 import { AreaBumpSvgProps, ResponsiveAreaBump } from "@nivo/bump"
 

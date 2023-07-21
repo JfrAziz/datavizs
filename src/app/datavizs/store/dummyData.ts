@@ -21,6 +21,391 @@ export const PieChartData = [
   },
 ]
 
+export const HeatMapData = [
+  {
+    id: "Japan",
+    data: [
+      {
+        x: "Train",
+        y: -76603,
+      },
+      {
+        x: "Subway",
+        y: -53350,
+      },
+      {
+        x: "Bus",
+        y: 927,
+      },
+      {
+        x: "Car",
+        y: 12627,
+      },
+      {
+        x: "Boat",
+        y: -9239,
+      },
+      {
+        x: "Moto",
+        y: 79594,
+      },
+      {
+        x: "Moped",
+        y: -63707,
+      },
+      {
+        x: "Bicycle",
+        y: 71549,
+      },
+      {
+        x: "Others",
+        y: 3038,
+      },
+    ],
+  },
+  {
+    id: "France",
+    data: [
+      {
+        x: "Train",
+        y: -31415,
+      },
+      {
+        x: "Subway",
+        y: -91405,
+      },
+      {
+        x: "Bus",
+        y: 64895,
+      },
+      {
+        x: "Car",
+        y: 73422,
+      },
+      {
+        x: "Boat",
+        y: 33428,
+      },
+      {
+        x: "Moto",
+        y: 42244,
+      },
+      {
+        x: "Moped",
+        y: -55264,
+      },
+      {
+        x: "Bicycle",
+        y: 80978,
+      },
+      {
+        x: "Others",
+        y: -37208,
+      },
+    ],
+  },
+  {
+    id: "US",
+    data: [
+      {
+        x: "Train",
+        y: 1262,
+      },
+      {
+        x: "Subway",
+        y: -99472,
+      },
+      {
+        x: "Bus",
+        y: 43755,
+      },
+      {
+        x: "Car",
+        y: -4110,
+      },
+      {
+        x: "Boat",
+        y: 41491,
+      },
+      {
+        x: "Moto",
+        y: -93503,
+      },
+      {
+        x: "Moped",
+        y: -18003,
+      },
+      {
+        x: "Bicycle",
+        y: -96115,
+      },
+      {
+        x: "Others",
+        y: -80006,
+      },
+    ],
+  },
+  {
+    id: "Germany",
+    data: [
+      {
+        x: "Train",
+        y: 5516,
+      },
+      {
+        x: "Subway",
+        y: -97591,
+      },
+      {
+        x: "Bus",
+        y: -33252,
+      },
+      {
+        x: "Car",
+        y: -57016,
+      },
+      {
+        x: "Boat",
+        y: -2546,
+      },
+      {
+        x: "Moto",
+        y: -98916,
+      },
+      {
+        x: "Moped",
+        y: 13272,
+      },
+      {
+        x: "Bicycle",
+        y: -2384,
+      },
+      {
+        x: "Others",
+        y: -51046,
+      },
+    ],
+  },
+  {
+    id: "Norway",
+    data: [
+      {
+        x: "Train",
+        y: 59731,
+      },
+      {
+        x: "Subway",
+        y: 72218,
+      },
+      {
+        x: "Bus",
+        y: 42652,
+      },
+      {
+        x: "Car",
+        y: 40966,
+      },
+      {
+        x: "Boat",
+        y: 28684,
+      },
+      {
+        x: "Moto",
+        y: 78623,
+      },
+      {
+        x: "Moped",
+        y: -92905,
+      },
+      {
+        x: "Bicycle",
+        y: 99136,
+      },
+      {
+        x: "Others",
+        y: 94229,
+      },
+    ],
+  },
+  {
+    id: "Iceland",
+    data: [
+      {
+        x: "Train",
+        y: -68331,
+      },
+      {
+        x: "Subway",
+        y: -68383,
+      },
+      {
+        x: "Bus",
+        y: -5611,
+      },
+      {
+        x: "Car",
+        y: -30238,
+      },
+      {
+        x: "Boat",
+        y: -88582,
+      },
+      {
+        x: "Moto",
+        y: -40510,
+      },
+      {
+        x: "Moped",
+        y: -56675,
+      },
+      {
+        x: "Bicycle",
+        y: 88423,
+      },
+      {
+        x: "Others",
+        y: 11185,
+      },
+    ],
+  },
+  {
+    id: "UK",
+    data: [
+      {
+        x: "Train",
+        y: -70407,
+      },
+      {
+        x: "Subway",
+        y: 95295,
+      },
+      {
+        x: "Bus",
+        y: -42689,
+      },
+      {
+        x: "Car",
+        y: -73323,
+      },
+      {
+        x: "Boat",
+        y: 82126,
+      },
+      {
+        x: "Moto",
+        y: 62014,
+      },
+      {
+        x: "Moped",
+        y: 31991,
+      },
+      {
+        x: "Bicycle",
+        y: -45219,
+      },
+      {
+        x: "Others",
+        y: 22415,
+      },
+    ],
+  },
+  {
+    id: "Vietnam",
+    data: [
+      {
+        x: "Train",
+        y: -63105,
+      },
+      {
+        x: "Subway",
+        y: -75967,
+      },
+      {
+        x: "Bus",
+        y: 24533,
+      },
+      {
+        x: "Car",
+        y: 89035,
+      },
+      {
+        x: "Boat",
+        y: 80531,
+      },
+      {
+        x: "Moto",
+        y: -5857,
+      },
+      {
+        x: "Moped",
+        y: -51366,
+      },
+      {
+        x: "Bicycle",
+        y: 90095,
+      },
+      {
+        x: "Others",
+        y: 19449,
+      },
+    ],
+  },
+]
+
+export const RadialBarData = [
+  {
+    id: "Supermarket",
+    data: [
+      {
+        x: "Vegetables",
+        y: 162,
+      },
+      {
+        x: "Fruits",
+        y: 135,
+      },
+      {
+        x: "Meat",
+        y: 286,
+      },
+    ],
+  },
+  {
+    id: "Combini",
+    data: [
+      {
+        x: "Vegetables",
+        y: 17,
+      },
+      {
+        x: "Fruits",
+        y: 22,
+      },
+      {
+        x: "Meat",
+        y: 21,
+      },
+    ],
+  },
+  {
+    id: "Online",
+    data: [
+      {
+        x: "Vegetables",
+        y: 198,
+      },
+      {
+        x: "Fruits",
+        y: 102,
+      },
+      {
+        x: "Meat",
+        y: 136,
+      },
+    ],
+  },
+]
+
 export const AreaBumpChartData = [
   {
     id: "JavaScript",
