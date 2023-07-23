@@ -1,14 +1,12 @@
 import type { FC } from "react"
+import { Transition } from "@mantine/core"
 import { ConfigSection } from "../layouts"
 import type { ChartConfigProps } from "../types"
-import { switchHandler } from "@/components/react"
 import {
-  Input,
-  Slider,
-  Switch,
-  Transition,
-  SegmentedControl,
-} from "@mantine/core"
+  SliderExtended,
+  SwitchExtended,
+  SegmentedControlExtended,
+} from "@/components/react"
 
 export const AreaBumpConfig: FC<ChartConfigProps<"areabump">> = ({
   config,
@@ -16,147 +14,109 @@ export const AreaBumpConfig: FC<ChartConfigProps<"areabump">> = ({
 }) => (
   <div>
     <ConfigSection label="Chart Layout">
-      <Input.Wrapper label="Interpolation" description="Area interpolation">
-        <SegmentedControl
-          value={config.interpolation}
-          defaultValue="smooth"
-          data={["smooth", "linear"]}
-          onChange={(value: "smooth" | "linear") =>
-            setConfig({ interpolation: value })
-          }
-        />
-      </Input.Wrapper>
+      <SegmentedControlExtended<"smooth" | "linear">
+        label="Interpolation"
+        description="Area interpolation"
+        value={config.interpolation}
+        defaultValue="smooth"
+        data={["smooth", "linear"]}
+        onChange={(value) => setConfig({ interpolation: value })}
+      />
       <div className="flex items-start space-x-2">
-        <Input.Wrapper
-          className="flex-1"
+        <SliderExtended
           label="X Padding"
-          description="Padding between x"
-        >
-          <Slider
-            min={0}
-            max={1}
-            step={0.01}
-            defaultValue={0.6}
-            value={config.xPadding}
-            label={Number(config.xPadding ?? 0.6).toFixed(1)}
-            onChange={(val) => setConfig({ xPadding: val })}
-          />
-        </Input.Wrapper>
-        <Input.Wrapper
           className="flex-1"
+          description="Padding between X"
+          min={0}
+          max={1}
+          step={0.1}
+          defaultValue={0.6}
+          value={config.xPadding}
+          onChange={(val) => setConfig({ xPadding: val })}
+        />
+        <SliderExtended
           label="Spacing"
+          className="flex-1"
           description="Space between area bump"
-        >
-          <Slider
-            min={0}
-            max={50}
-            step={0.1}
-            defaultValue={0}
-            value={config.spacing}
-            label={Number(config.spacing ?? 0).toFixed(1)}
-            onChange={(val) => setConfig({ spacing: val })}
-          />
-        </Input.Wrapper>
+          min={0}
+          max={50}
+          step={0.1}
+          defaultValue={0}
+          value={config.spacing}
+          onChange={(val) => setConfig({ spacing: val })}
+        />
       </div>
     </ConfigSection>
     <ConfigSection label="Labels">
-      <Input.Wrapper
+      <SwitchExtended
         label="Show Start Label"
         description="Enable/disable label at the start of charts"
-      >
-        <Switch
-          checked={!!config.startLabel ?? false}
-          onChange={(e) =>
-            setConfig({
-              startLabel: switchHandler(e, !!config.startLabel),
-            })
-          }
-        />
-      </Input.Wrapper>
+        defaultChecked={false}
+        checked={!!config.startLabel}
+        onChange={(value) => setConfig({ startLabel: value })}
+      />
       <Transition transition="fade" mounted={!!config.startLabel ?? false}>
         {(styles) => (
-          <Input.Wrapper
+          <SliderExtended
             style={styles}
             label="Start Label Offset"
             description="Offset of end label from line start"
-          >
-            <Slider
-              min={0}
-              max={36}
-              step={0.1}
-              defaultValue={16}
-              value={config.startLabelPadding}
-              label={Number(config.startLabelPadding ?? 16).toFixed(1)}
-              onChange={(val) => setConfig({ startLabelPadding: val })}
-            />
-          </Input.Wrapper>
+            min={0}
+            max={36}
+            step={0.1}
+            defaultValue={16}
+            value={config.startLabelPadding}
+            onChange={(val) => setConfig({ startLabelPadding: val })}
+          />
         )}
       </Transition>
-      <Input.Wrapper
+      <SwitchExtended
         label="Show End Label"
         description="Enable/disable label at end of charts"
-      >
-        <Switch
-          checked={!!config.endLabel ?? false}
-          onChange={(e) =>
-            setConfig({
-              endLabel: switchHandler(e, !!config.endLabel),
-            })
-          }
-        />
-      </Input.Wrapper>
+        defaultChecked={false}
+        checked={!!config.endLabel}
+        onChange={(value) => setConfig({ endLabel: value })}
+      />
       <Transition transition="fade" mounted={!!config.endLabel ?? false}>
         {(styles) => (
-          <Input.Wrapper
+          <SliderExtended
             style={styles}
             label="End Label Offset"
             description="Offset of end label from line end"
-          >
-            <Slider
-              min={0}
-              max={36}
-              step={0.1}
-              defaultValue={16}
-              value={config.endLabelPadding}
-              label={Number(config.endLabelPadding ?? 16).toFixed(1)}
-              onChange={(val) => setConfig({ endLabelPadding: val })}
-            />
-          </Input.Wrapper>
+            min={0}
+            max={36}
+            step={0.1}
+            defaultValue={16}
+            value={config.endLabelPadding}
+            onChange={(val) => setConfig({ endLabelPadding: val })}
+          />
         )}
       </Transition>
     </ConfigSection>
     <ConfigSection label="Lines & Point">
       <div className="flex items-start space-x-2">
-        <Input.Wrapper
+        <SliderExtended
           className="flex-1"
           label="Border Width"
           description="Border width each area"
-        >
-          <Slider
-            min={0}
-            max={20}
-            step={0.01}
-            defaultValue={2}
-            value={config.borderWidth}
-            label={Number(config.borderWidth ?? 2).toFixed(1)}
-            onChange={(val) => setConfig({ borderWidth: val })}
-          />
-        </Input.Wrapper>
-        <Input.Wrapper
+          min={0}
+          max={20}
+          step={0.01}
+          defaultValue={2}
+          value={config.borderWidth}
+          onChange={(val) => setConfig({ borderWidth: val })}
+        />
+        <SliderExtended
           className="flex-1"
           label="Fill Opacity"
           description="Make it transparent"
-        >
-          <Slider
-            min={0}
-            max={1}
-            step={0.01}
-            defaultValue={0.8}
-            value={config.fillOpacity}
-            label={Number(config.fillOpacity ?? 1).toFixed(1)}
-            onChange={(val) => setConfig({ fillOpacity: val })}
-          />
-        </Input.Wrapper>
+          min={0}
+          max={1}
+          step={0.01}
+          defaultValue={0.8}
+          value={config.fillOpacity}
+          onChange={(val) => setConfig({ fillOpacity: val })}
+        />
       </div>
     </ConfigSection>
   </div>

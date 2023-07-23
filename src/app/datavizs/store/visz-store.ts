@@ -26,60 +26,60 @@ export const useVizsStore = create(
           margin: { top: 10, right: 10, bottom: 50, left: 50 },
         },
       },
-      areaBump: {
-        name: "Area Bump",
-        source: "",
-        dimension: {},
-        type: "areabump",
-        config: {
-          data: AreaBumpChartData,
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-        },
-      },
-      bump: {
-        name: "Bump Chart",
-        type: "bump",
-        source: "",
-        dimension: {},
-        config: {
-          data: BumpChartData,
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-        },
-      },
-      heatmap: {
-        name: "Heat Map",
-        source: "",
-        dimension: {},
-        type: "heatmap",
-        config: {
-          data: HeatMapData,
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-          colors: {
-            scheme: "red_yellow_blue",
-            type: "sequential",
-          },
-        },
-      },
-      line: {
-        name: "Line Chart",
-        type: "line",
-        dimension: {},
-        source: "",
-        config: {
-          pointSize: 10,
-          pointLabelYOffset: -12,
-          useMesh: true,
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-          yScale: {
-            type: "linear",
-            min: "auto",
-            max: "auto",
-            stacked: true,
-            reverse: false,
-          },
-          data: LineChartData,
-        },
-      },
+      // areaBump: {
+      //   name: "Area Bump",
+      //   source: "",
+      //   dimension: {},
+      //   type: "areabump",
+      //   config: {
+      //     data: AreaBumpChartData,
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //   },
+      // },
+      // bump: {
+      //   name: "Bump Chart",
+      //   type: "bump",
+      //   source: "",
+      //   dimension: {},
+      //   config: {
+      //     data: BumpChartData,
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //   },
+      // },
+      // heatmap: {
+      //   name: "Heat Map",
+      //   source: "",
+      //   dimension: {},
+      //   type: "heatmap",
+      //   config: {
+      //     data: HeatMapData,
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //     colors:{
+      //       type: 'diverging',
+      //       colors: ['#e6f4fd', '#3a98f8', '#F00']
+      //      },
+      //   },
+      // },
+      // line: {
+      //   name: "Line Chart",
+      //   type: "line",
+      //   dimension: {},
+      //   source: "",
+      //   config: {
+      //     pointSize: 10,
+      //     pointLabelYOffset: -12,
+      //     useMesh: true,
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //     yScale: {
+      //       type: "linear",
+      //       min: "auto",
+      //       max: "auto",
+      //       stacked: true,
+      //       reverse: false,
+      //     },
+      //     data: LineChartData,
+      //   },
+      // },
       radar: {
         name: "Radar Charts",
         type: "radar",
@@ -92,22 +92,22 @@ export const useVizsStore = create(
           blendMode: "multiply",
         },
       },
-      bar: {
-        name: "Bar Charts",
-        source: "",
-        dimension: {
-          values: ["burger"],
-          x: ["country"],
-        },
-        type: "bar",
-        config: {
-          data: BarChartData,
-          indexBy: "country",
-          keys: ["hot dog", "burger", "sandwich", "kebab", "fries", "donut"],
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-          labelTextColor: "#FFF",
-        },
-      },
+      // bar: {
+      //   name: "Bar Charts",
+      //   source: "",
+      //   dimension: {
+      //     values: ["burger"],
+      //     x: ["country"],
+      //   },
+      //   type: "bar",
+      //   config: {
+      //     data: BarChartData,
+      //     indexBy: "country",
+      //     keys: ["hot dog", "burger", "sandwich", "kebab", "fries", "donut"],
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //     colors: ["#FFF", "#000", "#F00"]
+      //   },
+      // },
       pie: {
         name: "Pie Charts",
         type: "pie",
