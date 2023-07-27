@@ -10,7 +10,7 @@ type dataType = Exclude<ColumnType, "id">
 /**
  * handle dimension from data dynamically
  */
-interface Dimension {
+export interface Dimension {
   max?: number
   label?: string
   accept: dataType[]
@@ -32,12 +32,28 @@ export interface Chart<P, D extends string> {
   dimensions: Dimensions<D>
 
   /**
-   * mapper or transfomer function from data to required datt
+   * mapper or transfomer function from data to required data
    *
    * @param data
    * @returns
    */
-  transfomer: (data: Record<string, any>, args: Record<D, string[]>) => any
+  createDataConfig: (
+    data: Record<string, any>[],
+    args: Record<D, string[]>
+  ) => Partial<P>
+
+  /**
+   * transform generic theme input to different chart config
+   *
+   * @returns
+   */
+  createThemeConfig: () => Partial<P>
+
+  /**
+   * default config when creating a new chart and for comparing
+   * when creating shareable link
+   */
+  defaultConfig: Partial<P>
 
   /**
    * React Chart component
@@ -53,8 +69,6 @@ export interface Chart<P, D extends string> {
 
     setConfig: (config: Partial<P>) => void
   }>
-
-  defaultConfig: Partial<P>
 }
 
 /**
@@ -75,7 +89,7 @@ export type ChartConfig<T extends ChartType> = (typeof charts)[T]["Config"]
 export type ChartConfigProps<T extends ChartType> = ComponentPropsWithoutRef<ChartConfig<T>>
 
 // prettier-ignore
-export type ChartTransfomer<T extends ChartType> = (typeof charts)[T]["transfomer"]
+export type ChartTransfomer<T extends ChartType> = (typeof charts)[T]["createDataConfig"]
 
 // prettier-ignore
 export type ChartDimensionValue<T extends ChartType> = Record<keyof(typeof charts)[T]["dimensions"], string[]>

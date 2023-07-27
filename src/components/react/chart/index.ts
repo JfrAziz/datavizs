@@ -1,12 +1,12 @@
 export type * from "./types"
 
-import { AreaBumpChart } from "./areabump"
+import { PieChart } from "./pie"
 import { BarChart } from "./bar"
 import { BumpChart } from "./bump"
-import { HeatMapChart } from "./heatmap"
 import { LineChart } from "./line"
-import { PieChart } from "./pie"
 import { RadarChart } from "./radar"
+import { HeatMapChart } from "./heatmap"
+import { AreaBumpChart } from "./areabump"
 import { RadialBarChart } from "./radialbar"
 
 export const charts = {

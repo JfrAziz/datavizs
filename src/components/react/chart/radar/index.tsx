@@ -1,6 +1,10 @@
+import { dataFilter } from "@/utils/column"
 import { RadarConfig } from "./radar-config"
 import type { Chart, Dimensions } from "../types"
-import { Radar, RadarSvgProps, ResponsiveRadar } from "@nivo/radar"
+import {
+  RadarSvgProps,
+  ResponsiveRadar,
+} from "@/components/react/chart-provider"
 
 type RadarDimensions = "dimension" | "items"
 
@@ -28,12 +32,21 @@ export const RadarChart: Chart<
 
   dimensions: radarDimensions,
 
-  transfomer: (data, dimensions) => data,
-
   defaultConfig: {
     blendMode: "multiply",
     borderWidth: 2,
     gridLevels: 5,
     gridShape: "linear",
   },
+
+  createDataConfig: (dataSource, dimensions) => ({
+    indexBy: dimensions.dimension?.[0],
+    keys: dimensions.items ?? [],
+    data: dataFilter(dataSource, [
+      ...dimensions.dimension,
+      ...dimensions.items,
+    ]),
+  }),
+
+  createThemeConfig: () => ({}),
 }

@@ -128,16 +128,32 @@ export const BumpConfig: FC<ChartConfigProps<"bump">> = ({
           onChange={(val) => setConfig({ opacity: val })}
         />
       </div>
-      <SliderExtended
-        label="Point Size"
-        description="Intersection point size"
-        min={0}
-        max={20}
-        step={0.1}
-        defaultValue={6}
-        value={config.pointSize}
-        onChange={(val) => setConfig({ pointSize: val })}
-      />
+      <div className="flex items-start space-x-2">
+        <SliderExtended
+          className="flex-1"
+          label="Point Size"
+          description="Point size"
+          min={0}
+          max={20}
+          step={0.1}
+          defaultValue={6}
+          value={config.pointSize}
+          onChange={(val) => setConfig({ pointSize: val })}
+        />
+        <SliderExtended
+          className="flex-1"
+          label="Point Border Size"
+          description="Border size on point"
+          min={0}
+          max={5}
+          step={1}
+          defaultValue={0}
+          value={config.pointBorderWidth}
+          onChange={(val) =>
+            setConfig({ activePointBorderWidth: val, pointBorderWidth: val })
+          }
+        />
+      </div>
     </ConfigSection>
   </div>
 )

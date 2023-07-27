@@ -1,20 +1,24 @@
 import { PieConfig } from "./pie-config"
-import { Pie, ResponsivePie, type PieSvgProps } from "@nivo/pie"
+import { dataFilter } from "@/utils/column"
 import type { Chart, Dimensions } from "../types"
+import {
+  ResponsivePie,
+  type PieSvgProps,
+} from "@/components/react/chart-provider"
 
-type PieChartDimensions = "x" | "values"
+type PieChartDimensions = "x" | "value"
 
 const pieChartDimensions: Dimensions<PieChartDimensions> = {
   x: {
     max: 1,
     required: true,
-    label: "X Axis (index)",
+    label: "X",
     accept: ["number", "string"],
   },
-  values: {
+  value: {
     max: 1,
     required: true,
-    label: "Y (Values",
+    label: "Value",
     accept: ["number", "string"],
   },
 }
@@ -29,12 +33,20 @@ export const PieChart: Chart<
 
   dimensions: pieChartDimensions,
 
-  transfomer: (data, args) => data,
-
   defaultConfig: {
     innerRadius: 0.5,
     padAngle: 0.7,
     cornerRadius: 3,
     activeOuterRadiusOffset: 8,
   },
+
+  createDataConfig: (dataSource, dimensions) => ({
+    id: dimensions.x?.[0],
+    value: dimensions.value?.[0],
+    data: dataFilter(dataSource, [...dimensions.x, ...dimensions.value]),
+  }),
+
+  createThemeConfig: () => ({}),
 }
+
+export default PieChart

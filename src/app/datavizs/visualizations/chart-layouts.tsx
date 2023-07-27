@@ -1,18 +1,18 @@
 import { useMemo, type FC } from "react"
 import { ScrollArea } from "@mantine/core"
-import { charts } from "@/components/react/charts"
+import { charts } from "@/components/react/chart"
 import { useVizsStore } from "@/app/datavizs/store/visz-store"
 
 const ChartComponent: FC<{ chartId: string }> = ({ chartId }) => {
   const chart = useVizsStore((state) => state.visz[chartId])
-  const Chart = charts[chart.type]
+  const Chart = charts[chart.type].Component
 
   const Component = useMemo(
-    () => <Chart.Component {...(chart.config as any)} />,
+    () => <Chart {...(chart.config as any)} />,
     [chart.config]
   )
 
-  return <div className="min-w-[640px] w-[640px] h-[640px]">{Component}</div>
+  return <div className="w-[480px] h-[480px]">{Component}</div>
 }
 
 export const ChartLayouts: FC = () => {

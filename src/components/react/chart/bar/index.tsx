@@ -1,6 +1,10 @@
 import { BarConfig } from "./bar-config"
+import { dataFilter } from "@/utils/column"
 import type { Chart, Dimensions } from "../types"
-import { type BarSvgProps, Bar, ResponsiveBar } from "@nivo/bar"
+import {
+  type BarSvgProps,
+  ResponsiveBar,
+} from "@/components/react/chart-provider"
 
 type BarChartDimensions = "x" | "values"
 
@@ -28,8 +32,6 @@ export const BarChart: Chart<
 
   dimensions: barChartDimimensions,
 
-  transfomer: (data, dimensions) => data,
-
   defaultConfig: {
     padding: 0.2,
     enableGridY: true,
@@ -37,4 +39,14 @@ export const BarChart: Chart<
     layout: "vertical",
     groupMode: "stacked",
   },
+
+  createDataConfig: (dataSource, dimensions) => ({
+    indexBy: dimensions.x?.[0],
+    keys: dimensions.values ?? [],
+    data: dataFilter(dataSource, [...dimensions.x, ...dimensions.values]),
+  }),
+
+  createThemeConfig: () => ({}),
 }
+
+export default BarChart

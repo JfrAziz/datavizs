@@ -16,23 +16,23 @@ export const useVizsStore = create(
   immer<VizsState & VizsAction>((set, get) => ({
     layouts: [],
     visz: {
-      radialBar: {
-        name: "Radial Bar",
-        source: "",
-        dimension: {},
-        type: "radialbar",
-        config: {
-          data: RadialBarData,
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-        },
-      },
+      // radialBar: {
+      //   name: "Radial Bar",
+      //   source: "",
+      //   dimension: {},
+      //   type: "radialbar",
+      //   config: {
+      //     data: RadialBarData,
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //   },
+      // },
       // areaBump: {
       //   name: "Area Bump",
       //   source: "",
       //   dimension: {},
       //   type: "areabump",
       //   config: {
-      //     data: AreaBumpChartData,
+      //     data: [],
       //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
       //   },
       // },
@@ -44,42 +44,50 @@ export const useVizsStore = create(
       //   config: {
       //     data: BumpChartData,
       //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
-      //   },
-      // },
-      // heatmap: {
-      //   name: "Heat Map",
-      //   source: "",
-      //   dimension: {},
-      //   type: "heatmap",
-      //   config: {
-      //     data: HeatMapData,
-      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
-      //     colors:{
-      //       type: 'diverging',
-      //       colors: ['#e6f4fd', '#3a98f8', '#F00']
-      //      },
-      //   },
-      // },
-      // line: {
-      //   name: "Line Chart",
-      //   type: "line",
-      //   dimension: {},
-      //   source: "",
-      //   config: {
+      //     activeLineWidth: 6,
+      //     inactiveLineWidth: 3,
+      //     inactiveOpacity: 0.15,
       //     pointSize: 10,
-      //     pointLabelYOffset: -12,
-      //     useMesh: true,
-      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
-      //     yScale: {
-      //       type: "linear",
-      //       min: "auto",
-      //       max: "auto",
-      //       stacked: true,
-      //       reverse: false,
-      //     },
-      //     data: LineChartData,
+      //     activePointSize: 16,
+      //     inactivePointSize: 0,
+      //     pointBorderWidth: 3,
+      //     activePointBorderWidth: 3,
       //   },
       // },
+      heatmap: {
+        name: "Heat Map",
+        source: "",
+        dimension: {},
+        type: "heatmap",
+        config: {
+          data: HeatMapData,
+          margin: { top: 10, right: 10, bottom: 50, left: 50 },
+          colors:{
+            type: 'diverging',
+            colors: ['#e6f4fd', '#3a98f8', '#F00']
+           },
+        },
+      },
+      line: {
+        name: "Line Chart",
+        type: "line",
+        dimension: {},
+        source: "",
+        config: {
+          pointSize: 10,
+          pointLabelYOffset: -12,
+          useMesh: true,
+          margin: { top: 10, right: 10, bottom: 50, left: 50 },
+          yScale: {
+            type: "linear",
+            min: "auto",
+            max: "auto",
+            stacked: true,
+            reverse: false,
+          },
+          data: LineChartData,
+        },
+      },
       radar: {
         name: "Radar Charts",
         type: "radar",
@@ -90,42 +98,47 @@ export const useVizsStore = create(
           keys: ["chardonay", "carmenere", "syrah"],
           data: RadarChartData,
           blendMode: "multiply",
+          margin: { top: 50, right: 50, bottom: 50, left: 50 },
         },
       },
       // bar: {
       //   name: "Bar Charts",
-      //   source: "",
-      //   dimension: {
-      //     values: ["burger"],
-      //     x: ["country"],
-      //   },
+      //   source: undefined,
+      //   dimension: {},
       //   type: "bar",
       //   config: {
       //     data: BarChartData,
       //     indexBy: "country",
       //     keys: ["hot dog", "burger", "sandwich", "kebab", "fries", "donut"],
       //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
-      //     colors: ["#FFF", "#000", "#F00"]
       //   },
       // },
-      pie: {
-        name: "Pie Charts",
-        type: "pie",
-        dimension: {
-          values: [],
-          x: [],
-        },
-        source: "",
-        config: {
-          margin: { top: 10, right: 10, bottom: 50, left: 50 },
-          innerRadius: 0.5,
-          padAngle: 0.7,
-          cornerRadius: 3,
-          activeOuterRadiusOffset: 8,
-          data: PieChartData,
-        },
-      },
+      // pie: {
+      //   name: "Pie Charts",
+      //   type: "pie",
+      //   dimension: {
+      //     values: [],
+      //     x: [],
+      //   },
+      //   source: undefined,
+      //   config: {
+      //     margin: { top: 10, right: 10, bottom: 50, left: 50 },
+      //     innerRadius: 0.5,
+      //     padAngle: 0.7,
+      //     cornerRadius: 3,
+      //     activeOuterRadiusOffset: 8,
+      //     data: PieChartData,
+      //   },
+      // },
     },
+    updateDataSource: (chartId, dataId) =>
+      set((state) => {
+        state.visz[chartId].source = dataId
+      }),
+    updateDimension: (chartId, dimension) =>
+      set((state) => {
+        state.visz[chartId].dimension = dimension
+      }),
     updateConfig: (chartId, config) =>
       set((state) => {
         state.visz[chartId].config = {

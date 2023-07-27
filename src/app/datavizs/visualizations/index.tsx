@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { Config } from "./config"
 import { ChartLayouts } from "./chart-layouts"
-import pako from "pako"
+// import pako from "pako"
 import { useVizsStore } from "../store/visz-store"
 
 export const Visualization: FC = () => {
